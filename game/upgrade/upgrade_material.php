@@ -4,6 +4,14 @@
     if(!$_SESSION['user_name']){
         exit(header('Location: ../../index.php'));
     }
+
+    if(!isset($_GET['msg'])){
+        $_GET['msg']='';
+    }
+    if(!isset($_GET['err'])){
+        $_GET['err']='';
+    }
+
     include("../../database/database.php");
     $user_name = $_SESSION['user_name'];
     $form_user = "user_$user_name";

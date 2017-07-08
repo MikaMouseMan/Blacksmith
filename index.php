@@ -10,11 +10,7 @@
    <br>
    <br>
    <br>
-      <br>
-      <div align = "right" >
-                    
-      </div>
-       <div align = "center">
+    <div align = "center">
         <a href="registration/login.php"><h1>LOG IN BLACKSMITH</h1></a>
     </div>
 </body>
