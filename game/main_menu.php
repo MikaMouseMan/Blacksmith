@@ -4,7 +4,10 @@
         exit(header('Location: ../index.php'));
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/Blacksmith_Lucas
 
     if(!isset($_GET['msg'])){
         $_GET['msg']='';
@@ -13,8 +16,11 @@
             $_GET['err']='';
     }
     
+<<<<<<< HEAD
         
 >>>>>>> refs/remotes/origin/master
+=======
+>>>>>>> origin/Blacksmith_Lucas
     include('../database/database.php');
     $user_name=$_SESSION['user_name'];
     $answer = mysql_query("SELECT * FROM `reg_users` WHERE `user_name` = '$user_name'");
@@ -35,10 +41,14 @@
     Main menu
     <br>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <br><?=$_GET['err']?><?=$_GET['msg']?><?=$_GET['num1']?><?=$_GET['num2']?><?=$_GET['num3']?><?=$_GET['num4']?>
 =======
     <br><?=$_GET['err'].$_GET['msg']?>
 >>>>>>> refs/remotes/origin/master
+=======
+    <br><?=$_GET['err'].$_GET['msg']?>
+>>>>>>> origin/Blacksmith_Lucas
     <br>
     <a href="exit.php">EXIT</a>
     <div>

@@ -14,10 +14,15 @@
     <hi>Register new flash</hi>
     <br>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <br><?=$_GET['err']?>
 =======
     <br><?echo $_GET['err']?>
 >>>>>>> refs/remotes/origin/master
+=======
+
+    <br><?echo $_GET['err']?>
+>>>>>>> origin/Blacksmith_Lucas
     <form method = "post" action = "end_registration.php">
         Login: <input type="text" name = "login">
         <br>
