@@ -3,6 +3,7 @@
     
     include('../../database/database.php');
     
+
     $select = mysql_query("SELECT * FROM `data_resurse` WHERE `resurse_id` = '$seed'");
     $select_type = mysql_fetch_array($select);
     

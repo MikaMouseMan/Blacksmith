@@ -13,6 +13,7 @@
 <body>
     <hi>Register new flash</hi>
     <br>
+
     <br><?echo $_GET['err']?>
     <form method = "post" action = "end_registration.php">
         Login: <input type="text" name = "login">

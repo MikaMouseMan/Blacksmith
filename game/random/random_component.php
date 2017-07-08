@@ -9,6 +9,7 @@
     $structure2 = $structure1."_wood";
     $structure3 = $structure."_wood";
     
+
     $select = mysql_query("SELECT * FROM `data_component` WHERE `component_structure` IN ('$structure', '$structure1', '$structure2', '$structure3')");
     
     if(!$select){
@@ -23,6 +24,7 @@
     $seed = rand(0,count($temp_id)-1);
     $component_id = $temp_id[$seed];
     
+
     $select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '$component_id'");
     
     $select_type = mysql_fetch_array($select);

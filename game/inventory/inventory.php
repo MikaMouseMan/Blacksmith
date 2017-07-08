@@ -59,7 +59,7 @@
                     
                 }else if($_GET['craft']=='material1'){
                     $to_1st = "<a href='../craft/craft_component.php?material1=".$item['cell_id']."'>"."<img src='../../images/grab.jpg' height = '20' width = '20'></a>";
-                    
+                
                 }else{$to_1st="";}
                 
                 if($_GET['craft']=='resurse2'){
@@ -77,6 +77,5 @@
         }
         
     ?>
-    
 </body>
 </html>

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Blacksmit Login Screen</title>
 </head>
-
 <body>
    <br>
    <br>
