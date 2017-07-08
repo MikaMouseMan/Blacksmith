@@ -4,6 +4,17 @@
     if(!$_SESSION['user_name']){
         exit(header('Location: ../../index.php'));
     }
+<<<<<<< HEAD
+=======
+
+    if(!isset($_GET['msg'])){
+        $_GET['msg']='';
+    }
+    if(!isset($_GET['err'])){
+        $_GET['err']='';
+    }
+
+>>>>>>> refs/remotes/origin/master
     include("../../database/database.php");
     $user_name = $_SESSION['user_name'];
     $form_user = "user_$user_name";

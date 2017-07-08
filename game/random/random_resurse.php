@@ -3,7 +3,11 @@
     
     include('../../database/database.php');
     
+<<<<<<< HEAD
     $select = mysql_query("SELECT * FROM `resurse_data` WHERE `resurse_id` = '$seed'");
+=======
+    $select = mysql_query("SELECT * FROM `data_resurse` WHERE `resurse_id` = '$seed'");
+>>>>>>> refs/remotes/origin/master
     $select_type = mysql_fetch_array($select);
     
     $item_structure = $select_type['resurse_structure'];
