@@ -31,7 +31,7 @@
         $second_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '1000' AND '2000'");//handle
         $second_name = "handle";
         $third_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '9000' AND '10000'"); //garde
-        $third_name = "twine";
+        $third_name = "garde";
         
     }else if($weapon_id<3000){//bow        
     
