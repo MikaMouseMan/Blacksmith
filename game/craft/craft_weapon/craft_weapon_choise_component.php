@@ -82,7 +82,7 @@
         <select name="first_component">
             <option selected disabled>First component</option>
             <?
-            $select = mysql_query("SELECT * FROM `$form_user` WHERE `item_structure` IN ('$structure1', '$structure2', '$structure3') AND `item_type` LIKE 'component'");
+            $select = mysql_query("SELECT * FROM `$form_user` WHERE `item_structure` IN ('$structure1', '$structure2', '$structure3') AND `item_type` LIKE 'weapon'");
             
             while($component = mysql_fetch_array($select)){
                 echo "<option value='".$component['cell_id']."'>Name: ".$component['item_name']." coef: ".$component['item_coef']." type: ".$component['item_structure']." count: ".$component['item_count']."</option>";
