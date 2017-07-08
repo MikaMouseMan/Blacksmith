@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Июл 08 2017 г., 11:22
+-- Время создания: Июл 08 2017 г., 22:56
 -- Версия сервера: 10.1.21-MariaDB
 -- Версия PHP: 5.6.30
 
@@ -35,6 +35,19 @@ CREATE TABLE `data_armore` (
   `armore_slot` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
+--
+-- Дамп данных таблицы `data_armore`
+--
+
+INSERT INTO `data_armore` (`armore_id`, `armore_name`, `armore_image`, `armore_structure`, `armore_coef`, `armore_slot`) VALUES
+(101, 'lite helm', 'lite_helm.jpg', 'fibre', 10, 'head'),
+(201, 'lite shirt', 'lite_shirt.jpg', 'fibre', 40, 'chest'),
+(301, 'lite pans', 'lite_pans.jpg', 'fibre', 30, 'legs'),
+(401, 'lite gloves', 'lite_gloves.jpg', 'fibre', 10, 'hand'),
+(501, 'lite shose', 'lite_shose.jpg', 'fibre', 10, 'foot'),
+(601, 'lite belt', 'lite_belt.jpg', 'fibre', 5, 'belt'),
+(701, 'lite beg', 'lite_beg.jpg', 'fibre', 5, 'back');
+
 -- --------------------------------------------------------
 
 --
@@ -62,31 +75,16 @@ INSERT INTO `data_component` (`component_id`, `component_name`, `component_image
 (406, 'mixture', 'mixture.jpg', 'liqid', 2),
 (407, 'paper', 'paper.jpg', 'wood', 1),
 (408, 'tile', 'tile.jpg', 'crystal', 2),
-(1101, 'short handle', 'short_handle.jpg', 'hard_crystal_wood', 2),
-(1102, 'handle', 'handle.jpg', 'hard_crystal_wood', 6),
-(1103, 'long handle', 'long_handle.jpg', 'hard_crystal_wood', 24),
-(2201, 'knife blade', 'knife_blade.jpg', 'hard_crystal', 3),
-(2202, 'short blade', 'short_blade.jpg', 'hard_crystal', 12),
-(2203, 'blade', 'blade.jpg', 'hard_crystal', 24),
-(2204, 'long blade', 'long_blade.jpg', 'hard_crystal', 36),
-(2205, 'heavy blade', 'heavy_blade.jpg', 'hard_crystal', 48),
-(3301, 'short bow component', 'short_bow_component.jpg', 'hard_wood', 6),
-(3302, 'bow component', 'bow_component.jpg', 'hard_wood', 12),
-(3303, 'long bow component', 'long_bow_component.jpg', 'hard_wood', 24),
-(4101, 'short rod', 'short_rod.jpg', 'hard_crystal_wood', 2),
-(4102, 'rod', 'rod.jpg', 'hard_crystal_wood', 6),
-(4103, 'long rod', 'long_rod.jpg', 'hard_crystal_wood', 24),
+(1101, 'handle', 'handle.jpg', 'hard_crystal_wood', 2),
+(2201, 'blade', 'blade.jpg', 'hard_crystal', 3),
+(3301, 'bow component', 'bow_component.jpg', 'hard_wood', 6),
+(4101, 'rod', 'rod.jpg', 'hard_crystal_wood', 3),
 (5401, 'small wood block', 'small_wood_block.jpg', 'wood', 4),
 (5402, 'wood block', 'wood_block.jpg', 'wood', 16),
 (5403, 'long wood block', 'long_wood_block.jpg', 'wood', 32),
-(6201, 'small hammer head', 'small_hammer_head.jpg', 'hard_crystal', 2),
-(6202, 'hammer head', 'hammer_head.jpg', 'hard_crystal', 4),
-(6203, 'big hammer head', 'big_hammer_head.jpg', 'hard_crystal', 8),
-(6204, 'small axe head', 'small_axe_head.jpg', 'hard_crystal', 3),
-(6205, 'axe head', 'axe_head.jpg', 'hard_crystal', 5),
-(6206, 'big axe head', 'big_axe_head.jpg', 'hard_crystal', 7),
-(6207, 'tip', 'tip.jpg', 'hard_crystal', 1),
-(6208, 'pike tip', 'pike_tip.jpg', 'hard_crystal', 2);
+(6201, 'hammer head', 'hammer_head.jpg', 'hard_crystal', 2),
+(7202, 'axe head', 'axe_head.jpg', 'hard_crystal', 3),
+(8203, 'tip', 'tip.jpg', 'hard_crystal', 1);
 
 -- --------------------------------------------------------
 
@@ -151,8 +149,19 @@ CREATE TABLE `data_tools` (
   `tools_name` varchar(255) NOT NULL,
   `tools_image` varchar(255) NOT NULL,
   `tools_structure` varchar(255) NOT NULL,
-  `tools_coef` int(11) NOT NULL
+  `tools_coef` int(11) NOT NULL,
+  `tools_slot` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
+--
+-- Дамп данных таблицы `data_tools`
+--
+
+INSERT INTO `data_tools` (`tools_id`, `tools_name`, `tools_image`, `tools_structure`, `tools_coef`, `tools_slot`) VALUES
+(1, 'hammer', 'hammer.jpg', 'hard_crystal_wood', 2, 'any'),
+(2, 'saw', 'saw.jpg', 'hard_crystal_wood', 3, 'any'),
+(3, 'showel', 'showel.jpg', 'hard_crystal_wood', 3, 'two_hand'),
+(4, 'axe', 'axe.jpg', 'hard_crystal_wood', 3, 'any');
 
 -- --------------------------------------------------------
 
@@ -185,7 +194,6 @@ INSERT INTO `data_weapon` (`weapon_id`, `weapon_name`, `weapon_image`, `weapon_s
 (2304, 'arbalet', 'arbalet.jpg', 'hard_wood', 150, 'two_hand'),
 (2305, 'heavy arbalet', 'heavy_arbalet.jpg', 'hard_wood', 200, 'two_hand'),
 (3201, 'pike', 'pike.jpg', 'hard_crystal', 150, 'two_hand'),
-(3202, 'alebarda', 'alebarda.jpg', 'hard_crystal', 180, 'two_hand'),
 (3203, 'harpoon', 'harpoon.jpg', 'hard_crystal', 160, 'two_hand'),
 (4201, 'hammer', 'hammer.jpg', 'hard_crystal', 120, 'two_hand'),
 (4202, 'huge hammer', 'huge_hammer.jpg', 'hard_crystal', 180, 'two_hand'),
@@ -249,114 +257,26 @@ CREATE TABLE `user_aaaa` (
 --
 
 INSERT INTO `user_aaaa` (`cell_id`, `item_name`, `item_count`, `item_coef`, `item_type`, `item_structure`, `health`, `health_max`, `item_image`) VALUES
-(1, 'wood double chunk', 1, 23, 'material', 'wood', 0, 0, 'wood_double_chunk.jpg'),
-(2, 'fabric', 3, 14, 'material', 'fibre', 0, 0, 'fabric.jpg'),
-(3, 'ingot', 3, 21, 'material', 'hard', 0, 0, 'ingot.jpg'),
-(4, 'wood triple chunk', 3, 23, 'material', 'wood', 0, 0, 'wood_triple_chunk.jpg'),
-(5, 'fluid', 3, 15, 'material', 'liqid', 0, 0, 'fluid.jpg'),
-(6, 'fragment', 3, 35, 'material', 'crystal', 0, 0, 'fragment.jpg'),
-(7, 'fragment', 3, 140, 'material', 'crystal', 0, 0, 'fragment.jpg'),
-(8, 'wood double chunk', 3, 33, 'material', 'wood', 0, 0, 'wood_double_chunk.jpg'),
-(9, 'fragment', 3, 147, 'material', 'crystal', 0, 0, 'fragment.jpg'),
-(10, 'fabric', 3, 11, 'material', 'fibre', 0, 0, 'fabric.jpg'),
-(11, 'fluid', 3, 6, 'material', 'liqid', 0, 0, 'fluid.jpg'),
-(12, 'fragment', 3, 54, 'material', 'crystal', 0, 0, 'fragment.jpg'),
-(13, 'fragment', 3, 42, 'material', 'crystal', 0, 0, 'fragment.jpg'),
-(14, 'ingot', 3, 56, 'material', 'hard', 0, 0, 'ingot.jpg'),
-(15, 'fluid', 3, 8, 'material', 'liqid', 0, 0, 'fluid.jpg'),
-(16, 'long bow component', 2, 25, 'component', 'wood', 0, 0, 'long bow component'),
-(17, 'empty', 0, 0, '', '0', 0, 0, 'empty_cell.jpg'),
-(18, 'empty', 0, 0, '', '0', 0, 0, 'empty_cell.jpg'),
-(19, 'empty', 0, 0, '', '0', 0, 0, 'empty_cell.jpg'),
-(20, 'empty', 0, 0, '', '0', 0, 0, 'empty_cell.jpg');
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `user_константин`
---
-
-CREATE TABLE `user_константин` (
-  `cell_id` int(11) NOT NULL,
-  `item_name` varchar(255) NOT NULL,
-  `item_count` int(11) NOT NULL,
-  `item_coef` int(11) NOT NULL,
-  `item_type` varchar(255) NOT NULL,
-  `item_structure` varchar(255) NOT NULL,
-  `health` int(11) NOT NULL,
-  `health_max` int(11) NOT NULL,
-  `item_image` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Дамп данных таблицы `user_константин`
---
-
-INSERT INTO `user_константин` (`cell_id`, `item_name`, `item_count`, `item_coef`, `item_type`, `item_structure`, `health`, `health_max`, `item_image`) VALUES
-(1, 'fabric', 3, 23, 'material', 'fibre', 0, 0, 'fabric.jpg'),
-(2, 'pies', 3, 19, 'resurse', 'hard', 0, 0, 'pies.jpg'),
-(3, 'ingot', 1, 22, 'material', 'hard', 0, 0, 'ingot.jpg'),
-(4, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(5, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(6, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(7, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(8, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(9, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(10, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(11, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(12, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(13, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(14, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(15, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(16, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(17, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(18, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(19, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(20, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg');
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `user_виктор`
---
-
-CREATE TABLE `user_виктор` (
-  `cell_id` int(11) NOT NULL,
-  `item_name` varchar(255) NOT NULL,
-  `item_count` int(11) NOT NULL,
-  `item_coef` int(11) NOT NULL,
-  `item_type` varchar(255) NOT NULL,
-  `item_structure` varchar(255) NOT NULL,
-  `health` int(11) NOT NULL,
-  `health_max` int(11) NOT NULL,
-  `item_image` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Дамп данных таблицы `user_виктор`
---
-
-INSERT INTO `user_виктор` (`cell_id`, `item_name`, `item_count`, `item_coef`, `item_type`, `item_structure`, `health`, `health_max`, `item_image`) VALUES
-(1, 'empty', 0, 0, '', '0', 0, 0, 'empty_cell.jpg'),
-(2, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(3, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(4, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(5, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(6, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(7, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(8, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(9, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(10, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(11, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(12, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(13, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(14, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(15, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(16, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(17, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(18, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(19, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg'),
-(20, 'empty', 0, 0, '', '', 0, 0, 'empty_cell.jpg');
+(1, 'paper', 1, 87, 'component', 'wood', 0, 0, 'paper.jpg'),
+(2, 'tile', 1, 25, 'component', 'crystal', 0, 0, 'tile.jpg'),
+(3, 'mixture', 1, 40, 'component', 'liqid', 0, 0, 'mixture.jpg'),
+(4, 'mixture', 1, 46, 'component', 'liqid', 0, 0, 'mixture.jpg'),
+(5, 'twine', 1, 38, 'component', 'fibre', 0, 0, 'twine.jpg'),
+(6, 'wood block', 2, 5, 'component', 'wood', 0, 0, 'wood_block.jpg'),
+(7, 'mixture', 1, 44, 'component', 'liqid', 0, 0, 'mixture.jpg'),
+(8, 'mixture', 1, 30, 'component', 'liqid', 0, 0, 'mixture.jpg'),
+(9, 'wood block', 2, 3, 'component', 'wood', 0, 0, 'wood_block.jpg'),
+(10, 'wood block', 1, 6, 'component', 'wood', 0, 0, 'wood_block.jpg'),
+(11, 'mixture', 1, 49, 'component', 'liqid', 0, 0, 'mixture.jpg'),
+(12, 'cord', 1, 2, 'component', 'fibre', 0, 0, 'cord.jpg'),
+(13, 'mixture', 1, 37, 'component', 'liqid', 0, 0, 'mixture.jpg'),
+(14, 'hammer head', 1, 43, 'component', 'hard_crystal', 0, 0, 'hammer_head.jpg'),
+(15, 'small wood block', 1, 21, 'component', 'wood', 0, 0, 'small_wood_block.jpg'),
+(16, 'rod', 1, 29, 'component', 'hard_crystal_wood', 0, 0, 'rod.jpg'),
+(17, 'rod', 1, 18, 'component', 'hard_crystal_wood', 0, 0, 'rod.jpg'),
+(18, 'mixture', 1, 42, 'component', 'liqid', 0, 0, 'mixture.jpg'),
+(19, 'rod', 1, 25, 'component', 'hard_crystal_wood', 0, 0, 'rod.jpg'),
+(20, 'blade', 1, 30, 'component', 'hard_crystal', 0, 0, 'blade.jpg');
 
 --
 -- Индексы сохранённых таблиц
@@ -408,18 +328,6 @@ ALTER TABLE `reg_users`
 -- Индексы таблицы `user_aaaa`
 --
 ALTER TABLE `user_aaaa`
-  ADD UNIQUE KEY `cell_id` (`cell_id`);
-
---
--- Индексы таблицы `user_константин`
---
-ALTER TABLE `user_константин`
-  ADD UNIQUE KEY `cell_id` (`cell_id`);
-
---
--- Индексы таблицы `user_виктор`
---
-ALTER TABLE `user_виктор`
   ADD UNIQUE KEY `cell_id` (`cell_id`);
 
 --

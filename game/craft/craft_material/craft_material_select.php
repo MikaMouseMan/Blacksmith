@@ -1,7 +1,7 @@
 <?php
     
     include("../../../database/database.php");
-    $select = mysql_query("SELECT * FROM `material_data`");
+    $select = mysql_query("SELECT * FROM `data_material`");
 
     if(!isset($_GET['msg'])){
         $_GET['msg']='';

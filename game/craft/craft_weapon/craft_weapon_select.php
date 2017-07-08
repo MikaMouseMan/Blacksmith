@@ -1,6 +1,6 @@
 <?
 include("../../../database/database.php");
-$select = mysql_query("SELECT * FROM `weapon_data`");
+$select = mysql_query("SELECT * FROM `data_weapon`");
 
 if(!isset($_GET['msg'])){
     $_GET['msg']='';
