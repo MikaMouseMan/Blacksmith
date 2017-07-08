@@ -4,6 +4,11 @@
     if(!$_SESSION['user_name']){
         exit(header('Location: ../../index.php'));
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> origin/Blacksmith_Lucas
 
     if(!isset($_GET['msg'])){
         $_GET['msg']='';
@@ -12,6 +17,10 @@
         $_GET['err']='';
     }
 
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/master
+=======
+>>>>>>> origin/Blacksmith_Lucas
     include("../../database/database.php");
     $user_name = $_SESSION['user_name'];
     $form_user = "user_$user_name";

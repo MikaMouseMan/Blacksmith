@@ -2,15 +2,31 @@
     $seed = rand(1,5);
     
     include('../../database/database.php');
+<<<<<<< HEAD
+<<<<<<< HEAD
+    $select = mysql_query("SELECT * FROM `resurse_data` WHERE `resurse_id` = '$seed'");
+=======
     $select = mysql_query("SELECT * FROM `data_resurse` WHERE `resurse_id` = '$seed'");
+>>>>>>> refs/remotes/origin/master
+=======
+    $select = mysql_query("SELECT * FROM `data_resurse` WHERE `resurse_id` = '$seed'");
+>>>>>>> origin/Blacksmith_Lucas
     $select_type = mysql_fetch_array($select);
     $structure = $select_type['resurse_structure'];
     $structure1 = $structure."_crystal";
     $structure2 = $structure1."_wood";
     $structure3 = $structure."_wood";
     
+<<<<<<< HEAD
+<<<<<<< HEAD
+    $select = mysql_query("SELECT * FROM `component_data` WHERE `component_structure` LIKE '$structure' OR `component_structure` LIKE '$structure1' OR `component_structure` LIKE '$structure2' OR `component_structure` LIKE '$structure3'");
+=======
+    $select = mysql_query("SELECT * FROM `data_component` WHERE `component_structure` IN ('$structure', '$structure1', '$structure2', '$structure3')");
+>>>>>>> refs/remotes/origin/master
+=======
 
     $select = mysql_query("SELECT * FROM `data_component` WHERE `component_structure` IN ('$structure', '$structure1', '$structure2', '$structure3')");
+>>>>>>> origin/Blacksmith_Lucas
     
     if(!$select){
         exit(header('Location: ../main_menu.php?err=cant found random component'));
@@ -24,8 +40,16 @@
     $seed = rand(0,count($temp_id)-1);
     $component_id = $temp_id[$seed];
     
+<<<<<<< HEAD
+<<<<<<< HEAD
+    $select = mysql_query("SELECT * FROM `component_data` WHERE `component_id` = '$component_id'");
+=======
+    $select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '$component_id'");
+>>>>>>> refs/remotes/origin/master
+=======
 
     $select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '$component_id'");
+>>>>>>> origin/Blacksmith_Lucas
     
     $select_type = mysql_fetch_array($select);
     
