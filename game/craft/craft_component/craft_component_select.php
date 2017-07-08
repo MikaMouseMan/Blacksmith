@@ -1,7 +1,7 @@
 <?php
     
     include("../../../database/database.php");
-    $select = mysql_query("SELECT * FROM `component_data`");
+    $select = mysql_query("SELECT * FROM `data_component`");
     
     if(!isset($_GET['msg'])){
         $_GET['msg']='';

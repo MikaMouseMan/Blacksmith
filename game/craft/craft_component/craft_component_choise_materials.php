@@ -76,18 +76,20 @@
     <br>
     <br><?=$_GET['err'].$_GET['msg']?>
     <br>To craft <?=$component['component_name']?> you need <?=$component['component_coef']?> count both materials
-    <br>if you use wood you need 
+    <br>
     
     <?
-    if($component['component_coef']<10){
-        echo "chunk";
-    }else if($component['component_coef']<25){
-        echo "double chunk";
-    }elseif($component['component_coef']<50){
-        echo "triple chunk";
-    }else{echo (int)(1+($component['component_coef']/50))." triple chunks";}
-    ?> wood.
-    
+    if($structure=="wood" or $structure1=="wood" or $structure2=="wood" or $structure3=="wood"){
+        if($component['component_coef']<10){
+            echo "if you use wood you need chunk wood.";
+        }else if($component['component_coef']<25){
+            echo "if you use wood you need double chunk wood.";
+        }elseif($component['component_coef']<50){
+            echo "if you use wood you need triple chunk wood.";
+        }else{echo "if you use wood you need ".(int)(1+($component['component_coef']/50))." triple chunks wood.";}
+    }
+    ?>
+        
     <form action="craft_component_chek.php" method = "post">
         <input type="hidden" name = "component" value = "<?=$component_id?>">
         <select name="first_material">
