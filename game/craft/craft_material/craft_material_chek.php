@@ -16,14 +16,14 @@
     
     session_start();
     if(!$_SESSION['user_name']){
-        exit(header('Location: ../../index.php'));
+        exit(header('Location: ../../../index.php'));
     }
     
-    include("../../database/database.php");
+    include("../../../database/database.php");
     $user_name = $_SESSION['user_name'];
     $form_user = "user_$user_name";
     
-    $select = mysql_query("SELECT * FROM `material_data` WHERE `material_id` = '$material_id'");
+    $select = mysql_query("SELECT * FROM `data_material` WHERE `material_id` = '$material_id'");
     $material = mysql_fetch_array($select);
     
     $select = mysql_query("SELECT * FROM `$form_user` WHERE `cell_id` = '$first'");
@@ -114,7 +114,11 @@
             
         }else{
             
-            if($first_item['item_structure']=="crystal"){
+            if($first_item['item_structure']=="hard"){
+                
+                $new_item_structure = "hard";$hard_coef = 1.2;
+                
+            }else if($first_item['item_structure']=="crystal"){
                 
                 $new_item_structure = "crystal";$hard_coef = 1.3;
                 

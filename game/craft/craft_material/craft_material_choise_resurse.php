@@ -5,7 +5,7 @@
     
     session_start();
     if(!$_SESSION['user_name']){
-        exit(header('Location: ../../index.php'));
+        exit(header('Location: ../../../index.php'));
     }
     
     if(!isset($_GET['msg'])){
@@ -15,12 +15,12 @@
         $_GET['err']='';
     }
     
-    include("../../database/database.php");
+    include("../../../database/database.php");
     $user_name = $_SESSION['user_name'];
     $form_user = "user_$user_name";
     
     $material_id = $_POST['must_craft'];
-    $select = mysql_query("SELECT * FROM `material_data` WHERE `material_id` = '$material_id'");
+    $select = mysql_query("SELECT * FROM `data_material` WHERE `material_id` = '$material_id'");
     $material = mysql_fetch_array($select);
     
     $material_structure = $material['material_structure'];
@@ -52,7 +52,7 @@
     <title>Blacksmith</title>
 </head>
 <body>
-    <a href="craft.php">Back</a>
+    <a href="../craft.php">Back</a>
     <br><a href = "craft_material_select.php">Enother choise</a>
     <br>
     <br><?=$_GET['err'].$_GET['msg']?>

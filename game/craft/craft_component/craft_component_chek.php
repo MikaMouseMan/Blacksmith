@@ -5,7 +5,7 @@
     
     session_start();
     if(!$_SESSION['user_name']){
-        exit(header('Location: ../../index.php'));
+        exit(header('Location: ../../../index.php'));
     }
     
     function cant_mix(){
@@ -13,11 +13,11 @@
     }
     
     //connect DB and load to variable component and resurse
-    include("../../database/database.php");
+    include("../../../database/database.php");
     $user_name = $_SESSION['user_name'];
     $form_user = "user_$user_name";
     
-    $select = mysql_query("SELECT * FROM `component_data` WHERE `component_id` = '$component_id'");
+    $select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '$component_id'");
     $component = mysql_fetch_array($select);
     
     $select = mysql_query("SELECT * FROM `$form_user` WHERE `cell_id` = '$first_material_id'");
@@ -69,14 +69,16 @@
                 $new_item_count = 1;
             }else if($first_item['item_name'] == "wood triple chunk"){
                 $new_item_count = 1;
-            }else{exit(header('Location: creft_component_select.php?err=Need double wood pies'));}
+            }else{exit(header('Location: craft_component_select.php?err=Need double wood pies'));}
             
         }else if($need == "wood triple chunk"){
             
             if($first_item['item_name'] == "wood triple chunk"){
                 $new_item_count = 1;
-            }else{exit(header('Location: creft_component_select.php?err=Need triple wood pies'));}
+            }else{exit(header('Location: craft_component_select.php?err=Need triple wood pies'));}
             
+        }else {
+            exit(header('Location: craft_component_select.php?err=error wood select'));
         }
         
         

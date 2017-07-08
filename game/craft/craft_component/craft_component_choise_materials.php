@@ -6,7 +6,7 @@
     
     session_start();
     if(!$_SESSION['user_name']){
-        exit(header('Location: ../../index.php'));
+        exit(header('Location: ../../../index.php'));
     }
 
     if(!isset($_GET['msg'])){
@@ -16,9 +16,9 @@
         $_GET['err']='';
     }
 
-    include("../../database/database.php");
+    include("../../../database/database.php");
     $component_id = $_POST['must_craft'];
-    $select = mysql_query("SELECT * FROM `component_data` WHERE `component_id` = '$component_id'");
+    $select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '$component_id'");
     $component = mysql_fetch_array($select);
     
     $user_name = $_SESSION['user_name'];
@@ -71,7 +71,7 @@
     <title>Blacksmith</title>
 </head>
 <body>
-    <a href = "craft.php">Cansel</a>
+    <a href = "../craft.php">Cansel</a>
     <br><a href = "craft_component_select.php">Enother choise</a>
     <br>
     <br><?=$_GET['err'].$_GET['msg']?>

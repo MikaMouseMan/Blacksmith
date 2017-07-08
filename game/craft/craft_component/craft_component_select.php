@@ -1,6 +1,6 @@
 <?php
     
-    include("../../database/database.php");
+    include("../../../database/database.php");
     $select = mysql_query("SELECT * FROM `component_data`");
     
     if(!isset($_GET['msg'])){
@@ -17,7 +17,7 @@
     <title>Blacksmith</title>
 </head>
 <body>
-    <a href="craft.php">Back</a>
+    <a href="../craft.php">Back</a>
     <br>
     <br><?=$_GET['err'].$_GET['msg']?>
     <br>
