@@ -7,6 +7,7 @@
     
     
     
+
     $select = mysql_query("SELECT * FROM `data_material` WHERE `material_id` = '$seed'");
     $select_type = mysql_fetch_array($select);
     $resurse = $select_type['material_structure'];

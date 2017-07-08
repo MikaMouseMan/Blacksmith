@@ -11,7 +11,6 @@
             $_GET['err']='';
     }
     
-        
     include('../database/database.php');
     $user_name=$_SESSION['user_name'];
     $answer = mysql_query("SELECT * FROM `reg_users` WHERE `user_name` = '$user_name'");

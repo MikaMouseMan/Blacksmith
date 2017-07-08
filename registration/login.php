@@ -15,6 +15,7 @@ if(!isset($_GET['err'])){
 <body>
     <h1>Log in</h1>
     <form method = "post" action = "chek_login.php">
+
     <br><?echo $_GET['err']?>
     <br>
     Login: <input type="text" name = "login">
