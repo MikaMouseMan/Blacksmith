@@ -54,24 +54,8 @@
         while ($item=mysql_fetch_array($answer)){
             
             if($item['item_count']!=0){
-                
-                if($_GET['craft']=='resurse1'){
-                    $to_1st = "<a href='../craft/craft_material.php?resurse1=".$item['cell_id']."'>"."<img src='../../images/grab.jpg' height = '20' width = '20'></a>";
-                    
-                }else if($_GET['craft']=='material1'){
-                    $to_1st = "<a href='../craft/craft_component.php?material1=".$item['cell_id']."'>"."<img src='../../images/grab.jpg' height = '20' width = '20'></a>";
-                
-                }else{$to_1st="";}
-                
-                if($_GET['craft']=='resurse2'){
-                    $to_2nd = "<a href='../craft/craft_material.php?resurse2=".$item['cell_id']."'>"."<img src='../../images/grab.jpg' height = '20' width = '20'></a>";
-                    
-                }else if($_GET['craft']=='material2'){
-                    $to_2nd = "<a href='../craft/craft_component.php?material2=".$item['cell_id']."'>"."<img src='../../images/grab.jpg' height = '20' width = '20'></a>";
-                 
-                }else{$to_2nd = "";}
-                    
-                 echo /*"N:".$item['cell_id'].*/"Name: ".$item['item_name']."<br>Count: ".$item['item_count']."<br>Coef= ".$item['item_coef']."<br>Struct: ".$item['item_structure']." <img src='../images/".$item['item_type']."/".$item['item_image']."' height = '20' width = '20'><a href='clear_cell.php?id=".$item['cell_id']."'><img src='../../images/delete_items.jpg' height = '20' width = '20'></a>".$to_1st.$to_2nd."<br><br>";
+                                
+                 echo "Name: ".$item['item_name']."<br>Count: ".$item['item_count']."<br>Coef= ".$item['item_coef']."<br>Struct: ".$item['item_structure']." <img src='../../images/".$item['item_type']."/".$item['item_name'].".png"."' height = '20' width = '20'><a href='clear_cell.php?id=".$item['cell_id']."'><img src='../../images/buttons/delete_items.png' height = '20' width = '20'></a><br><br>";
                 
             }
             

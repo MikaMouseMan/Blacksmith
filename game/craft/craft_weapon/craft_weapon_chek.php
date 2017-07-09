@@ -2,8 +2,8 @@
 
 if(!$_POST['weapon']){
     exit(header('Location: craft_weapon_select.php?err=ERROR weapon not transmit!!!'));
-}else if(!$_POST['first_conponent']){
-    exit(header('Location: craft_weapon_select.php?err=You dont select main component'));
+}else if(!$_POST['first_component']){
+    exit(header('Location: craft_weapon_select.php?err=You dont select first component'));
 }else if(!$_POST['second_component']){
     exit(header('Location: craft_weapon_select.php?err=You dont select second component'));
 }else if(!$_POST['tird_component']){
@@ -47,11 +47,17 @@ $third_item_need = ceil($weapon['weapon_coef']/160);
 
 
 if($first_item['item_count']<$first_item_need){
-    exit(header('Location: craft_weapon_select.php?err=Not enoght first item'))
+    
+    exit(header('Location: craft_weapon_select.php?err=Not enoght first item'));
+        
 }else if($second_item['item_count']<$second_item_need){
-    exit(header('Location: craft_weapon_select.php?err=Not enoght second item'))
+    
+    exit(header('Location: craft_weapon_select.php?err=Not enoght second item'));
+    
 }else if($third_item['item_count']<$third_item_need){
-    exit(header('Location: craft_weapon_select.php?err=Not enoght third item'))
+    
+    exit(header('Location: craft_weapon_select.php?err=Not enoght third item'));
+    
 }
 
 if($weapon_id<2000){//sword 
@@ -61,7 +67,7 @@ if($weapon_id<2000){//sword
     $new_item_coef = (int)($first_item['item_coef']*(($second_item['item_coef']/2)*($third_item['item_coef']/3)));
     $new_item_type = "weapon";
     $new_item_structure = $first_item['item_structure'];
-    $new_item_health_max = $new_item_coef*($main_item_use+$second_item_use);
+    $new_item_health_max = $new_item_coef*($first_item_use+$second_item_use);
     $new_item_health = $new_item_health_max;    
         
 }else if($weapon_id<3000){//bow     
@@ -76,12 +82,12 @@ if($weapon_id<2000){//sword
     exit(header('Location: ../craft?err=component select error'));
 }
 
-if($first_item['item_count']>$main_item_need){
-    $temp_count1 = $first_item['item_count']-$main_item_need;
-    mysql_query("UPDATE `$form_user` SET `item_count` = '$temp_count1' WHERE `$form_user`.`cell_id` = '$main_component_id'");
+if($first_item['item_count']>$first_item_need){
+    $temp_count1 = $first_item['item_count']-$first_item_need;
+    mysql_query("UPDATE `$form_user` SET `item_count` = '$temp_count1' WHERE `$form_user`.`cell_id` = '$first_component_id'");
 }else{
 
-    mysql_query("UPDATE `$form_user` SET `item_name` = 'empty', `item_count` = '0', `item_coef` = '0', `item_type` = 'none', `item_structure` = '0', `item_image` = 'empty_cell.jpg' WHERE `$form_user`.`cell_id` = '$main_component_id'");
+    mysql_query("UPDATE `$form_user` SET `item_name` = 'empty', `item_count` = '0', `item_coef` = '0', `item_type` = 'none', `item_structure` = '0' WHERE `$form_user`.`cell_id` = '$first_component_id'");
 }
 
 if($second_item['item_count']>$second_item_need){
@@ -89,7 +95,7 @@ if($second_item['item_count']>$second_item_need){
     mysql_query("UPDATE `$form_user` SET `item_count` = '$temp_count1' WHERE `$form_user`.`cell_id` = '$second_component_id'");
 }else{
 
-    mysql_query("UPDATE `$form_user` SET `item_name` = 'empty', `item_count` = '0', `item_coef` = '0', `item_type` = 'none', `item_structure` = '0', `item_image` = 'empty_cell.jpg' WHERE `$form_user`.`cell_id` = '$second_component_id'");
+    mysql_query("UPDATE `$form_user` SET `item_name` = 'empty', `item_count` = '0', `item_coef` = '0', `item_type` = 'none', `item_structure` = '0' WHERE `$form_user`.`cell_id` = '$second_component_id'");
 }
 
 if($third_item['item_count']>$third_item_need){
@@ -97,7 +103,7 @@ if($third_item['item_count']>$third_item_need){
     mysql_query("UPDATE `$form_user` SET `item_count` = '$temp_count1' WHERE `$form_user`.`cell_id` = '$third_component_id'");
 }else{
 
-    mysql_query("UPDATE `$form_user` SET `item_name` = 'empty', `item_count` = '0', `item_coef` = '0', `item_type` = 'none', `item_structure` = '0', `item_image` = 'empty_cell.jpg' WHERE `$form_user`.`cell_id` = '$third_component_id'");
+    mysql_query("UPDATE `$form_user` SET `item_name` = 'empty', `item_count` = '0', `item_coef` = '0', `item_type` = 'none', `item_structure` = '0' WHERE `$form_user`.`cell_id` = '$third_component_id'");
 }
 
 $select = mysql_query("SELECT * FROM `$form_user` WHERE `item_name` LIKE '$new_item_name' AND `item_coef` = '$new_item_coef' AND `item_structure` LIKE '$new_item_structure'");
@@ -121,4 +127,4 @@ if($row['item_count']>0){
 
     exit(header('Location: craft_weapon_select.php?msg=new item added'));
 }
->?
+?>

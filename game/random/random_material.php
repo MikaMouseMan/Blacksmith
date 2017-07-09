@@ -19,7 +19,6 @@
     $item_type = "material";
     $item_coef = (int)rand($resurse['resurse_coef']/5,$resurse['resurse_coef'])*1.5;
     $item_name = $select_type['material_name'];
-    $item_image = $select_type['material_image'];
     $item_count = 3; // rand(2,4);
     
     $adress = "push_item_to_inventory.php";
@@ -30,7 +29,6 @@
     <input type="hidden" name = 'item_type' value = '<?=$item_type?>'>
     <input type="hidden" name = 'item_coef' value = '<?=$item_coef?>'>
     <input type="hidden" name = 'item_name' value = '<?=$item_name?>'>
-    <input type="hidden" name = 'item_image' value = '<?=$item_image?>'>
     <input type="hidden" name = 'item_count' value = '<?=$item_count?>'>
     
 </form>

@@ -39,9 +39,9 @@
         <br>You register <?=(int)$days?> days ago.
     </div>
     <div>
-        <a href="inventory/inventory.php"><img src="../images/inventory.jpg"></a>
-        <a href="craft/craft.php"><img src="../images/craft.jpg"></a>
-        <a href="upgrade/upgrade_material.php"><img src="../images/qestion.jpg"></a>
+        <a href="inventory/inventory.php"><img src="../images/buttons/inventory.png"></a>
+        <a href="craft/craft.php"><img src="../images/buttons/craft.png"></a>
+        <a href="upgrade/upgrade_material.php"><img src="../images/buttons/qestion.png"></a>
         <br><a href="random/random_resurse.php">Random resurse</a>
         <br><a href="random/random_material.php">Random material</a>
         <br><a href="random/random_component.php">Random component</a>
