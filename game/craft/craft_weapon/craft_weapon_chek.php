@@ -47,8 +47,8 @@ $third_item_need = ceil($weapon['weapon_coef']/160);
 
 
 if($first_item['item_count']<$first_item_need){
-    exit($first_item['item_count']);
-    //exit(header('Location: craft_weapon_select.php?err=Not enoght first item'));
+    
+    exit(header('Location: craft_weapon_select.php?err=Not enoght first item'));
         
 }else if($second_item['item_count']<$second_item_need){
     
@@ -67,69 +67,70 @@ $new_item_count = 1;
 
 if($weapon_id<2000){//sword 
         
-    $new_item_coef = (int)(($first_item['item_coef']*(($second_item['item_coef']/2)*($third_item['item_coef']/3)))/100);    
-    $new_item_health_max = $new_item_coef*($first_item_need+$second_item_need);
+    $new_item_coef = (int)(($first_item['item_coef']*$weapon['weapon_coef'])+($second_item['item_coef']*$third_item['item_coef']));    
+    $new_item_health_max = ($new_item_coef*($first_item_need+$second_item_need))/10;
     $new_item_health = $new_item_health_max;    
         
 }else if($weapon_id<3000){//bow    
     
-    $new_item_coef = (int)(($first_item['item_coef']*(($second_item['item_coef'])*($third_item['item_coef']/3)))/150);    
-    $new_item_health_max = $new_item_coef*($first_item_need+$second_item_need+$third_item_need);
+    $new_item_coef = (int)($first_item['item_coef']+(($weapon['weapon_coef']*($second_item['item_coef']+$third_item['item_coef'])))); 
+    $new_item_health_max = ($new_item_coef*($first_item_need+$second_item_need))/12;
     $new_item_health = $new_item_health_max;   
     
 }else if($weapon_id<4000){//pike   
     
-    $new_item_coef = (int)(($first_item['item_coef']*(($second_item['item_coef'])*($third_item['item_coef'])))/250);    
-    $new_item_health_max = $new_item_coef*($first_item_need*2+$second_item_need*1.5);
+    $new_item_coef = (int)(($first_item['item_coef']+$second_item['item_coef'])*($weapon['weapon_coef']+$third_item['item_coef']));    
+    $new_item_health_max = ($new_item_coef*($first_item_need+$second_item_need))/12;
     $new_item_health = $new_item_health_max; 
     
 }else if($weapon_id<5000){//hammer
     
-    $new_item_coef = (int)((($first_item['item_coef']*2)/(($second_item['item_coef']/2)*($third_item['item_coef']/3)))/100); 
-    $new_item_health_max = $new_item_coef*($first_item_need*2+$second_item_need);
+    $new_item_coef = (int)(($first_item['item_coef']*$weapon['weapon_coef'])+($second_item['item_coef']*$third_item['item_coef'])); 
+    $new_item_health_max = ($new_item_coef*($first_item_need+$second_item_need))/6;
     $new_item_health = $new_item_health_max;
     
 }else if($weapon_id<6000){//axe 
     
-    $new_item_coef = (int)((($first_item['item_coef']*1.5)/(($second_item['item_coef']/1.5)*($third_item['item_coef']/2)))/150); 
-    $new_item_health_max = $new_item_coef*($first_item_need+$second_item_need*2);
+    $new_item_coef = (int)(($first_item['item_coef']*$weapon['weapon_coef'])+($second_item['item_coef']*$third_item['item_coef'])); 
+    $new_item_health_max = ($new_item_coef*($first_item_need+$second_item_need))/10;
     $new_item_health = $new_item_health_max;
     
 }else if($weapon_id<7000){//arrow, throwable 
     
     $new_item_count = 10;
-    $new_item_coef = (int)(($first_item['item_coef']*(($second_item['item_coef']/20)*($third_item['item_coef']/30)))/100);    
+    $new_item_coef = (int)(($first_item['item_coef']*$weapon['weapon_coef'])+($second_item['item_coef']*$third_item['item_coef']));    
     $new_item_health_max = 1;
     $new_item_health = 1; 
     
 }else if($weapon_id<8000){//staff 
     
-    $new_item_coef = (int)((($first_item['item_coef']*3)*(($second_item['item_coef'])*($third_item['item_coef']/3)))/150);    
-    $new_item_health_max = $new_item_coef*($first_item_need*1.5+$second_item_need);
+    $new_item_coef = (int)(($first_item['item_coef']+$second_item['item_coef']+$third_item['item_coef'])*$weapon['weapon_coef']);    
+    $new_item_health_max = ($new_item_coef*($first_item_need+$second_item_need))/8;
     $new_item_health = $new_item_health_max;
     
 }else if($weapon_id<9000){//book 
     
-    $new_item_coef = (int)(($first_item['item_coef']*(($second_item['item_coef']/4)*($third_item['item_coef']/6)))/100);    
-    $new_item_health_max = $new_item_coef*($first_item_need+$second_item_need*2);
+    $new_item_coef = (int)(($first_item['item_coef']+$second_item['item_coef']+$third_item['item_coef'])*$weapon['weapon_coef']);      
+    $new_item_health_max = ($new_item_coef*($first_item_need+$second_item_need))/20;
     $new_item_health = $new_item_health_max;
     
 }else if($weapon_id<10000){//shield 
     
-    $new_item_coef = (int)(($first_item['item_coef']*(($second_item['item_coef'])*($third_item['item_coef']*1.5)))/50);    
-    $new_item_health_max = $new_item_coef*($first_item_need*2+$second_item_need);
+    $new_item_coef = (int)((($first_item['item_coef']+$second_item['item_coef'])*$third_item['item_coef'])*$weapon['weapon_coef']);    
+    $new_item_health_max = ($new_item_coef*($first_item_need+$second_item_need))/10;
     $new_item_health = $new_item_health_max;
     
 }else{
     exit(header('Location: ../craft?err=component select error'));
 }
 
+
 if($first_item['item_count']>$first_item_need){
     $temp_count1 = $first_item['item_count']-$first_item_need;
     mysql_query("UPDATE `$form_user` SET `item_count` = '$temp_count1' WHERE `$form_user`.`cell_id` = '$first_component_id'");
 }else{
 
-    mysql_query("UPDATE `$form_user` SET `item_name` = 'empty', `item_count` = '0', `item_coef` = '0', `item_type` = '', `item_structure` = '' WHERE `$form_user`.`cell_id` = '$first_component_id'");
+    mysql_query("UPDATE `$form_user` SET `item_name` = '', `item_count` = '0', `item_coef` = '0', `item_type` = '', `item_structure` = '' WHERE `$form_user`.`cell_id` = '$first_component_id'");
 }
 
 if($second_item['item_count']>$second_item_need){
@@ -137,7 +138,7 @@ if($second_item['item_count']>$second_item_need){
     mysql_query("UPDATE `$form_user` SET `item_count` = '$temp_count1' WHERE `$form_user`.`cell_id` = '$second_component_id'");
 }else{
 
-    mysql_query("UPDATE `$form_user` SET `item_name` = 'empty', `item_count` = '0', `item_coef` = '0', `item_type` = 'none', `item_structure` = '0' WHERE `$form_user`.`cell_id` = '$second_component_id'");
+    mysql_query("UPDATE `$form_user` SET `item_name` = '', `item_count` = '0', `item_coef` = '0', `item_type` = '', `item_structure` = '0' WHERE `$form_user`.`cell_id` = '$second_component_id'");
 }
 
 if($third_item['item_count']>$third_item_need){
@@ -145,7 +146,7 @@ if($third_item['item_count']>$third_item_need){
     mysql_query("UPDATE `$form_user` SET `item_count` = '$temp_count1' WHERE `$form_user`.`cell_id` = '$third_component_id'");
 }else{
 
-    mysql_query("UPDATE `$form_user` SET `item_name` = 'empty', `item_count` = '0', `item_coef` = '0', `item_type` = 'none', `item_structure` = '0' WHERE `$form_user`.`cell_id` = '$third_component_id'");
+    mysql_query("UPDATE `$form_user` SET `item_name` = '', `item_count` = '0', `item_coef` = '0', `item_type` = '', `item_structure` = '0' WHERE `$form_user`.`cell_id` = '$third_component_id'");
 }
 
 $select = mysql_query("SELECT * FROM `$form_user` WHERE `item_name` LIKE '$new_item_name' AND `item_coef` = '$new_item_coef' AND `item_structure` LIKE '$new_item_structure'");

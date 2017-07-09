@@ -98,7 +98,7 @@
         
     }else if($weapon_id<10000){//shield     
     
-        $first_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` IN ('401','408')");//plate,tile
+        $first_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` IN ('301','408')");//plate,tile
         $first_name = "plate or tile";
         $second_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '1000' AND '2000'");//handle
         $second_name = "handle";
