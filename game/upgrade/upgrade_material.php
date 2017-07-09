@@ -26,7 +26,7 @@
     <title>Blacksmith</title>
 </head>
 <body>
-    <a href="../main_menu.php">Back</a>
+    <a href="../home/blacksmith_home.php">Back</a>
     <br>
     <br><?=$_GET['err'].$_GET['msg']?>
     <br>
