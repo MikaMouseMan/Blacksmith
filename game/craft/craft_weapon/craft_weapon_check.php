@@ -62,8 +62,7 @@ if($weapon_id<2000){//sword
     $new_item_type = "weapon";
     $new_item_structure = $first_item['item_structure'];
     $new_item_health_max = $new_item_coef*($main_item_use+$second_item_use);
-    $new_item_health = $new_item_health_max;
-    $new_item_image = $weapon['weapon_image'];
+    $new_item_health = $new_item_health_max;    
         
 }else if($weapon_id<3000){//bow     
 }else if($weapon_id<4000){//pike   
@@ -99,5 +98,27 @@ if($third_item['item_count']>$third_item_need){
 }else{
 
     mysql_query("UPDATE `$form_user` SET `item_name` = 'empty', `item_count` = '0', `item_coef` = '0', `item_type` = 'none', `item_structure` = '0', `item_image` = 'empty_cell.jpg' WHERE `$form_user`.`cell_id` = '$third_component_id'");
+}
+
+$select = mysql_query("SELECT * FROM `$form_user` WHERE `item_name` LIKE '$new_item_name' AND `item_coef` = '$new_item_coef' AND `item_structure` LIKE '$new_item_structure'");
+$row = mysql_fetch_array($select);
+
+if($row['item_count']>0){
+
+    $sum = $new_item_count+$row['item_count'];
+    $temp_cell = $row['cell_id'];
+
+    mysql_query("UPDATE `$form_user` SET `item_count` = '$sum' WHERE `$form_user`.`cell_id` = '$temp_cell'");
+
+    exit(header('Location: craft_weapon_select.php?msg=new item stacked'));
+
+}else{
+
+    $select = mysql_query("SELECT `cell_id` FROM `$form_user` WHERE `item_count` = 0");
+    $row = mysql_fetch_array($select);
+    $temp_cell = $row['cell_id'];
+    mysql_query("UPDATE `$form_user` SET `item_name` = '$new_item_name', `item_count` = '$new_item_count', `item_coef` = '$new_item_coef', `item_type` = 'component', `item_structure` = '$new_item_structure', `health_max` = '$new_item_health_max' `health` = '$new_item_health' WHERE `$form_user`.`cell_id` = '$temp_cell'");
+
+    exit(header('Location: craft_weapon_select.php?msg=new item added'));
 }
 >?
