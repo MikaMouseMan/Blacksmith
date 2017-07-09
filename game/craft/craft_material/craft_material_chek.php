@@ -56,16 +56,16 @@
             
             mysql_query("UPDATE `$form_user` SET `item_count` = '$sum' WHERE `$form_user`.`cell_id` = '$temp_cell'");
             
-            header('Location: craft_material_select.php?msg=new item stacked');
+            exit(header('Location: craft_material_select.php?msg=new item stacked'));
                 
         }else{
         
             $select = mysql_query("SELECT `cell_id` FROM `$form_user` WHERE `item_count` = 0");
             $row = mysql_fetch_array($select);
             $temp_cell = $row['cell_id'];
-            mysql_query("UPDATE `$form_user` SET `item_name` = '$new_item_name', `item_count` = 3, `item_coef` = '$new_item_coef', `item_type` = 'material', `item_structure` = '$new_item_structure' WHERE `$form_user`.`cell_id` = '$temp_cell'");
+            mysql_query("UPDATE `$form_user` SET `item_name` = '$new_item_name', `item_count` = 1, `item_coef` = '$new_item_coef', `item_type` = 'material', `item_structure` = '$new_item_structure' WHERE `$form_user`.`cell_id` = '$temp_cell'");
             
-            header('Location: craft_material_select.php?msg=new item added');
+            exit(header('Location: craft_material_select.php?msg=new item added'));
         }
         
         //WOOD

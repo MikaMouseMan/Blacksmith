@@ -51,11 +51,15 @@
     <br>
     <br>
     <?
-        while ($item=mysql_fetch_array($answer)){
+        while ($item = mysql_fetch_array($answer)){
             
             if($item['item_count']!=0){
                                 
-                 echo "Name: ".$item['item_name']."<br>Count: ".$item['item_count']."<br>Coef= ".$item['item_coef']."<br>Struct: ".$item['item_structure']." <img src='../../images/".$item['item_type']."/".$item['item_name'].".png"."' height = '20' width = '20'><a href='clear_cell.php?id=".$item['cell_id']."'><img src='../../images/buttons/delete_items.png' height = '20' width = '20'></a><br><br>";
+                 echo "Name: ".$item['item_name']."<br>Count: ".$item['item_count']."<br>Struct: ".$item['item_structure'];
+                if($item['item_type'] == 'weapon'){
+                    echo "<br>Health ".$item['health']."/".$item['health_max'];
+                }
+                echo " <img src='../../images/".$item['item_type']."/".$item['item_name'].".png"."' height = '20' width = '20'><a href='clear_cell.php?id=".$item['cell_id']."'><img src='../../images/buttons/delete_items.png' height = '20' width = '20'></a><br><br>";                
                 
             }
             

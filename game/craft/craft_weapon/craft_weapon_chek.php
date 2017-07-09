@@ -60,24 +60,66 @@ if($first_item['item_count']<$first_item_need){
     
 }
 
+$new_item_name = $weapon['weapon_name'];
+$new_item_type = "weapon";
+$new_item_structure = $first_item['item_structure'];
+$new_item_count = 1;
+
 if($weapon_id<2000){//sword 
-    
-    $new_item_name = $weapon['weapon_name'];
-    $new_item_count = 1;
-    $new_item_coef = (int)(($first_item['item_coef']*(($second_item['item_coef']/2)*($third_item['item_coef']/3)))/100);
-    $new_item_type = "weapon";
-    $new_item_structure = $first_item['item_structure'];
+        
+    $new_item_coef = (int)(($first_item['item_coef']*(($second_item['item_coef']/2)*($third_item['item_coef']/3)))/100);    
     $new_item_health_max = $new_item_coef*($first_item_need+$second_item_need);
     $new_item_health = $new_item_health_max;    
         
-}else if($weapon_id<3000){//bow     
+}else if($weapon_id<3000){//bow    
+    
+    $new_item_coef = (int)(($first_item['item_coef']*(($second_item['item_coef'])*($third_item['item_coef']/3)))/150);    
+    $new_item_health_max = $new_item_coef*($first_item_need+$second_item_need+$third_item_need);
+    $new_item_health = $new_item_health_max;   
+    
 }else if($weapon_id<4000){//pike   
+    
+    $new_item_coef = (int)(($first_item['item_coef']*(($second_item['item_coef'])*($third_item['item_coef'])))/250);    
+    $new_item_health_max = $new_item_coef*($first_item_need*2+$second_item_need*1.5);
+    $new_item_health = $new_item_health_max; 
+    
 }else if($weapon_id<5000){//hammer
+    
+    $new_item_coef = (int)((($first_item['item_coef']*2)/(($second_item['item_coef']/2)*($third_item['item_coef']/3)))/100); 
+    $new_item_health_max = $new_item_coef*($first_item_need*2+$second_item_need);
+    $new_item_health = $new_item_health_max;
+    
 }else if($weapon_id<6000){//axe 
+    
+    $new_item_coef = (int)((($first_item['item_coef']*1.5)/(($second_item['item_coef']/1.5)*($third_item['item_coef']/2)))/150); 
+    $new_item_health_max = $new_item_coef*($first_item_need+$second_item_need*2);
+    $new_item_health = $new_item_health_max;
+    
 }else if($weapon_id<7000){//arrow, throwable 
+    
+    $new_item_count = 10;
+    $new_item_coef = (int)(($first_item['item_coef']*(($second_item['item_coef']/20)*($third_item['item_coef']/30)))/100);    
+    $new_item_health_max = 1;
+    $new_item_health = 1; 
+    
 }else if($weapon_id<8000){//staff 
+    
+    $new_item_coef = (int)((($first_item['item_coef']*3)*(($second_item['item_coef'])*($third_item['item_coef']/3)))/150);    
+    $new_item_health_max = $new_item_coef*($first_item_need*1.5+$second_item_need);
+    $new_item_health = $new_item_health_max;
+    
 }else if($weapon_id<9000){//book 
+    
+    $new_item_coef = (int)(($first_item['item_coef']*(($second_item['item_coef']/4)*($third_item['item_coef']/6)))/100);    
+    $new_item_health_max = $new_item_coef*($first_item_need+$second_item_need*2);
+    $new_item_health = $new_item_health_max;
+    
 }else if($weapon_id<10000){//shield 
+    
+    $new_item_coef = (int)(($first_item['item_coef']*(($second_item['item_coef'])*($third_item['item_coef']*1.5)))/50);    
+    $new_item_health_max = $new_item_coef*($first_item_need*2+$second_item_need);
+    $new_item_health = $new_item_health_max;
+    
 }else{
     exit(header('Location: ../craft?err=component select error'));
 }
@@ -123,7 +165,7 @@ if($row['item_count']>0){
     $select = mysql_query("SELECT `cell_id` FROM `$form_user` WHERE `item_count` = '0'");
     $row = mysql_fetch_array($select);
     $temp_cell = $row['cell_id'];
-    mysql_query("UPDATE `$form_user` SET `item_name` = '$new_item_name', `item_count` = '$new_item_count', `item_coef` = '$new_item_coef', `item_type` = 'component', `item_structure` = '$new_item_structure', `health_max` = '$new_item_health_max', `health` = '$new_item_health' WHERE `$form_user`.`cell_id` = '$temp_cell'");
+    mysql_query("UPDATE `$form_user` SET `item_name` = '$new_item_name', `item_count` = '$new_item_count', `item_coef` = '$new_item_coef', `item_type` = 'weapon', `item_structure` = '$new_item_structure', `health_max` = '$new_item_health_max', `health` = '$new_item_health' WHERE `$form_user`.`cell_id` = '$temp_cell'");
 
     exit(header('Location: craft_weapon_select.php?msg=new item added'));
 }
