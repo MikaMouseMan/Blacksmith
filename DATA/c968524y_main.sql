@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Июл 09 2017 г., 01:44
+-- Время создания: Июл 09 2017 г., 13:23
 -- Версия сервера: 10.1.21-MariaDB
 -- Версия PHP: 5.6.30
 
@@ -44,13 +44,15 @@ TRUNCATE TABLE `data_armore`;
 --
 
 INSERT INTO `data_armore` (`armore_id`, `armore_name`, `armore_structure`, `armore_coef`, `armore_slot`) VALUES
-(101, 'lite helm', 'fibre', 10, 'head'),
-(201, 'lite shirt', 'fibre', 40, 'chest'),
-(301, 'lite pans', 'fibre', 30, 'legs'),
-(401, 'lite gloves', 'fibre', 10, 'hand'),
-(501, 'lite shose', 'fibre', 10, 'foot'),
-(601, 'lite belt', 'fibre', 5, 'belt'),
-(701, 'lite beg', 'fibre', 5, 'back');
+(1001, 'lite helm', 'fibre', 10, 'head'),
+(1301, 'medium helm', 'hard_crystal_fibre', 100, 'head'),
+(1601, 'havy helm', 'hard_crystal', 150, 'head'),
+(2001, 'lite shirt', 'fibre', 40, 'chest'),
+(3001, 'lite pans', 'fibre', 30, 'legs'),
+(4001, 'lite gloves', 'fibre', 10, 'hand'),
+(5001, 'lite shose', 'fibre', 10, 'foot'),
+(6001, 'lite belt', 'fibre', 5, 'belt'),
+(7001, 'lite beg', 'fibre', 5, 'back');
 
 -- --------------------------------------------------------
 
@@ -75,7 +77,7 @@ TRUNCATE TABLE `data_component`;
 --
 
 INSERT INTO `data_component` (`component_id`, `component_name`, `component_structure`, `component_coef`) VALUES
-(401, 'plate', 'hard', 3),
+(301, 'plate', 'hard_wood', 3),
 (402, 'cord', 'fibre', 20),
 (403, 'linen', 'fibre', 100),
 (404, 'twine', 'fibre', 2),
