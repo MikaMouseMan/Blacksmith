@@ -26,8 +26,8 @@
         
     if($weapon_id<2000){//sword        
     
-        $main_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '2000' AND '3000'");//blade
-        $main_name = "blade component";
+        $first_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '2000' AND '3000'");//blade
+        $first_name = "blade component";
         $second_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '1000' AND '2000'");//handle
         $second_name = "handle";
         $third_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '9000' AND '10000'"); //garde
@@ -35,8 +35,8 @@
         
     }else if($weapon_id<3000){//bow        
     
-        $main_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '3000' AND '4000'");//bow component
-        $main_name = "bow component";
+        $first_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '3000' AND '4000'");//bow component
+        $first_name = "bow component";
         $second_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '402'");//cord
         $second_name = "cord";
         $third_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '404'"); //twine
@@ -44,8 +44,8 @@
         
     }else if($weapon_id<4000){//pike        
     
-        $main_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '8000' AND '9000'");//tip
-        $main_name = "tip";
+        $first_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '8000' AND '9000'");//tip
+        $first_name = "tip";
         $second_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '4000' AND '5000'");//rod
         $second_name = "rod";
         $third_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '404'"); //twine
@@ -53,8 +53,8 @@
         
     }else if($weapon_id<5000){//hammer       
     
-        $main_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '6000' AND '7000'");//hammer head
-        $main_name = "hammer head";
+        $first_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '6000' AND '7000'");//hammer head
+        $first_name = "hammer head";
         $second_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '1000' AND '2000'");//handle
         $second_name = "handle";
         $third_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '404'"); //twine
@@ -62,8 +62,8 @@
         
     }else if($weapon_id<6000){//axe       
     
-        $main_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '7000' AND '8000'");//axe head
-        $main_name = "axe head";
+        $first_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '7000' AND '8000'");//axe head
+        $first_name = "axe head";
         $second_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '1000' AND '2000'");//handle
         $second_name = "handle";
         $third_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '404'"); //twine
@@ -71,8 +71,8 @@
         
     }else if($weapon_id<7000){//arrow, throwable      
     
-        $main_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '8000' AND '9000'");//tip
-        $main_name = "tip";
+        $first_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '8000' AND '9000'");//tip
+        $first_name = "tip";
         $second_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '4000' AND '5000'");//rod
         $second_name = "rod";
         $third_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '404'"); //twine
@@ -80,8 +80,8 @@
         
     }else if($weapon_id<8000){//staff      
     
-        $main_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '4000' AND '5000'");//rod
-        $main_name = "rod";
+        $first_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '4000' AND '5000'");//rod
+        $first_name = "rod";
         $second_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '405'");//diamond
         $second_name = "diamond";
         $third_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '406'"); //mixture
@@ -89,8 +89,8 @@
         
     }else if($weapon_id<9000){//book      
     
-        $main_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '407'");//paper
-        $main_name = "paper";
+        $first_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '407'");//paper
+        $first_name = "paper";
         $second_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '403'");//linen
         $second_name = "linen";
         $third_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '404'"); //twine
@@ -98,8 +98,8 @@
         
     }else if($weapon_id<10000){//shield     
     
-        $main_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` IN ('401','408')");//plate,tile
-        $main_name = "plate or tile";
+        $first_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` IN ('301','408')");//plate,tile
+        $first_name = "plate or tile";
         $second_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '1000' AND '2000'");//handle
         $second_name = "handle";
         $third_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '403'");//linen
@@ -118,16 +118,16 @@
     <br><a href = "craft_weapon_select.php">Enother choise</a>
     <br>
     <br><?=$_GET['err'].$_GET['msg']?>
-    <br>To craft <?=$weapon['weapon_name']?> you need <?=ceil($weapon['weapon_coef']/40)." ".$main_name?>:
+    <br>To craft <?=$weapon['weapon_name']?> you need <?=ceil($weapon['weapon_coef']/40)." ".$first_name?>:
         
     <form action="craft_weapon_chek.php" method = "post">
         <input type="hidden" name = "weapon" value = "<?=$weapon_id?>">
-        <select name="main_component">
-            <option selected disabled>Main component</option>
+        <select name="first_component">
+            <option selected disabled>first component</option>
                 <?   
-                    while($main_component = mysql_fetch_array($main_select)){
+                    while($first_component = mysql_fetch_array($first_select)){
                         
-                        $item_name = $main_component['component_name'];
+                        $item_name = $first_component['component_name'];
                         $item_select = mysql_query("SELECT * FROM `$form_user` WHERE `item_name` LIKE '$item_name'");
                         
                         while($item_component = mysql_fetch_array($item_select)){

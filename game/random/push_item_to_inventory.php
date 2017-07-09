@@ -10,8 +10,7 @@
     $item_structure = $_POST['item_structure'];
     $item_type = $_POST['item_type'];
     $item_coef = $_POST['item_coef'];
-    $item_name = $_POST['item_name'];
-    $item_image = $_POST['item_image'];
+    $item_name = $_POST['item_name'];    
     $item_count = $_POST['item_count'];
     
     $select = mysql_query("SELECT * FROM `$form_user` WHERE `item_name` LIKE '$item_name' AND `item_coef` = '$item_coef' AND `item_structure` LIKE '$item_structure'");
@@ -24,7 +23,6 @@
         
         mysql_query("UPDATE `$form_user` SET `item_count` = '$sum' WHERE `$form_user`.`cell_id` = '$temp_cell'");
         
-        unset ($_POST);
         exit(header('Location: ../main_menu.php?msg=item staked'));
         
     }else{
@@ -39,7 +37,7 @@
         
         $sum = $item_count+$row['item_count'];
         $temp_cell = $row['cell_id'];
-        mysql_query("UPDATE `$form_user` SET `item_name` = '$item_name', `item_count` = '$sum', `item_coef` = '$item_coef', `item_type` = '$item_type', `item_structure` = '$item_structure', `item_image` = '$item_image'  WHERE `$form_user`.`cell_id` = '$temp_cell'");
+        mysql_query("UPDATE `$form_user` SET `item_name` = '$item_name', `item_count` = '$sum', `item_coef` = '$item_coef', `item_type` = '$item_type', `item_structure` = '$item_structure' WHERE `$form_user`.`cell_id` = '$temp_cell'");
         
         exit(header('Location: ../main_menu.php?msg=new item added'));
     
