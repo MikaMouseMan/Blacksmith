@@ -42,7 +42,7 @@
         mysql_query("CREATE TABLE `$form_name` ( `cell_id` INT NOT NULL ,  `item_name` VARCHAR(255) NOT NULL ,  `item_count` INT NOT NULL , `item_coef` INT NOT NULL ,  `item_type` VARCHAR(255) NOT NULL ,  `item_structure` VARCHAR(255) NOT NULL , `health` INT NOT NULL ,  `health_max` INT NOT NULL , `item_image` VARCHAR(255) NOT NULL,    UNIQUE  (`cell_id`)) ENGINE = InnoDB");
         
         for($i=1;$i<=20;$i++){
-            mysql_query("INSERT INTO `$form_name` (`cell_id`, `item_name`, `item_count`, `item_coef`, `item_type`, `item_structure`, `health`, `health_max`, `item_image`) VALUES ('$i', 'empty', '', '', '', '', '', '', 'empty_cell.jpg')");
+            mysql_query("INSERT INTO `$form_name` (`cell_id`, `item_name`, `item_count`, `item_coef`, `item_type`, `item_structure`, `health`, `health_max`, `item_image`) VALUES ('$i', '', '', '', '', '', '', '', 'empty_cell.jpg')");
         }
         
         session_start();
