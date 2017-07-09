@@ -11,7 +11,7 @@ if(!$_POST['weapon']){
 }
 
 $weapon_id = $_POST['weapon'];
-$first_component_id = $_POST['first_conponent'];
+$first_component_id = $_POST['first_component'];
 $second_component_id = $_POST['second_component'];
 $third_component_id = $_POST['tird_component'];
 
@@ -47,8 +47,8 @@ $third_item_need = ceil($weapon['weapon_coef']/160);
 
 
 if($first_item['item_count']<$first_item_need){
-    
-    exit(header('Location: craft_weapon_select.php?err=Not enoght first item'));
+    exit($first_item['item_count']);
+    //exit(header('Location: craft_weapon_select.php?err=Not enoght first item'));
         
 }else if($second_item['item_count']<$second_item_need){
     
@@ -64,10 +64,10 @@ if($weapon_id<2000){//sword
     
     $new_item_name = $weapon['weapon_name'];
     $new_item_count = 1;
-    $new_item_coef = (int)($first_item['item_coef']*(($second_item['item_coef']/2)*($third_item['item_coef']/3)));
+    $new_item_coef = (int)(($first_item['item_coef']*(($second_item['item_coef']/2)*($third_item['item_coef']/3)))/100);
     $new_item_type = "weapon";
     $new_item_structure = $first_item['item_structure'];
-    $new_item_health_max = $new_item_coef*($first_item_use+$second_item_use);
+    $new_item_health_max = $new_item_coef*($first_item_need+$second_item_need);
     $new_item_health = $new_item_health_max;    
         
 }else if($weapon_id<3000){//bow     
@@ -87,7 +87,7 @@ if($first_item['item_count']>$first_item_need){
     mysql_query("UPDATE `$form_user` SET `item_count` = '$temp_count1' WHERE `$form_user`.`cell_id` = '$first_component_id'");
 }else{
 
-    mysql_query("UPDATE `$form_user` SET `item_name` = 'empty', `item_count` = '0', `item_coef` = '0', `item_type` = 'none', `item_structure` = '0' WHERE `$form_user`.`cell_id` = '$first_component_id'");
+    mysql_query("UPDATE `$form_user` SET `item_name` = 'empty', `item_count` = '0', `item_coef` = '0', `item_type` = '', `item_structure` = '' WHERE `$form_user`.`cell_id` = '$first_component_id'");
 }
 
 if($second_item['item_count']>$second_item_need){
@@ -120,10 +120,10 @@ if($row['item_count']>0){
 
 }else{
 
-    $select = mysql_query("SELECT `cell_id` FROM `$form_user` WHERE `item_count` = 0");
+    $select = mysql_query("SELECT `cell_id` FROM `$form_user` WHERE `item_count` = '0'");
     $row = mysql_fetch_array($select);
     $temp_cell = $row['cell_id'];
-    mysql_query("UPDATE `$form_user` SET `item_name` = '$new_item_name', `item_count` = '$new_item_count', `item_coef` = '$new_item_coef', `item_type` = 'component', `item_structure` = '$new_item_structure', `health_max` = '$new_item_health_max' `health` = '$new_item_health' WHERE `$form_user`.`cell_id` = '$temp_cell'");
+    mysql_query("UPDATE `$form_user` SET `item_name` = '$new_item_name', `item_count` = '$new_item_count', `item_coef` = '$new_item_coef', `item_type` = 'component', `item_structure` = '$new_item_structure', `health_max` = '$new_item_health_max', `health` = '$new_item_health' WHERE `$form_user`.`cell_id` = '$temp_cell'");
 
     exit(header('Location: craft_weapon_select.php?msg=new item added'));
 }
