@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Blacksmith</title>
-    <link rel="stylesheet" href='../../style/blacksmith.css'>
+    <link rel="stylesheet" href='../../style/Blacksmith.css'>
 </head>
 <body>
     <a href="../exit.php">EXIT</a>

@@ -1,7 +1,7 @@
 <?php
     session_start();
     if(!$_SESSION['user_name']){
-        exit(header('Location: ../index.php'));
+        exit(header('Location: ../../index.php'));
     }
 
     if(!isset($_GET['msg'])){
