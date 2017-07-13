@@ -1,9 +1,5 @@
 
 body {
+    background-size:cover;
     background-image: url(../images/green_map.png);
-}
-
-a {
-    background: red;
-    font-size: 24px;
 }
