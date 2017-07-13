@@ -60,6 +60,15 @@ if($tools['tools_name']=='hammer'){
     $third_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '406'");//mixture
     $third_name = "linen";
     
+}else if($tools['tools_name']=='pixaxe'){
+   
+    $first_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '9000' AND '10000'");//pixaxe head
+    $first_name = "hammer head";
+    $second_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` BETWEEN '1000' AND '2000'");//handle
+    $second_name = "handle";
+    $third_select = mysql_query("SELECT * FROM `data_component` WHERE `component_id` = '404'");//twine
+    $third_name = "linen";
+    
 }else{
     exit(header('Location: ../craft?err=component select error'));
 }
