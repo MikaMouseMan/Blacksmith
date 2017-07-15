@@ -26,5 +26,6 @@ if(!isset($_GET['err'])){
     <input type="submit" value = "Chek">
     </form>
     Dont have account? <a href="registration.php">Registration</a>
+    <br>Want to delete account? <a href="delete_account.php">DELETE</a>
 </body>
 </html>
