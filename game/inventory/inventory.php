@@ -15,26 +15,8 @@
     if(!isset($_GET['err'])){
             $_GET['err']='';
     }
-    if(!isset($_GET['craft'])){
-            $_GET['craft']='';
-    }
     
-    
-    if($_GET['craft']=='resurse1'||$_GET['craft']=='resurse2'){
-        
-        $answer = mysql_query("SELECT * FROM `$form_user` WHERE `item_type` LIKE 'resurse'");
-        
-    }else if($_GET['craft']=='material1'||$_GET['craft']=='material2'){
-        
-        $answer = mysql_query("SELECT * FROM `$form_user` WHERE `item_type` LIKE 'material'");
-        
-    }else if($_GET['craft']=='component1'||$_GET['craft']=='component2'){
-        
-        $answer = mysql_query("SELECT * FROM `$form_user` WHERE `item_type` LIKE 'component'");
-        
-    }else $answer = mysql_query("SELECT * FROM `$form_user`");
-    
-    
+    $answer = mysql_query("SELECT * FROM `$form_user`");
     
 ?>
 
@@ -52,8 +34,8 @@
     <br>
     <?
         while ($item = mysql_fetch_array($answer)){
-            
-            if($item['item_count']!=0){
+                        
+            if($item['item_count']!=0 and $item['cell_id']<1000){
                                 
                  echo "Name: ".$item['item_name']." Type: ".$item['item_type']."<br>Count: ".$item['item_count']." Coef: ".$item['item_coef']."<br>Struct: ".$item['item_structure'];
                 if($item['health'] != '0'){
