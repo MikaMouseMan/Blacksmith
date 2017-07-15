@@ -6,7 +6,7 @@
     <link rel="stylesheet" href='../../style/Blacksmith.css'>
 </head>
 <body>
-    <a href="../exit.php">EXIT</a>
-    <a href="map_select_zone.php">Back</a>
+    <a style="color:red;" href="../exit.php">EXIT</a>
+    <br><a style="color:red;" href="map_select_zone.php">Back</a>
 </body>
 </html>
