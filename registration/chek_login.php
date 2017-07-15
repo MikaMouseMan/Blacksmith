@@ -29,4 +29,5 @@
     }else{
         header('Location: login.php?err=Dont register yet or wrong login.');
     }
+    
 ?>
