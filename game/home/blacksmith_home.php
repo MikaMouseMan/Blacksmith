@@ -31,15 +31,16 @@
     Main menu
     <br>
     <br><?=$_GET['err'].$_GET['msg']?>
-    <br>
-    <a href="../exit.php">EXIT</a>
-    <a href="../map/map_select_zone.php">Back</a>
+    <br><a href="../exit.php">EXIT</a>
+    <br><a href="../map/map_select_zone.php">Back</a>
     <div>
         <br>Player: <?=$selected_user['user_name']?>
         <br>Start playing: <?=$selected_user['date_reg']?>
         <br>You register <?=(int)$days?> days ago.
+        
     </div>
     <div>
+       <a href="../player/player_stats.php"><img src="../../images/buttons/player.png"></a>
         <a href="../inventory/inventory.php"><img src="../../images/buttons/inventory.png"></a>
         <a href="../craft/craft.php"><img src="../../images/buttons/craft.png"></a>
         <!--<a href="../upgrade/upgrade_material.php"><img src="../../images/buttons/qestion.png"></a>-->
