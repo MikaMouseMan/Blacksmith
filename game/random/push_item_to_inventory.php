@@ -23,7 +23,7 @@
         
         mysql_query("UPDATE `$form_user` SET `item_count` = '$sum' WHERE `$form_user`.`cell_id` = '$temp_cell'");
         
-        exit(header('Location: ../home/main_menu.php?msg=item staked'));
+        exit(header('Location: ../home/blacksmith_home.php?msg=item staked'));
         
     }else{
         
