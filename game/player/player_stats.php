@@ -22,22 +22,27 @@ if($health['health']<$health['health_max']){
     
     if(($time_now-$curent_time)>300){
         $temp_health = $health['health'];
-        $temp_max_health = $health['health_max'];
+        $temp_max_health = $health['health_max']+($health['item_coef']*100);
         while(($time_now-$curent_time)>300){
 
             $curent_time += 300;
-            $temp_health += $temp_max_health/10;
+            $temp_health += $temp_max_health/25;
 
         }
     
         mysql_query("UPDATE `$form_user` SET `health` = '$temp_health', `item_count` = '$time_now' WHERE `$form_user`.`cell_id` = '1000'");
     }
     
-}else if($health['health']>=$health['health_max']){
+}
+
+if($health['health']>=$health['health_max']){
     $curent_time = time();
     $max = $health['health_max'];
     mysql_query("UPDATE `$form_user` SET `health` = '$max', `item_count` = '$curent_time' WHERE `$form_user`.`cell_id` = '1000'");
 }
+
+$answer = mysql_query("SELECT * FROM `$form_user` WHERE `cell_id` = '1000'");
+$health = mysql_fetch_array($answer);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,12 +52,13 @@ if($health['health']<$health['health_max']){
 </head>
 <body>
    <a href="../exit.php">EXIT</a>
+   <br><a href="../home/blacksmith_home.php">Back</a>
     <br>Player: <?=$selected_user['user_name']?>
     <br>Health: <?=$health['health']."/".$health['health_max']?>
     <br>
     <?
         if($health['health']<$health['health_max']){
-            echo "Time left to regen:".(300-(time() - $health['item_count']))." sec";
+            echo "Time left to regen:".(300-(time() - $curent_time))." sec";
         }
     ?>
 </body>
