@@ -12,7 +12,6 @@
    <br>
     <div align = "center">
         <a href="registration/login.php"><h1>LOG IN BLACKSMITH</h1></a>
-        <a href="test_map.php">test</a>
         <small>v.0.0.1</small>
     </div>
 </body>
