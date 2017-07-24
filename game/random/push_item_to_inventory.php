@@ -27,7 +27,7 @@
         
     }else{
         
-        $select = mysql_query("SELECT * FROM `$form_user` WHERE `item_count` = 0");
+        $select = mysql_query("SELECT * FROM `$form_user` WHERE `item_count` = 0 AND `cell_id` < 1000");
         $row = mysql_fetch_array($select);
         
         if(!$row){
