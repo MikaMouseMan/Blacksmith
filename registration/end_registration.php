@@ -49,7 +49,7 @@
         }
         
         //Create body slots
-        mysql_query("INSERT INTO `$form_name` (`cell_id`, `item_name`, `item_count`, `item_coef`, `item_type`, `item_structure`, `health`, `health_max`) VALUES ('1000', 'health', '', '1', '', '', '100', '100'), ('2001', '', '', '', 'armore_head', '', '', ''), ('2002', '', '', '', 'armore_chest', '', '', ''), ('2003', '', '', '', 'armore_legs', '', '', ''), ('2004', '', '', '', 'armore_hand', '', '', ''), ('2005', '', '', '', 'armore_foot', '', '', ''), ('2006', '', '', '', 'armore_belt', '', '', ''), ('2007', '', '', '', 'armore_back', '', '', ''), ('2100', '', '', '', 'left_hand', '', '', ''), ('2200', '', '', '', 'right_hand', '', '', ''), ('2300', '', '', '', 'two_hand', '', '', '')");
+        mysql_query("INSERT INTO `$form_name` (`cell_id`, `item_name`, `item_count`, `item_coef`, `item_type`, `item_structure`, `health`, `health_max`) VALUES ('1000', 'health', '', '1', '', '', '100', '100'),('1001', 'player coord', '', '', '', '', '10', '10') , ('2001', '', '', '', 'armore_head', '', '', ''), ('2002', '', '', '', 'armore_chest', '', '', ''), ('2003', '', '', '', 'armore_legs', '', '', ''), ('2004', '', '', '', 'armore_hand', '', '', ''), ('2005', '', '', '', 'armore_foot', '', '', ''), ('2006', '', '', '', 'armore_belt', '', '', ''), ('2007', '', '', '', 'armore_back', '', '', ''), ('2100', '', '', '', 'left_hand', '', '', ''), ('2200', '', '', '', 'right_hand', '', '', ''), ('2300', '', '', '', 'two_hand', '', '', '')");
         
         session_start();
         $_SESSION['user_name'] = $selected_user['user_name'];
