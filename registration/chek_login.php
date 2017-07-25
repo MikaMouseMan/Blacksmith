@@ -21,7 +21,7 @@
         if($password==$selected_user['password']){
             session_start();
             $_SESSION['user_name'] = $selected_user['user_name'];
-            header('Location: ../game/map/map_select_zone.php');
+            header('Location: ../game/map/simple_player_global_state.php');
             
         }else{
             header('Location: login.php?err=Wrong password.');
