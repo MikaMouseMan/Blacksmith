@@ -11,12 +11,9 @@ $form_user = "user_$user_name";
 $select = mysql_query("SELECT * FROM `$form_user` WHERE `cell_id` = '1001'");
 $player_coord = mysql_fetch_array($select);
 
-$select = mysql_query("SELECT * FROM `data_map` WHERE `x` = '$x' AND `y` = '$y'");
-$map_start_point = mysql_fetch_array($select);
-
-$r_main = $map_start_point['r'];
-$g_main = $map_start_point['g'];
-$b_main = $map_start_point['b'];
+$r_main = $_GET['r'];
+$g_main = $_GET['g'];
+$b_main = $_GET['b'];
 
 //global setting
 //
@@ -36,18 +33,17 @@ for($i = 0; $i < $image_size; $i++){
     }
 }
 
-$player_x = (int)(($player_coord['health']%1000000)/1000);
-$player_y = (int)(($player_coord['health_max']%1000000)/1000);
+$player_x = (int)($player_coord['health']%1000);
+$player_y = (int)($player_coord['health_max']%1000);
 
-if($x != (int)($player_coord['health']/1000000)){
-    $player_x = 101;    
+if($x != (int)(($player_coord['health']%1000000)/1000)){
+    $player_x = 101;
 }
-if($y != (int)($player_coord['health_max']/1000000)){        
+if($y != (int)(($player_coord['health_max']%1000000)/1000)){
     $player_y = 101;
 }
-    
 
-$map_seed = (int) $x.$y;
+$map_seed = (int) $y.$x.$y;
 
 srand($map_seed);
 
@@ -147,7 +143,6 @@ $mountain_count--;
     <meta charset = "UTF-8">
     <title>Blacksmith</title>
     <link rel="stylesheet" href="../../style/blacksmith.css">
-
 </head>
 
 <style>
@@ -157,7 +152,7 @@ $mountain_count--;
     }
 </style>
 
-<body align = "center">
+<body align = "center" >
 <a href="simple_player_global_state.php">to map</a>
 <div style = "font-size: 10px">
 <?
@@ -171,9 +166,9 @@ for($i = 0; $i < $image_size; $i++){
         $b = $image[$i][$j]['b'];
         
         if($j == $player_x && $i == $player_y){
-            echo "<a href = 'map_generator_10000.php?x=".$j."&y=".$i."&r=".$r."&g=".$g."&b=".$b."' style = 'animation: state_1 2s infinite'>&#8195</a>";
+            echo "<a style = 'animation: state_1 2s infinite'>&#8195</a>";
         }else{
-            echo "<a href = 'map_generator_10000.php?x=".$j."&y=".$i."&r=".$r."&g=".$g."&b=".$b."' style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#8195</a>";
+            echo "<a style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#8195</a>";
         }        
     }
     echo "<br>";
