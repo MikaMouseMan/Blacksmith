@@ -32,7 +32,7 @@
     <br>
     <br><?=$_GET['err'].$_GET['msg']?>
     <br><a href="../exit.php">EXIT</a>
-    <br><a href="../map/map_select_zone.php">Back</a>
+    <br><a href="../map/simple_player_global_state.php">Back</a>
     <div>
         <br>Player: <?=$selected_user['user_name']?>
         <br>Start playing: <?=$selected_user['date_reg']?>
