@@ -2,14 +2,14 @@
 session_start();
 include ('../../database/database.php');
 
-$x = $_GET['x'];
-$y = $_GET['y'];
-
 $user_name = $_SESSION['user_name'];
 $form_user = "user_$user_name";
 
 $select = mysql_query("SELECT * FROM `$form_user` WHERE `cell_id` = '1001'");
 $player_coord = mysql_fetch_array($select);
+
+$x = $_GET['x'];
+$y = $_GET['y'];
 
 $r_main = $_GET['r'];
 $g_main = $_GET['g'];
@@ -22,6 +22,8 @@ $mountain_count = 10;
 $sity_count = 3;
 $enemy_camp_count = 6;
 $image_size = 100;
+//if change map will change too default 5 10 3 6 100
+
 
 /////////////////////create and fill array base color
 for($i = 0; $i < $image_size; $i++){
@@ -36,14 +38,7 @@ for($i = 0; $i < $image_size; $i++){
 $player_x = (int)($player_coord['health']%1000);
 $player_y = (int)($player_coord['health_max']%1000);
 
-if($x != (int)(($player_coord['health']%1000000)/1000)){
-    $player_x = 101;
-}
-if($y != (int)(($player_coord['health_max']%1000000)/1000)){
-    $player_y = 101;
-}
-
-$map_seed = (int) $y.$x.$y;
+$map_seed = $y.$x.$x.$y;
 
 srand($map_seed);
 
@@ -58,6 +53,7 @@ if($r_main >= $g_main && $r_main >= $b_main){
 }else if($b_main >= $r_main && $b_main >= $g_main){
     $b_main = $mix_color;
 }else{echo "!";}
+
 while($mountain_count > 0){    
     
     $i = rand(0, $image_size-1);
@@ -135,14 +131,17 @@ while($mountain_count > 0){
 $mountain_count--;                     
     
 }
+
+$r_main = $_GET['r'];
+$g_main = $_GET['g'];
+$b_main = $_GET['b'];
 ?>
 
 <!DOCTYPE html>
 <html lang = "en">
 <head>
     <meta charset = "UTF-8">
-    <title>Blacksmith</title>
-    <link rel="stylesheet" href="../../style/blacksmith.css">
+    <title>Blacksmith</title>    
 </head>
 
 <style>
@@ -152,9 +151,14 @@ $mountain_count--;
     }
 </style>
 
-<body align = "center" >
+<body>
 <a href="simple_player_global_state.php">to map</a>
-<div style = "font-size: 10px">
+
+<div style = "display: inline"><a href="move_on_map.php?direction=left&x=<?=$x?>&y=<?=$y?>&r=<?=$r_main?>&g=<?=$g_main?>&b=<?=$b_main?>">left</a></div>
+<div style = "display: inline"><a href="move_on_map.php?direction=right&x=<?=$x?>&y=<?=$y?>&r=<?=$r_main?>&g=<?=$g_main?>&b=<?=$b_main?>">right</a> </div>
+<div style = "display: inline"><a href="move_on_map.php?direction=up&x=<?=$x?>&y=<?=$y?>&r=<?=$r_main?>&g=<?=$g_main?>&b=<?=$b_main?>">up</a> </div>
+<div style = "display: inline"><a href="move_on_map.php?direction=down&x=<?=$x?>&y=<?=$y?>&r=<?=$r_main?>&g=<?=$g_main?>&b=<?=$b_main?>">down</a> </div>
+<div>
 <?
 /////drawing sector
 

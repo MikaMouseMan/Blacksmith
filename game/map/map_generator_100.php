@@ -40,14 +40,14 @@ $player_x = (int)(($player_coord['health']%1000000)/1000);
 $player_y = (int)(($player_coord['health_max']%1000000)/1000);
 
 if($x != (int)($player_coord['health']/1000000)){
-    $player_x = 101;    
+    echo "Missing x!";
 }
-if($y != (int)($player_coord['health_max']/1000000)){        
-    $player_y = 101;
+if($y != (int)($player_coord['health_max']/1000000)){
+    echo "Missing y!";
 }
     
 
-$map_seed = (int) $x.$y;
+$map_seed = (int) $x.$y.$r_main.$g_main.$b_main;
 
 srand($map_seed);
 
@@ -146,8 +146,6 @@ $mountain_count--;
 <head>
     <meta charset = "UTF-8">
     <title>Blacksmith</title>
-    <link rel="stylesheet" href="../../style/blacksmith.css">
-
 </head>
 
 <style>
@@ -157,9 +155,9 @@ $mountain_count--;
     }
 </style>
 
-<body align = "center">
-<a href="simple_player_global_state.php">to map</a>
-<div style = "font-size: 10px">
+<body>
+<a href = "simple_player_global_state.php">to map</a>
+<div>
 <?
 /////drawing sector
 
@@ -173,7 +171,7 @@ for($i = 0; $i < $image_size; $i++){
         if($j == $player_x && $i == $player_y){
             echo "<a href = 'map_generator_10000.php?x=".$j."&y=".$i."&r=".$r."&g=".$g."&b=".$b."' style = 'animation: state_1 2s infinite'>&#8195</a>";
         }else{
-            echo "<a href = 'map_generator_10000.php?x=".$j."&y=".$i."&r=".$r."&g=".$g."&b=".$b."' style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#8195</a>";
+            echo "<a style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#8195</a>";
         }        
     }
     echo "<br>";

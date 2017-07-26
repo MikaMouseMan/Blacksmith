@@ -1,7 +1,7 @@
 <?php
 
 //constants
-define ("map_drow_size", 30);//map heigt & wind draw
+define ("map_drow_size", 100);//map heigt & wind draw
 define ("map_x_max", 512);//pixel map lenght
 define ("map_y_max", 512);//pixel map hight
 
@@ -15,6 +15,19 @@ $form_user = "user_$user_name";
 
 $select = mysql_query("SELECT * FROM `$form_user` WHERE `cell_id` = '1001'");
 $player_coord = mysql_fetch_array($select);
+
+if($player_coord['health'] < 0){
+    mysql_query("UPDATE `$form_user` SET `health` = '0' WHERE `$form_user`.`cell_id` = 1001;");
+}else if($player_coord['health'] > 512099099){
+    mysql_query("UPDATE `$form_user` SET `health` = '512099099' WHERE `$form_user`.`cell_id` = 1001;");
+}
+
+if($player_coord['health_max'] < 0){
+    mysql_query("UPDATE `$form_user` SET `health_max` = '0' WHERE `$form_user`.`cell_id` = 1001;");
+}else if($player_coord['health_max'] > 512099099){
+    mysql_query("UPDATE `$form_user` SET `health_max` = '512099099' WHERE `$form_user`.`cell_id` = 1001;");
+}
+
 
 $player_x = (int)($player_coord['health'] / 1000000);
 $player_y = (int)($player_coord['health_max'] / 1000000);
@@ -49,7 +62,6 @@ $select = mysql_query("SELECT * FROM `data_map` WHERE `x` BETWEEN '$x_min' AND '
 <head>
     <meta charset="UTF-8">
     <title>Blacksmith</title>
-    <link rel="stylesheet" href="../../style/blacksmith.css">
 </head>
 
 <style>
@@ -59,13 +71,13 @@ $select = mysql_query("SELECT * FROM `data_map` WHERE `x` BETWEEN '$x_min' AND '
     }
 </style>
 
-<body align = "center">
+<body>
     <div>
-    <a style="color:red;" href="../exit.php">EXIT</a>
-    <br><a style="color:red;" href="../home/blacksmith_home.php">Blacksmith home</a>
-    <br><a style="color:red;" href="simple_player_global_state.php">World map</a>
+    <a href="../exit.php">EXIT</a>
+    <br><a href="../home/blacksmith_home.php">Blacksmith home</a>
+    <br><a href="simple_player_global_state.php">World map</a>
     </div>
-    <div style = "font-size: 10px">
+    <div>
     <?
     while($point = mysql_fetch_array($select)){
 
@@ -76,7 +88,7 @@ $select = mysql_query("SELECT * FROM `data_map` WHERE `x` BETWEEN '$x_min' AND '
         if($point['x'] == $player_x && $point['y'] == $player_y){
             echo "<a href = 'map_generator_100.php?x=".$point['x']."&y=".$point['y']."' style='animation: state_1 2s infinite'>&#8195</a>";
         }else{
-            echo "<a href = 'map_generator_100.php?x=".$point['x']."&y=".$point['y']."' style='background-color: RGB(".$r.",".$g.",".$b.")'>&#8195</a>";
+            echo "<a style='background-color: RGB(".$r.",".$g.",".$b.")'>&#8195</a>";
         }
         if($point['x']>$x_max-1){
             echo "<br>";
