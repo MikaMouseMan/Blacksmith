@@ -23,23 +23,23 @@
         
         mysql_query("UPDATE `$form_user` SET `item_count` = '$sum' WHERE `$form_user`.`cell_id` = '$temp_cell'");
         
-        exit(header('Location: ../main_menu.php?msg=item staked'));
+        exit(header('Location: ../home/blacksmith_home.php?msg=item staked'));
         
     }else{
         
-        $select = mysql_query("SELECT * FROM `$form_user` WHERE `item_count` = 0");
+        $select = mysql_query("SELECT * FROM `$form_user` WHERE `item_count` = 0 AND `cell_id` < 1000");
         $row = mysql_fetch_array($select);
         
         if(!$row){
             
-            exit(header('Location: ../main_menu.php?err=inventory full item lost'));
+            exit(header('Location: ../home/blacksmith_home.php?err=inventory full item lost'));
         }
         
         $sum = $item_count+$row['item_count'];
         $temp_cell = $row['cell_id'];
         mysql_query("UPDATE `$form_user` SET `item_name` = '$item_name', `item_count` = '$sum', `item_coef` = '$item_coef', `item_type` = '$item_type', `item_structure` = '$item_structure' WHERE `$form_user`.`cell_id` = '$temp_cell'");
         
-        exit(header('Location: ../main_menu.php?msg=new item added'));
+        exit(header('Location: ../home/blacksmith_home.php?msg=new item added'));
     
     }
     

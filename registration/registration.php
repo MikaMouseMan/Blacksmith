@@ -1,9 +1,15 @@
 <?php
     
-   header('Location: login.php?err=Registration is close!')
+  // header('Location: login.php?err=Registration is close!')
+
+if(!isset($_GET['msg'])){
+    $_GET['msg']='';
+}
+if(!isset($_GET['err'])){
+        $_GET['err']='';
+}
 
 ?>
-
 <!doctype html>
 <html lang="en">
 <head>
