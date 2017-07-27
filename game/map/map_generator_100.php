@@ -2,8 +2,6 @@
 session_start();
 include ('../../database/database.php');
 
-$x = $_GET['x'];
-$y = $_GET['y'];
 
 $user_name = $_SESSION['user_name'];
 $form_user = "user_$user_name";
@@ -169,9 +167,9 @@ for($i = 0; $i < $image_size; $i++){
         $b = $image[$i][$j]['b'];
         
         if($j == $player_x && $i == $player_y){
-            echo "<a href = 'map_generator_10000.php?x=".$j."&y=".$i."&r=".$r."&g=".$g."&b=".$b."' style = 'animation: state_1 2s infinite'>&#8195</a>";
+            echo "<a href = 'map_generator_10000.php?r=".$r."&g=".$g."&b=".$b."' style = 'animation: state_1 2s infinite'><img src='../../images/player.png' height='14px' width='14px'></a>";
         }else{
-            echo "<a style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#8195</a>";
+            echo "<span style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#11036</span>";
         }        
     }
     echo "<br>";

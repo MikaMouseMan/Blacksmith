@@ -8,12 +8,16 @@ $form_user = "user_$user_name";
 $select = mysql_query("SELECT * FROM `$form_user` WHERE `cell_id` = '1001'");
 $player_coord = mysql_fetch_array($select);
 
-$x = $_GET['x'];
-$y = $_GET['y'];
+if(isset($_GET['r'])){
+$_SESSION['color_r'] = $_GET['r'];
+$_SESSION['color_g'] = $_GET['g'];
+$_SESSION['color_b'] = $_GET['b'];
+}
+$r_main = $_SESSION['color_r'];
+$g_main = $_SESSION['color_g'];
+$b_main = $_SESSION['color_b'];
 
-$r_main = $_GET['r'];
-$g_main = $_GET['g'];
-$b_main = $_GET['b'];
+/////////////////////////////////////////global setting
 
 //global setting
 //
@@ -132,9 +136,9 @@ $mountain_count--;
     
 }
 
-$r_main = $_GET['r'];
-$g_main = $_GET['g'];
-$b_main = $_GET['b'];
+$r_main = $_SESSION['color_r'];
+$g_main = $_SESSION['color_g'];
+$b_main = $_SESSION['color_b'];
 ?>
 
 <!DOCTYPE html>
@@ -154,11 +158,13 @@ $b_main = $_GET['b'];
 <body>
 <a href="simple_player_global_state.php">to map</a>
 
-<div style = "display: inline"><a href="move_on_map.php?direction=left&x=<?=$x?>&y=<?=$y?>&r=<?=$r_main?>&g=<?=$g_main?>&b=<?=$b_main?>">left</a></div>
-<div style = "display: inline"><a href="move_on_map.php?direction=right&x=<?=$x?>&y=<?=$y?>&r=<?=$r_main?>&g=<?=$g_main?>&b=<?=$b_main?>">right</a> </div>
-<div style = "display: inline"><a href="move_on_map.php?direction=up&x=<?=$x?>&y=<?=$y?>&r=<?=$r_main?>&g=<?=$g_main?>&b=<?=$b_main?>">up</a> </div>
-<div style = "display: inline"><a href="move_on_map.php?direction=down&x=<?=$x?>&y=<?=$y?>&r=<?=$r_main?>&g=<?=$g_main?>&b=<?=$b_main?>">down</a> </div>
-<div>
+<div style = "display: inline"><a href="move_on_map.php?direction=left">left</a></div>
+<div style = "display: inline"><a href="move_on_map.php?direction=right">right</a> </div>
+<div style = "display: inline"><a href="move_on_map.php?direction=up">up</a> </div>
+<div style = "display: inline"><a href="move_on_map.php?direction=down">down</a> </div>
+<a href="../build/build_menu.php">BUILD</a>
+<div style='line-height: 0.9'>
+<br>
 <?
 /////drawing sector
 

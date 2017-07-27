@@ -5,15 +5,8 @@ include ('../../database/database.php');
 $user_name = $_SESSION['user_name'];
 $form_user = "user_$user_name";
 
-$select = mysql_query("SELECT * FROM `$form_user` WHERE `cell_id` = '1001'");
-$player_coord = mysql_fetch_array($select);
-
-$x = $_GET['x'];
-$y = $_GET['y'];
-
-$r_main = $_GET['r'];
-$g_main = $_GET['g'];
-$b_main = $_GET['b'];
+$global_x = $_SESSION['x'];
+$global_y = $_SESSION['y'];
 
 $direction = $_GET['direction'];
 
@@ -100,6 +93,6 @@ if($direction == "left"){
     
 }
 
-exit(header("Location: map_generator_10000.php?x=$x&y=$y&r=$r_main&g=$g_main&b=$b_main"));
+exit(header("Location: map_generator_10000.php?move=$temp_x"));
 
 ?>
