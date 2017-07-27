@@ -1,7 +1,7 @@
 <?php
 
 //constants
-define ("map_drow_size", 100);//map heigt & wind draw
+define ("map_drow_size", 50);//map heigt & wind draw
 define ("map_x_max", 512);//pixel map lenght
 define ("map_y_max", 512);//pixel map hight
 
@@ -16,21 +16,27 @@ $form_user = "user_$user_name";
 $select = mysql_query("SELECT * FROM `$form_user` WHERE `cell_id` = '1001'");
 $player_coord = mysql_fetch_array($select);
 
-if($player_coord['health'] < 0){
+$_SESSION['x'] = $player_coord['health'];
+$_SESSION['y'] = $player_coord['health_max'];
+
+$global_x = $_SESSION['x'];
+$global_y = $_SESSION['y'];
+
+if($global_x < 0){
     mysql_query("UPDATE `$form_user` SET `health` = '0' WHERE `$form_user`.`cell_id` = 1001;");
-}else if($player_coord['health'] > 512099099){
+}else if($global_x > 512099099){
     mysql_query("UPDATE `$form_user` SET `health` = '512099099' WHERE `$form_user`.`cell_id` = 1001;");
 }
 
-if($player_coord['health_max'] < 0){
+if($global_y < 0){
     mysql_query("UPDATE `$form_user` SET `health_max` = '0' WHERE `$form_user`.`cell_id` = 1001;");
-}else if($player_coord['health_max'] > 512099099){
+}else if($global_y > 512099099){
     mysql_query("UPDATE `$form_user` SET `health_max` = '512099099' WHERE `$form_user`.`cell_id` = 1001;");
 }
 
 
-$player_x = (int)($player_coord['health'] / 1000000);
-$player_y = (int)($player_coord['health_max'] / 1000000);
+$player_x = (int)($global_x / 1000000);
+$player_y = (int)($global_y / 1000000);
 
 if($player_x < map_drow_size){
     $x_min = 0;
@@ -67,7 +73,7 @@ $select = mysql_query("SELECT * FROM `data_map` WHERE `x` BETWEEN '$x_min' AND '
 <style>
     @keyframes state_1{
       from { background-color: RGB(0,0,0);}
-      to  {background-color: RGB(255,255,255);}
+      to  { background-color: RGB(255,255,255);}
     }
 </style>
 
@@ -86,7 +92,7 @@ $select = mysql_query("SELECT * FROM `data_map` WHERE `x` BETWEEN '$x_min' AND '
         $b = $point['b'];
 
         if($point['x'] == $player_x && $point['y'] == $player_y){
-            echo "<a href = 'map_generator_100.php?x=".$point['x']."&y=".$point['y']."' style='animation: state_1 2s infinite'>&#8195</a>";
+            echo "<a href = 'map_generator_100.php' style='animation: state_1 2s infinite'><img src='../../images/player.png' height='14px' width='14px'></a>";
         }else{
             echo "<a style='background-color: RGB(".$r.",".$g.",".$b.")'>&#8195</a>";
         }
