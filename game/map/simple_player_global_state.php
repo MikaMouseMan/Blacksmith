@@ -77,13 +77,13 @@ $select = mysql_query("SELECT * FROM `data_map` WHERE `x` BETWEEN '$x_min' AND '
     }
 </style>
 
-<body>
+<body align = "center">
     <div>
     <a href="../exit.php">EXIT</a>
     <br><a href="../home/blacksmith_home.php">Blacksmith home</a>
     <br><a href="simple_player_global_state.php">World map</a>
     </div>
-    <div>
+    <div style='line-height: 0.9'>
     <?
     while($point = mysql_fetch_array($select)){
 
@@ -94,7 +94,7 @@ $select = mysql_query("SELECT * FROM `data_map` WHERE `x` BETWEEN '$x_min' AND '
         if($point['x'] == $player_x && $point['y'] == $player_y){
             echo "<a href = 'map_generator_100.php' style='animation: state_1 2s infinite'><img src='../../images/player.png' height='14px' width='14px'></a>";
         }else{
-            echo "<a style='background-color: RGB(".$r.",".$g.",".$b.")'>&#8195</a>";
+            echo "<a style='background-color: RGB(".$r.",".$g.",".$b.")'>&#11036</a>";
         }
         if($point['x']>$x_max-1){
             echo "<br>";
