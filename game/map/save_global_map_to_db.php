@@ -18,9 +18,10 @@ for($i = 0; $i < 512; $i++){
         $r = ($rgb >> 16) & 0xFF;
         $g = ($rgb >> 8) & 0xFF;
         $b = $rgb & 0xFF;
-        
+                
         $ji++;
         $values_string_this = "('".$ji."', '".$j."', '".$i."', '".$r."', '".$g."', '".$b."')";
+        
         if($values_string_old != ""){
             
             $values_string_new = $values_string_old.", ".$values_string_this;
