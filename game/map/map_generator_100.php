@@ -1,13 +1,18 @@
 <?php
+//constant
+define ("map_drow_size", 10);//map heigt & wind draw
+define ("map_scale_max", 100);//pixel map lenght
+
 session_start();
 include ('../../database/database.php');
 
 
-$user_name = $_SESSION['user_name'];
-$form_user = "user_$user_name";
+$global_x = $_SESSION['x'];
+$global_y = $_SESSION['y'];
 
-$select = mysql_query("SELECT * FROM `$form_user` WHERE `cell_id` = '1001'");
-$player_coord = mysql_fetch_array($select);
+//top coord
+$x = (int)($global_x/1000000);
+$y = (int)($global_y/1000000);
 
 $select = mysql_query("SELECT * FROM `data_map` WHERE `x` = '$x' AND `y` = '$y'");
 $map_start_point = mysql_fetch_array($select);
@@ -22,11 +27,10 @@ $mountain_max_hight = 5;
 $mountain_count = 10;
 $sity_count = 3;
 $enemy_camp_count = 6;
-$image_size = 100;
 
 /////////////////////create and fill array base color
-for($i = 0; $i < $image_size; $i++){
-    for($j = 0; $j < $image_size; $j++){
+for($i = 0; $i < map_scale_max; $i++){
+    for($j = 0; $j < map_scale_max; $j++){
         
         $image[$i][$j]['r']= $r_main;
         $image[$i][$j]['g']= $g_main;
@@ -34,13 +38,14 @@ for($i = 0; $i < $image_size; $i++){
     }
 }
 
-$player_x = (int)(($player_coord['health']%1000000)/1000);
-$player_y = (int)(($player_coord['health_max']%1000000)/1000);
+///////////player midle coord
+$player_x = (int)(($global_x%1000000)/1000);
+$player_y = (int)(($global_y%1000000)/1000);
 
-if($x != (int)($player_coord['health']/1000000)){
+if($x != (int)($global_x/1000000)){
     echo "Missing x!";
 }
-if($y != (int)($player_coord['health_max']/1000000)){
+if($y != (int)($global_y/1000000)){
     echo "Missing y!";
 }
     
@@ -62,9 +67,9 @@ if($r_main >= $g_main && $r_main >= $b_main){
 }else{echo "!";}
 while($mountain_count > 0){    
     
-    $i = rand(0, $image_size-1);
+    $i = rand(0, map_scale_max-1);
     srand($i);
-    $j = rand(0, $image_size-1);
+    $j = rand(0, map_scale_max-1);
     srand($j);
                          
     $first_circle = 377 * $mountain_max_hight;
@@ -84,17 +89,17 @@ while($mountain_count > 0){
             case 4: $j += 1;break;
         }
         
-        //check frame for x
+        //check frame for x out of range
         if($i < 0){
             $i = 0;
-        }else if($i > $image_size - 1){
-            $i = $image_size - 1;
+        }else if($i > map_scale_max - 1){
+            $i = map_scale_max - 1;
         }
-        //check frame for y
+        //check frame for y out of range
         if($j < 0){
             $j = 0;
-        }else if($j > $image_size - 1){
-            $j = $image_size - 1;
+        }else if($j > map_scale_max - 1){
+            $j = map_scale_max - 1;
         }
         
         $image[$i][$j]['r']= $r_main;
@@ -110,7 +115,7 @@ while($mountain_count > 0){
                 $image[$i - rand(1, $mountain_max_hight)][$j]['g']= $g_main;
                 $image[$i - rand(1, $mountain_max_hight)][$j]['b']= $b_main;      
             }
-        if(($i + rand(1, $mountain_max_hight)) < $image_size - 1){                    
+        if(($i + rand(1, $mountain_max_hight)) < map_scale_max - 1){                    
                 $image[$i + rand(1, $mountain_max_hight)][$j]['r']= $r_main;
                 $image[$i + rand(1, $mountain_max_hight)][$j]['g']= $g_main;
                 $image[$i + rand(1, $mountain_max_hight)][$j]['b']= $b_main;      
@@ -120,7 +125,7 @@ while($mountain_count > 0){
                 $image[$i][$j - rand(1, $mountain_max_hight)]['g']= $g_main;
                 $image[$i][$j - rand(1, $mountain_max_hight)]['b']= $b_main;      
             }
-        if(($j + rand(1, $mountain_max_hight)) < $image_size - 1){                    
+        if(($j + rand(1, $mountain_max_hight)) < map_scale_max - 1){                    
                 $image[$i][$j + rand(1, $mountain_max_hight)]['r']= $r_main;
                 $image[$i][$j + rand(1, $mountain_max_hight)]['g']= $g_main;
                 $image[$i][$j + rand(1, $mountain_max_hight)]['b']= $b_main;      
@@ -153,14 +158,38 @@ $mountain_count--;
     }
 </style>
 
-<body>
+<body align = "center">
 <a href = "simple_player_global_state.php">to map</a>
-<div>
+<div style='line-height: 0.9'>
 <?
 /////drawing sector
-
-for($i = 0; $i < $image_size; $i++){
-    for($j = 0; $j < $image_size; $j++){
+    
+    ////////////////////////////////////////////////////calk x/y min/max
+if($player_x - map_drow_size < 0){
+    $x_min = 0;
+}else{
+    $x_min = $player_x - map_drow_size;
+}
+if($player_x + map_drow_size > map_scale_max){
+    $x_max = map_scale_max;
+}else{
+    $x_max = $player_x + map_drow_size;
+}
+    
+if($player_y - map_drow_size < 0){
+    $y_min = 0;
+}else{
+    $y_min = $player_y - map_drow_size;
+}
+if($player_y + map_drow_size > map_scale_max){
+    $y_max = map_scale_max;
+}else{
+    $y_max = $player_y + map_drow_size;
+}
+   /////////////////////////////////////////////////////////
+    
+for($i = $y_min; $i < $y_max; $i++){
+    for($j = $x_min; $j < $x_max; $j++){
 
         $r = $image[$i][$j]['r'];
         $g = $image[$i][$j]['g'];

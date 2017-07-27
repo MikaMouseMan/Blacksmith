@@ -1,12 +1,20 @@
 <?php
+////////////////////////constant
+define ("map_drow_size", 10);//map heigt & wind draw
+define ("map_scale_max", 100);//pixel map lenght
+
 session_start();
+if(!$_SESSION['user_name']){
+    exit(header('Location: ../../index.php'));
+}
 include ('../../database/database.php');
 
-$user_name = $_SESSION['user_name'];
-$form_user = "user_$user_name";
+$global_x = $_SESSION['x'];
+$global_y = $_SESSION['y'];
 
-$select = mysql_query("SELECT * FROM `$form_user` WHERE `cell_id` = '1001'");
-$player_coord = mysql_fetch_array($select);
+//midle coord
+$x = ((int)(($global_x)/1000))%1000;
+$y = ((int)(($global_y)/1000))%1000;
 
 if(isset($_GET['r'])){
 $_SESSION['color_r'] = $_GET['r'];
@@ -19,19 +27,16 @@ $b_main = $_SESSION['color_b'];
 
 /////////////////////////////////////////global setting
 
-//global setting
-//
 $mountain_max_hight = 5;
 $mountain_count = 10;
 $sity_count = 3;
 $enemy_camp_count = 6;
-$image_size = 100;
 //if change map will change too default 5 10 3 6 100
 
 
 /////////////////////create and fill array base color
-for($i = 0; $i < $image_size; $i++){
-    for($j = 0; $j < $image_size; $j++){
+for($i = 0; $i < map_scale_max; $i++){
+    for($j = 0; $j < map_scale_max; $j++){
         
         $image[$i][$j]['r']= $r_main;
         $image[$i][$j]['g']= $g_main;
@@ -39,8 +44,8 @@ for($i = 0; $i < $image_size; $i++){
     }
 }
 
-$player_x = (int)($player_coord['health']%1000);
-$player_y = (int)($player_coord['health_max']%1000);
+$player_x = (int)($global_x % 1000);
+$player_y = (int)($global_y % 1000);
 
 $map_seed = $y.$x.$x.$y;
 
@@ -60,9 +65,9 @@ if($r_main >= $g_main && $r_main >= $b_main){
 
 while($mountain_count > 0){    
     
-    $i = rand(0, $image_size-1);
+    $i = rand(0, map_scale_max-1);
     srand($i);
-    $j = rand(0, $image_size-1);
+    $j = rand(0, map_scale_max-1);
     srand($j);
                          
     $first_circle = 377 * $mountain_max_hight;
@@ -85,14 +90,14 @@ while($mountain_count > 0){
         //check frame for x
         if($i < 0){
             $i = 0;
-        }else if($i > $image_size - 1){
-            $i = $image_size - 1;
+        }else if($i > map_scale_max - 1){
+            $i = map_scale_max - 1;
         }
         //check frame for y
         if($j < 0){
             $j = 0;
-        }else if($j > $image_size - 1){
-            $j = $image_size - 1;
+        }else if($j > map_scale_max - 1){
+            $j = map_scale_max - 1;
         }
         
         $image[$i][$j]['r']= $r_main;
@@ -108,7 +113,7 @@ while($mountain_count > 0){
                 $image[$i - rand(1, $mountain_max_hight)][$j]['g']= $g_main;
                 $image[$i - rand(1, $mountain_max_hight)][$j]['b']= $b_main;      
             }
-        if(($i + rand(1, $mountain_max_hight)) < $image_size - 1){                    
+        if(($i + rand(1, $mountain_max_hight)) < map_scale_max - 1){                    
                 $image[$i + rand(1, $mountain_max_hight)][$j]['r']= $r_main;
                 $image[$i + rand(1, $mountain_max_hight)][$j]['g']= $g_main;
                 $image[$i + rand(1, $mountain_max_hight)][$j]['b']= $b_main;      
@@ -118,7 +123,7 @@ while($mountain_count > 0){
                 $image[$i][$j - rand(1, $mountain_max_hight)]['g']= $g_main;
                 $image[$i][$j - rand(1, $mountain_max_hight)]['b']= $b_main;      
             }
-        if(($j + rand(1, $mountain_max_hight)) < $image_size - 1){                    
+        if(($j + rand(1, $mountain_max_hight)) < map_scale_max - 1){                    
                 $image[$i][$j + rand(1, $mountain_max_hight)]['r']= $r_main;
                 $image[$i][$j + rand(1, $mountain_max_hight)]['g']= $g_main;
                 $image[$i][$j + rand(1, $mountain_max_hight)]['b']= $b_main;      
@@ -155,7 +160,7 @@ $b_main = $_SESSION['color_b'];
     }
 </style>
 
-<body>
+<body align = "center">
 <a href="simple_player_global_state.php">to map</a>
 
 <div style = "display: inline"><a href="move_on_map.php?direction=left">left</a></div>
@@ -167,22 +172,73 @@ $b_main = $_SESSION['color_b'];
 <br>
 <?
 /////drawing sector
+    
+///////////////////////////////////////////////////calk x/y min/max for buildig found
+$x_min = ((int) ($global_x/1000)) * 1000;
+$x_max = ((int) ($global_x/1000)) * 1000 + 99;
+$y_min = ((int) ($global_y/1000)) * 1000;
+$y_max = ((int) ($global_y/1000)) * 1000 + 99;
 
-for($i = 0; $i < $image_size; $i++){
-    for($j = 0; $j < $image_size; $j++){
+$select = mysql_query("SELECT * FROM `data_buildings_on_map` WHERE `x` BETWEEN '$x_min' AND '$x_max' AND `y` BETWEEN  '$y_min' AND '$y_max'");
 
-        $r = $image[$i][$j]['r'];
-        $g = $image[$i][$j]['g'];
-        $b = $image[$i][$j]['b'];
-        
-        if($j == $player_x && $i == $player_y){
-            echo "<a style = 'animation: state_1 2s infinite'>&#8195</a>";
-        }else{
-            echo "<a style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#8195</a>";
-        }        
-    }
-    echo "<br>";
+//////////////////////////////////////////////////
+    
+    ////////////////////////////////////////////////////calk x/y min/max for draw map
+if($player_x - map_drow_size < 0){
+    $x_min = 0;
+}else{
+    $x_min = $player_x - map_drow_size;
 }
+if($player_x + map_drow_size > map_scale_max){
+    $x_max = map_scale_max;
+}else{
+    $x_max = $player_x + map_drow_size;
+}
+    
+if($player_y - map_drow_size < 0){
+    $y_min = 0;
+}else{
+    $y_min = $player_y - map_drow_size;
+}
+if($player_y + map_drow_size > map_scale_max){
+    $y_max = map_scale_max;
+}else{
+    $y_max = $player_y + map_drow_size;
+}
+   /////////////////////////////////////////////////////////drawing map
+    
+    while($point = mysql_fetch_array($select)){
+        $construction[$point['x']][$point['y']]=$point;        
+    }           
+
+    for($i = $y_min; $i < $y_max; $i++){
+        for($j = $x_min; $j < $x_max; $j++){       
+
+            if($j == $player_x && $i == $player_y){
+
+                //echo "<span style = 'animation: state_1 2s infinite'>&#8195</span>";
+                echo "<img src='../../images/player.png' height='14px' width='14px'>";
+
+            }else if(isset($construction[$j][$i])){
+                
+                    $r = $construction[$j][$i]['color'];
+                    $g = $construction[$j][$i]['color'];
+                    $b = $construction[$j][$i]['color'];
+                echo "<span style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#11036</span>";
+                
+            }else{
+                
+                    $r = $image[$i][$j]['r'];
+                    $g = $image[$i][$j]['g'];
+                    $b = $image[$i][$j]['b']; 
+                echo "<span style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#11036</span>";
+                
+            }            
+        }   
+        
+    echo "<br>";
+    }
+    
 ?>
 </div>
 </body>
