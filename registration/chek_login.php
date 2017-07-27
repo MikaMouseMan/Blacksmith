@@ -21,6 +21,7 @@
         if($password==$selected_user['password']){
             session_start();
             $_SESSION['user_name'] = $selected_user['user_name'];
+            $_SESSION['user_id'] = $selected_user['id'];
             header('Location: ../game/map/simple_player_global_state.php');
             
         }else{
