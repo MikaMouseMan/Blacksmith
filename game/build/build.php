@@ -14,11 +14,36 @@ $player_coord = mysql_fetch_array($select);
 $global_x = $player_coord['health'];
 $global_y = $player_coord['health_max'];
 
+if(isset($_POST['side'])){
+    
+    $side = $_POST['side'];
+    
+    if($side == "left"){
+
+        $global_x -= 1;  
+
+    }else if($side == "right"){
+
+        $global_x += 1;
+        
+    }else if($side == "up"){
+        
+        $global_y -= 1;
+
+    }else if($side == "down"){
+
+        $global_y += 1;
+
+    }else if($side == "midle"){
+        //all is fine
+    }
+}
+
 $select = mysql_query("SELECT * FROM `data_buildings_on_map` WHERE `x` = '$global_x' AND `y` = '$global_y'");
 $plase_coord = mysql_fetch_array($select);
 if(!$plase_coord){
     $new_id = $global_x.$global_y;
-    $new_name = $_GET['name'];
+    $new_name = $_POST['name'];
     $master_id = $_SESSION['user_id'];
     
     if($new_name == 'road'){
@@ -36,7 +61,7 @@ if(!$plase_coord){
     }
     
     mysql_query("INSERT INTO `data_buildings_on_map` (`id`, `x`, `y`, `name`, `health`, `health_max`, `master_id`, `color`) VALUES ('$new_id', '$global_x', '$global_y', '$new_name', '1', '1', '$master_id', '$color')");
-    exit(header('Location: build_menu.php?msg=buided'));
+    exit(header('Location: ../map/map_generator_10000.php?msg='.$new_name.' buided'));
 }else{
     exit(header('Location: build_menu.php?msg=alredy busy'));
 }

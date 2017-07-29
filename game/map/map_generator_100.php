@@ -1,6 +1,6 @@
 <?php
 //constant
-define ("map_drow_size", 10);//map heigt & wind draw
+define ("map_drow_size", 25);//map heigt & wind draw
 define ("map_scale_max", 100);//pixel map lenght
 
 session_start();
@@ -150,41 +150,33 @@ $mountain_count--;
     <meta charset = "UTF-8">
     <title>Blacksmith</title>
 </head>
-
-<style>
-    @keyframes state_1{
-      from { background-color: RGB(0,0,0);}
-      to  {background-color: RGB(255,255,255);}
-    }
-</style>
-
 <body align = "center">
-<a href = "simple_player_global_state.php">to map</a>
+<a href = "player_global_state.php">to map</a>
 <div style='line-height: 0.9'>
 <?
 /////drawing sector
     
     ////////////////////////////////////////////////////calk x/y min/max
-if($player_x - map_drow_size < 0){
+if((int)($player_x - map_drow_size/2) < 0){
     $x_min = 0;
-}else{
-    $x_min = $player_x - map_drow_size;
-}
-if($player_x + map_drow_size > map_scale_max){
+    $x_max = map_drow_size;
+}else if((int)($player_x + map_drow_size/2) > map_scale_max){
     $x_max = map_scale_max;
+    $x_min = $player_x - map_drow_size;
 }else{
-    $x_max = $player_x + map_drow_size;
+    $x_max = (int)($player_x + map_drow_size/2);
+    $x_min = (int)($player_x - map_drow_size/2);
 }
     
-if($player_y - map_drow_size < 0){
+if((int)($player_y - map_drow_size/2) < 0){
     $y_min = 0;
-}else{
-    $y_min = $player_y - map_drow_size;
-}
-if($player_y + map_drow_size > map_scale_max){
+    $y_max = map_drow_size;
+}else if((int)($player_y + map_drow_size/2) > map_scale_max){
     $y_max = map_scale_max;
+    $y_min = $player_y - map_drow_size;
 }else{
-    $y_max = $player_y + map_drow_size;
+    $y_max = (int)($player_y + map_drow_size/2);
+    $y_min = (int)($player_y - map_drow_size/2);
 }
    /////////////////////////////////////////////////////////
     
@@ -196,7 +188,7 @@ for($i = $y_min; $i < $y_max; $i++){
         $b = $image[$i][$j]['b'];
         
         if($j == $player_x && $i == $player_y){
-            echo "<a href = 'map_generator_10000.php?r=".$r."&g=".$g."&b=".$b."' style = 'animation: state_1 2s infinite'><img src='../../images/player.png' height='14px' width='14px'></a>";
+            echo "<a href = 'map_generator_10000.php?r=".$r."&g=".$g."&b=".$b."'><img src='../../images/player.png' height='14px' width='14px'></a>";
         }else{
             echo "<span style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#11036</span>";
         }        

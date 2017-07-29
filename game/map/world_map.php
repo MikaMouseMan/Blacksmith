@@ -16,10 +16,9 @@ $select = mysql_query("SELECT * FROM `data_map`");
 
 <body align = "center">    
     <div>
-    <a style="color:red;" href="../exit.php">EXIT</a>
-    <br><a style="color:red;" href="../home/blacksmith_home.php">Blacksmith home</a>
-    <br><a style="color:red;" href="simple_player_global_state.php">World map</a>
+    <a href="../exit.php">EXIT</a>
     </div>
+    <div style='line-height: 0.9'>
     <?
     while($point = mysql_fetch_array($select)){
 
@@ -27,7 +26,7 @@ $select = mysql_query("SELECT * FROM `data_map`");
         $g = $point['g'];
         $b = $point['b'];
         
-        echo "<a href = 'map_generator_100.php?x=".$point['x']."&y=".$point['y']."' style='background-color: RGB(".$r.",".$g.",".$b.")'>&#8195</a>";
+        echo "<span style='background-color: RGB(".$r.",".$g.",".$b.")'>&#11036</span>";
         
         if($point['x']==511){
             echo "<br>";
@@ -37,5 +36,6 @@ $select = mysql_query("SELECT * FROM `data_map`");
     
     
     ?>
+    </div>
 </body>
 </html>
