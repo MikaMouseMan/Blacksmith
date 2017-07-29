@@ -1,6 +1,3 @@
-<?php
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,12 +5,26 @@
     <title>Blacksmith</title>
 </head>
 <body>
-   <a href="../map/map_generator_10000.php">Back</a>
-    <a href="build.php?name=road">road</a>
-    <a href="build.php?name=floor">floor</a>
-    <a href="build.php?name=wall">wall</a>
-    <a href="build.php?name=door">door</a>
-    <a href="build.php?name=chest">chest</a>
-    <a href="">work structure</a>
+ <a href="../map/map_generator_10000.php">Back</a>
+ <br><br>
+  <form action="build.php" method = "post">
+      <?php
+          if(isset($_GET['side'])){
+
+              echo "<input type='hidden' name = 'side' value = '".$_GET['side']."'>";
+
+          }
+      ?>
+   
+    <select name="name">
+        <option selected desabled>Choise what build</option>
+        <option value="road">Road</option>
+        <option value="floor">Floor</option>
+        <option value="wall">Wall</option>
+        <option value="door">Door</option>
+        <option value="chest">Chest</option>
+    </select>
+    <input type="submit" value = "BUILD">
+  </form>
 </body>
 </html>
