@@ -150,14 +150,6 @@ $mountain_count--;
     <meta charset = "UTF-8">
     <title>Blacksmith</title>
 </head>
-
-<style>
-    @keyframes state_1{
-      from { background-color: RGB(0,0,0);}
-      to  {background-color: RGB(255,255,255);}
-    }
-</style>
-
 <body align = "center">
 <a href = "simple_player_global_state.php">to map</a>
 <div style='line-height: 0.9'>
@@ -196,7 +188,7 @@ for($i = $y_min; $i < $y_max; $i++){
         $b = $image[$i][$j]['b'];
         
         if($j == $player_x && $i == $player_y){
-            echo "<a href = 'map_generator_10000.php?r=".$r."&g=".$g."&b=".$b."' style = 'animation: state_1 2s infinite'><img src='../../images/player.png' height='14px' width='14px'></a>";
+            echo "<a href = 'map_generator_10000.php?r=".$r."&g=".$g."&b=".$b."'><img src='../../images/player.png' height='14px' width='14px'></a>";
         }else{
             echo "<span style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#11036</span>";
         }        

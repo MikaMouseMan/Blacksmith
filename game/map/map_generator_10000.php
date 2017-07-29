@@ -152,14 +152,6 @@ $b_main = $_SESSION['color_b'];
     <meta charset = "UTF-8">
     <title>Blacksmith</title>    
 </head>
-
-<style>
-    @keyframes state_1{
-      from { background-color: RGB(0,0,0);}
-      to  {background-color: RGB(255,255,255);}
-    }
-</style>
-
 <body align = "center">
 <a href="simple_player_global_state.php">to map</a>
 
@@ -215,8 +207,10 @@ if($player_y + map_drow_size > map_scale_max){
         for($j = $x_min; $j < $x_max; $j++){       
 
             if($j == $player_x && $i == $player_y){
-
-                //echo "<span style = 'animation: state_1 2s infinite'>&#8195</span>";
+                
+                $information = "X:".$player_x." Y:".$player_y;
+                
+                ////////////////draw player
                 echo "<img src='../../images/player.png' height='14px' width='14px'>";
 
             }else if(isset($construction[$j][$i])){
