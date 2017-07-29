@@ -140,10 +140,6 @@ while($mountain_count > 0){
 $mountain_count--;                     
     
 }
-
-$r_main = $_SESSION['color_r'];
-$g_main = $_SESSION['color_g'];
-$b_main = $_SESSION['color_b'];
 ?>
 
 <!DOCTYPE html>
@@ -153,13 +149,12 @@ $b_main = $_SESSION['color_b'];
     <title>Blacksmith</title>    
 </head>
 <body align = "center">
-<a href="simple_player_global_state.php">to map</a>
+<a href="player_global_state.php">to map</a>
 
-<div style = "display: inline"><a href="move_on_map.php?direction=left">left</a></div>
-<div style = "display: inline"><a href="move_on_map.php?direction=right">right</a> </div>
-<div style = "display: inline"><a href="move_on_map.php?direction=up">up</a> </div>
-<div style = "display: inline"><a href="move_on_map.php?direction=down">down</a> </div>
-<a href="../build/build_menu.php">BUILD</a>
+<div style = "display: inline"><a href="actions/move_on_map.php?direction=left">left</a></div>
+<div style = "display: inline"><a href="actions/move_on_map.php?direction=right">right</a> </div>
+<div style = "display: inline"><a href="actions/move_on_map.php?direction=up">up</a> </div>
+<div style = "display: inline"><a href="actions/move_on_map.php?direction=down">down</a> </div>
 <div style='line-height: 0.9'>
 <br>
 <?
@@ -176,28 +171,29 @@ $select = mysql_query("SELECT * FROM `data_buildings_on_map` WHERE `x` BETWEEN '
 //////////////////////////////////////////////////
     
     ////////////////////////////////////////////////////calk x/y min/max for draw map
-if($player_x - map_drow_size < 0){
+if((int)($player_x - map_drow_size/2) < 0){
     $x_min = 0;
-}else{
-    $x_min = $player_x - map_drow_size;
-}
-if($player_x + map_drow_size > map_scale_max){
+    $x_max = map_drow_size;
+}else if((int)($player_x + map_drow_size/2) > map_scale_max){
     $x_max = map_scale_max;
+    $x_min = $player_x - map_drow_size;
 }else{
-    $x_max = $player_x + map_drow_size;
+    $x_max = (int)($player_x + map_drow_size/2);
+    $x_min = (int)($player_x - map_drow_size/2);
 }
     
-if($player_y - map_drow_size < 0){
+if((int)($player_y - map_drow_size/2) < 0){
     $y_min = 0;
-}else{
-    $y_min = $player_y - map_drow_size;
-}
-if($player_y + map_drow_size > map_scale_max){
+    $y_max = map_drow_size;
+}else if((int)($player_y + map_drow_size/2) > map_scale_max){
     $y_max = map_scale_max;
+    $y_min = $player_y - map_drow_size;
 }else{
-    $y_max = $player_y + map_drow_size;
+    $y_max = (int)($player_y + map_drow_size/2);
+    $y_min = (int)($player_y - map_drow_size/2);
 }
    /////////////////////////////////////////////////////////drawing map
+    $information = "";//for print at and of map
     
     while($point = mysql_fetch_array($select)){
         $construction[$point['x']][$point['y']]=$point;        
@@ -214,26 +210,90 @@ if($player_y + map_drow_size > map_scale_max){
                 echo "<img src='../../images/player.png' height='14px' width='14px'>";
 
             }else if(isset($construction[$j][$i])){
-                
+                /////////////////draw construction
                     $r = $construction[$j][$i]['color'];
                     $g = $construction[$j][$i]['color'];
-                    $b = $construction[$j][$i]['color'];
-                echo "<span style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#11036</span>";
+                    $b = $construction[$j][$i]['color'];               
+                
+                /////////////if this construction niar player
+                if($j == $player_x-1 && $i == $player_y){
+                    
+                    echo "<a href = 'actions/action.php?side=left' style = 'background-color: RGB(".$r.", ".$g.", ".$b.")' title = '".$construction[$j][$i]['name']."'>&#11036</a>";
+                    
+                }else if($j == $player_x+1 && $i == $player_y){
+                    
+                    echo "<a href = 'actions/action.php?side=right' style = 'background-color: RGB(".$r.", ".$g.", ".$b.")' title = '".$construction[$j][$i]['name']."'>&#11036</a>";
+                    
+                }else if($j == $player_x && $i == $player_y-1){
+                    
+                    echo "<a href = 'actions/action.php?side=up' style = 'background-color: RGB(".$r.", ".$g.", ".$b.")' title = '".$construction[$j][$i]['name']."'>&#11036</a>";
+                    
+                }else if($j == $player_x && $i == $player_y+1){
+                    
+                    echo "<a href = 'actions/action.php?side=down' style = 'background-color: RGB(".$r.", ".$g.", ".$b.")' title = '".$construction[$j][$i]['name']."'>&#11036</a>";
+                    
+                }else{
+                    
+                    echo "<span style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#11036</span>";
+                }
                 
             }else{
-                
+                /////////////////draw terrain
                     $r = $image[$i][$j]['r'];
                     $g = $image[$i][$j]['g'];
-                    $b = $image[$i][$j]['b']; 
-                echo "<span style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#11036</span>";
+                    $b = $image[$i][$j]['b'];
                 
-            }            
+                /////////////if empty niar player
+                if($j == $player_x-1 && $i == $player_y){
+                    
+                    echo "<a href = '../build/build_menu.php?side=left' style = 'background-color: RGB(".$r.", ".$g.", ".$b.")' >&#11036</a>";
+                    
+                }else if($j == $player_x+1 && $i == $player_y){
+                    
+                    echo "<a href = '../build/build_menu.php?side=right' style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#11036</a>";
+                    
+                }else if($j == $player_x && $i == $player_y-1){
+                    
+                    echo "<a href = '../build/build_menu.php?side=up' style = 'background-color: RGB(".$r.", ".$g.", ".$b.")' >&#11036</a>";
+                    
+                }else if($j == $player_x && $i == $player_y+1){
+                    
+                    echo "<a href = '../build/build_menu.php?side=down' style = 'background-color: RGB(".$r.", ".$g.", ".$b.")' >&#11036</a>";
+                    
+                }else{
+                    
+                    echo "<span style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#11036</span>";
+                }
+                
+            }      
+            
+            ///////////////information about construction under player
+            if($j == $player_x && $i == $player_y){
+                    
+                if(isset($construction[$j][$i])){
+                    $temp_id = $construction[$j][$i]['master_id'];
+                    $select = mysql_query("SELECT * FROM `reg_users` WHERE `id` = '$temp_id'");
+                    $temp_name = mysql_fetch_array($select);
+                    
+                    $information .= "<br>Construction: ".$construction[$j][$i]['name']."<br>Builder: ".$temp_name['user_name']."<br><a href = 'actions/action.php?side=midle'>Actions</a>";
+                }else{
+                    $information .="<br><a href='../build/build_menu.php'>BUILD</a>";
+                }
+            }
         }   
         
     echo "<br>";
     }
     
 ?>
+</div>
+<div>
+<?
+    echo $information;
+    
+    if(isset($_GET['msg']))
+        echo "<br>".$_GET['msg'];
+    ?>
 </div>
 </body>
 </html>
