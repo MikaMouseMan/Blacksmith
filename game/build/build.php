@@ -45,20 +45,7 @@ if(!$plase_coord){
     $new_id = $global_x.$global_y;
     $new_name = $_POST['name'];
     $master_id = $_SESSION['user_id'];
-    
-    if($new_name == 'road'){
-        $color = 200;
-    }else if($new_name == 'floor'){
-        $color = 250;
-    }else if($new_name == 'wall'){
-        $color = 50;
-    }else if($new_name == 'door'){
-        $color = 160;
-    }else if($new_name == 'chest'){
-        $color = 225;
-    }else{
-        $color = 0;
-    }
+    $color = "";
     
     mysql_query("INSERT INTO `data_buildings_on_map` (`id`, `x`, `y`, `name`, `health`, `health_max`, `master_id`, `color`) VALUES ('$new_id', '$global_x', '$global_y', '$new_name', '1', '1', '$master_id', '$color')");
     exit(header('Location: ../map/map_generator_10000.php?msg='.$new_name.' buided'));
