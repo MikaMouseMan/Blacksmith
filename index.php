@@ -15,7 +15,7 @@
         <small>v.0.0.1</small>
     </div>
     <div>
-    <small>26214400000000 block count</small>
+        <small>26214400000000 block count</small>
     </div>
 </body>
 </html>
