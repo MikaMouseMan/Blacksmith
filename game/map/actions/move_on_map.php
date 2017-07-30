@@ -1,6 +1,19 @@
 <?php
 session_start();
+if(!$_SESSION['user_name']){
+    exit(header('Location: ../../index.php'));
+}
+
+
+//////////////////check busy
+if(!(($_SESSION['last_action'] + $_SESSION['busy_time']) < time())){
+    $left = (time() - $_SESSION['last_action'] - $_SESSION['busy_time']) * (-1);
+    exit(header("Location: ../map_generator_10000.php?msg=Not ready ".$left." sec left."));
+}
+
 include ('../../../database/database.php');
+
+$_SESSION['busy_time'] = 0;////drop busy if can
 
 $user_name = $_SESSION['user_name'];
 $form_user = "user_$user_name";
@@ -24,7 +37,9 @@ $y_max = $global_y+1;
 
 $select = mysql_query("SELECT * FROM `data_buildings_on_map` WHERE `x` BETWEEN '$x_min' AND '$x_max' AND `y` BETWEEN '$y_min' AND '$y_max'");
 while($point = mysql_fetch_array($select)){
-    $construction[$point['x']][$point['y']] = $point;
+    $temp_x = $point['x'] % 1000;
+    $temp_y = $point['y'] % 1000;
+    $construction[$temp_x][$temp_y] = $point;
 }
 /////////////////////
 
@@ -42,12 +57,29 @@ if($direction == "left"){
     $y_coef = 1;
 }
 
+$_SESSION['busy_time'] += 3;
+
 //////////////colision check
 if(isset($construction[$player_x + $x_coef][$player_y + $y_coef])){
     if($construction[$player_x + $x_coef][$player_y + $y_coef]['name']=="wall"){
         exit(header("Location: ../map_generator_10000.php?msg=Cant go ".$direction.". Wall."));
+    }else if($construction[$player_x + $x_coef][$player_y + $y_coef]['name']=="road"){
+        $_SESSION['busy_time'] -= 1;
+    }else if($construction[$player_x + $x_coef][$player_y + $y_coef]['name']=="door"){
+        if(!isset($_GET['pass'])){ 
+            $door_id = $construction[$player_x + $x_coef][$player_y + $y_coef]['id'];
+            exit(header("Location: door_action.php?x_coef=".$x_coef."&y_coef=".$y_coef."&direction=".$direction));
+        }else{            
+            if($_GET['pass'] == "denaid"){
+                $_SESSION['busy_time'] += 3;
+                exit(header("Location: ../map_generator_10000.php?msg=Wrong password"));
+            }
+        }
     }
 }
+$_SESSION['last_action'] = time();
+
+
 
 $temp_x = $global_x;
 $temp_y = $global_y;
