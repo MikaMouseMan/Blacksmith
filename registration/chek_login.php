@@ -22,7 +22,7 @@
             session_start();
             $_SESSION['user_name'] = $selected_user['user_name'];
             $_SESSION['user_id'] = $selected_user['id'];
-            header('Location: ../game/map/simple_player_global_state.php');
+            header('Location: ../game/map/player_global_state.php');
             
         }else{
             header('Location: login.php?err=Wrong password.');
