@@ -17,47 +17,31 @@ if($side == "left"){
     $x = $global_x - 1;
     $y = $global_y;
     
-    $select = mysql_query("SELECT * FROM `data_buildings_on_map` WHERE `x` = '$x' AND `y` = '$y'");
-    $point = mysql_fetch_array($select);
-    
-    
 }else if($side == "right"){
     
     $x = $global_x + 1;
     $y = $global_y;
-    
-    $select = mysql_query("SELECT * FROM `data_buildings_on_map` WHERE `x` = '$x' AND `y` = '$y'");
-    $point = mysql_fetch_array($select);
-    
     
 }else if($side == "up"){
     
     $x = $global_x;
     $y = $global_y - 1;
     
-    $select = mysql_query("SELECT * FROM `data_buildings_on_map` WHERE `x` = '$x' AND `y` = '$y'");
-    $point = mysql_fetch_array($select);
-    
-    
 }else if($side == "down"){
     
     $x = $global_x;
     $y = $global_y + 1;
-    
-    $select = mysql_query("SELECT * FROM `data_buildings_on_map` WHERE `x` = '$x' AND `y` = '$y'");
-    $point = mysql_fetch_array($select);
-    
     
 }else if($side == "midle"){
     
     $x = $global_x;
     $y = $global_y;
     
-    $select = mysql_query("SELECT * FROM `data_buildings_on_map` WHERE `x` = '$x' AND `y` = '$y'");
-    $point = mysql_fetch_array($select);
-    
-    
 }
+
+$select = mysql_query("SELECT * FROM `data_buildings_on_map` WHERE `x` = '$x' AND `y` = '$y'");
+$point = mysql_fetch_array($select);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,7 +51,8 @@ if($side == "left"){
 </head>
 <body>
     <a href="../map_generator_10000.php">BACK</a>
-    <br><br>
+    <br>
+    <br>    
     <div>        
         <a href="../../build/build_menu.php">BUILD</a>
     </div>
