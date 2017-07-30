@@ -1,3 +1,8 @@
+<?php
+if(!isset($_GET['msg'])){
+    $msg = "";
+}else $msg = $_GET['msg'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,5 +31,8 @@
     </select>
     <input type="submit" value = "BUILD">
   </form>
+  <br>
+  <br>
+  <br><?=$msg?>
 </body>
 </html>
