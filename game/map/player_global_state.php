@@ -1,13 +1,18 @@
 <?php
 
 //constants
-define ("map_drow_size", 50);//map heigt & wind draw
-define ("map_x_max", 512);//pixel map lenght
-define ("map_y_max", 512);//pixel map hight
+define ("map_drow_size", 20);//map heigt & wind draw
+
+$size = getimagesize ("../../database/map_core.png");
+$map_x_max = $size[0];
+$map_y_max = $size[1];
 
 session_start();
 if(!$_SESSION['user_name']){
     exit(header('Location: ../../index.php'));
+}
+if($_SESSION['user_id'] == 1){
+    echo "<a href='../../database/api.php'>ADMIN</a>";
 }
 include("../../database/database.php");
 $user_name = $_SESSION['user_name'];
@@ -38,34 +43,39 @@ if($global_y < 0){
     $_SESSION['y'] = 512099099;
 }
 
+
 $global_x = $_SESSION['x'];
 $global_y = $_SESSION['y'];
 
 $player_x = (int)($global_x / 1000000);
 $player_y = (int)($global_y / 1000000);
 
+
+////////////////x draw diapozone
 if((int)($player_x - map_drow_size/2) < 0){
     $x_min = 0;
     $x_max = map_drow_size;
-}else if((int)($player_x + map_drow_size/2) > map_scale_max){
-    $x_max = map_scale_max;
-    $x_min = $player_x - map_drow_size;
+}else if((int)($player_x + map_drow_size/2) > $map_x_max){
+    $x_min = $map_x_max - map_drow_size;
+    $x_max = $map_x_max;
 }else{
-    $x_max = (int)($player_x + map_drow_size/2);
     $x_min = (int)($player_x - map_drow_size/2);
+    $x_max = (int)($player_x + map_drow_size/2);
 }
     
+////////////////y draw diapozone
 if((int)($player_y - map_drow_size/2) < 0){
     $y_min = 0;
     $y_max = map_drow_size;
-}else if((int)($player_y + map_drow_size/2) > map_scale_max){
-    $y_max = map_scale_max;
-    $y_min = $player_y - map_drow_size;
+}else if((int)($player_y + map_drow_size/2) > $map_y_max){
+    $y_min = $map_y_max - map_drow_size;
+    $y_max = $map_y_max;
 }else{
-    $y_max = (int)($player_y + map_drow_size/2);
     $y_min = (int)($player_y - map_drow_size/2);
+    $y_max = (int)($player_y + map_drow_size/2);
 }
 
+////////////////////select from DB to memory all drawing diapozone
 $select = mysql_query("SELECT * FROM `data_map` WHERE `x` BETWEEN '$x_min' AND '$x_max' AND `y` BETWEEN '$y_min' AND '$y_max'");
 
 ?>
@@ -80,18 +90,99 @@ $select = mysql_query("SELECT * FROM `data_map` WHERE `x` BETWEEN '$x_min' AND '
     <a href="../exit.php">EXIT</a>
     <br><a href="../home/blacksmith_home.php">Blacksmith home</a>
     </div>
-    <div style='line-height: 0.9'>
+    <div style='line-height: 0.7'>
     <?
+    //////////////////drawing map
     while($point = mysql_fetch_array($select)){
 
         $r = $point['r'];
         $g = $point['g'];
-        $b = $point['b'];
-
+        $b = $point['b'];                
+            
+        $image_point = "error";
+        
+        if($r == 0){
+            if($g == 0){
+                if($b == 0){
+                    $image_point = "error";
+                    
+                }else if($b > 170){              
+                    $image_point = "smal_water"; //////////////blue pure   
+                    
+                }else if($b > 85 && $b < 171){
+                    $image_point = "water";//////////////blue pure 
+                    
+                }else if($b < 86){
+                    $image_point = "deep_water";//////////////blue pure 
+                }
+                
+            }else if($g > 170){
+                if($b == 0){
+                    $image_point = "flat"; //////////////green pure                               
+                }
+                
+            }else if($g > 85 && $g < 171){
+                if($b == 0){
+                    $image_point = "grass";//////////////green pure
+                }
+                
+            }else if($g < 86){
+                if($b == 0){    
+                    $image_point = "hils";//////////////green pure
+                }
+            }
+            
+        }else if($r > 170){ 
+            if($g == 0){
+                if($b == 0){
+                    $image_point = "cold_lava"; //////////////red pure                                
+                }
+                
+            }else if($g > 170){
+                if($b == 0){
+                    $image_point = "lite_sand"; //////////////yelloy pure 
+                    
+                }else if($b > 170){
+                    $image_point = "low_mountain"; //////////////gray pure                               
+                }
+            }
+        }else if($r > 85 && $b < 171){
+            
+            if($g == 0){
+                if($b == 0){
+                    $image_point = "lava";//////////////red pure 
+                }
+                
+            }else if($g > 85 && $g < 171){
+                
+                if($b == 0){
+                    $image_point = "sand";//////////////yelloy pure
+                    
+                }else if($b > 85 && $b < 171){
+                    $image_point = "mountain"; //////////////gray pure                               
+                }
+            }            
+        }else if($r < 86){
+            
+            if($g == 0){
+                if($b == 0){
+                    $image_point = "hot_lava";//////////////red pure 
+                }
+                
+            }else if($g < 86){
+                if($b == 0){    
+                    $image_point = "hard_sand";//////////////yelloy pure
+                    
+                }else if($b < 86){
+                    $image_point = "high_mountain"; //////////////gray pure                               
+                }
+            }
+        }
+        
         if($point['x'] == $player_x && $point['y'] == $player_y){
             echo "<a href = 'map_generator_100.php'><img src='../../images/player.png' height='14px' width='14px'></a>";
         }else{
-            echo "<a style='background-color: RGB(".$r.",".$g.",".$b.")'>&#11036</a>";
+            echo "<img src='../../images/map/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'>";
         }
         if($point['x']>$x_max-1){
             echo "<br>";

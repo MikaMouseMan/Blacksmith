@@ -1,6 +1,7 @@
 <?php
 //constant
-define ("map_drow_size", 25);//map heigt & wind draw
+define ("color_const", 85);// 255/3
+define ("map_drow_size", 20);//map heigt & wind draw
 define ("map_scale_max", 100);//pixel map lenght
 
 session_start();
@@ -56,29 +57,34 @@ srand($map_seed);
 
 ///////////////////////////////////////////MOUNTAIN generation
 
-$mix_color = (int)(($r_main + $g_main + $b_main)/4);
+////////////////////////////////higter/deeper color
+$r_main -= color_const;
+if($r_main < 0){
+    $r_main = 0;
+}
+$g_main -= color_const;
+if($g_main < 0){
+    $g_main = 0;
+}
+$b_main -= color_const;
+if($b_main < 0){
+    $b_main = 0;
+}
 
-if($r_main >= $g_main && $r_main >= $b_main){
-    $r_main = $mix_color;
-}else if($g_main >= $r_main && $g_main >= $b_main){
-    $g_main = $mix_color;
-}else if($b_main >= $r_main && $b_main >= $g_main){
-    $b_main = $mix_color;
-}else{echo "!";}
 while($mountain_count > 0){    
     
-    $i = rand(0, map_scale_max-1);
+    $i = rand(0, map_scale_max - 1);
     srand($i);
-    $j = rand(0, map_scale_max-1);
+    $j = rand(0, map_scale_max - 1);
     srand($j);
                          
     $first_circle = 377 * $mountain_max_hight;
                 
-    $image[$i][$j]['r']= $r_main;
-    $image[$i][$j]['g']= $g_main;
-    $image[$i][$j]['b']= $b_main;
+    $image[$i][$j]['r'] = $r_main;
+    $image[$i][$j]['g'] = $g_main;
+    $image[$i][$j]['b'] = $b_main;
     
-    while($first_circle>0){
+    while($first_circle > 0){
         
         $direction = rand(1,4);
         
@@ -152,7 +158,7 @@ $mountain_count--;
 </head>
 <body align = "center">
 <a href = "player_global_state.php">to map</a>
-<div style='line-height: 0.9'>
+<div style='line-height: 0.7'>
 <?
 /////drawing sector
     
@@ -161,22 +167,22 @@ if((int)($player_x - map_drow_size/2) < 0){
     $x_min = 0;
     $x_max = map_drow_size;
 }else if((int)($player_x + map_drow_size/2) > map_scale_max){
+    $x_min = map_scale_max - map_drow_size;
     $x_max = map_scale_max;
-    $x_min = $player_x - map_drow_size;
 }else{
-    $x_max = (int)($player_x + map_drow_size/2);
     $x_min = (int)($player_x - map_drow_size/2);
+    $x_max = (int)($player_x + map_drow_size/2);
 }
     
 if((int)($player_y - map_drow_size/2) < 0){
     $y_min = 0;
     $y_max = map_drow_size;
 }else if((int)($player_y + map_drow_size/2) > map_scale_max){
+    $y_min = map_scale_max - map_drow_size;
     $y_max = map_scale_max;
-    $y_min = $player_y - map_drow_size;
 }else{
-    $y_max = (int)($player_y + map_drow_size/2);
     $y_min = (int)($player_y - map_drow_size/2);
+    $y_max = (int)($player_y + map_drow_size/2);
 }
    /////////////////////////////////////////////////////////
     
@@ -187,10 +193,91 @@ for($i = $y_min; $i < $y_max; $i++){
         $g = $image[$i][$j]['g'];
         $b = $image[$i][$j]['b'];
         
+        $image_point = "error";
+        
+        if($r == 0){
+            if($g == 0){
+                if($b == 0){
+                    $image_point = "error";
+                    
+                }else if($b > 170){              
+                    $image_point = "smal_water"; //////////////blue pure   
+                    
+                }else if($b > 85 && $b < 171){
+                    $image_point = "water";//////////////blue pure 
+                    
+                }else if($b < 86){
+                    $image_point = "deep_water";//////////////blue pure 
+                }
+                
+            }else if($g > 170){
+                if($b == 0){
+                    $image_point = "flat"; //////////////green pure                               
+                }
+                
+            }else if($g > 85 && $g < 171){
+                if($b == 0){
+                    $image_point = "grass";//////////////green pure
+                }
+                
+            }else if($g < 86){
+                if($b == 0){    
+                    $image_point = "hils";//////////////green pure
+                }
+            }
+            
+        }else if($r > 170){ 
+            if($g == 0){
+                if($b == 0){
+                    $image_point = "cold_lava"; //////////////red pure                                
+                }
+                
+            }else if($g > 170){
+                if($b == 0){
+                    $image_point = "lite_sand"; //////////////yelloy pure 
+                    
+                }else if($b > 170){
+                    $image_point = "low_mountain"; //////////////gray pure                               
+                }
+            }
+        }else if($r > 85 && $b < 171){
+            
+            if($g == 0){
+                if($b == 0){
+                    $image_point = "lava";//////////////red pure 
+                }
+                
+            }else if($g > 85 && $g < 171){
+                
+                if($b == 0){
+                    $image_point = "sand";//////////////yelloy pure
+                    
+                }else if($b > 85 && $b < 171){
+                    $image_point = "mountain"; //////////////gray pure                               
+                }
+            }            
+        }else if($r < 86){
+            
+            if($g == 0){
+                if($b == 0){
+                    $image_point = "hot_lava";//////////////red pure 
+                }
+                
+            }else if($g < 86){
+                if($b == 0){    
+                    $image_point = "hard_sand";//////////////yelloy pure
+                    
+                }else if($b < 86){
+                    $image_point = "high_mountain"; //////////////gray pure                               
+                }
+            }
+        }
+        
+        
         if($j == $player_x && $i == $player_y){
             echo "<a href = 'map_generator_10000.php?r=".$r."&g=".$g."&b=".$b."'><img src='../../images/player.png' height='14px' width='14px'></a>";
         }else{
-            echo "<span style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#11036</span>";
+            echo "<img src='../../images/map/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'>";
         }        
     }
     echo "<br>";

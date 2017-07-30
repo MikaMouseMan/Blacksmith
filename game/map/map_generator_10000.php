@@ -1,5 +1,6 @@
 <?php
 ////////////////////////constant
+define ("color_const", 85);// 255/3
 define ("map_drow_size", 10);//map heigt & wind draw
 define ("map_scale_max", 100);//pixel map lenght
 
@@ -15,6 +16,12 @@ $global_y = $_SESSION['y'];
 //midle coord
 $x = ((int)(($global_x)/1000))%1000;
 $y = ((int)(($global_y)/1000))%1000;
+
+if(!isset($_GET['msg'])){
+    $msg = "";
+}else{
+    $msg = $_GET['msg'];
+}
 
 if(isset($_GET['r'])){
 $_SESSION['color_r'] = $_GET['r'];
@@ -38,9 +45,9 @@ $enemy_camp_count = 6;
 for($i = 0; $i < map_scale_max; $i++){
     for($j = 0; $j < map_scale_max; $j++){
         
-        $image[$i][$j]['r']= $r_main;
-        $image[$i][$j]['g']= $g_main;
-        $image[$i][$j]['b']= $b_main;
+        $image[$j][$i]['r']= $r_main;
+        $image[$j][$i]['g']= $g_main;
+        $image[$j][$i]['b']= $b_main;
     }
 }
 
@@ -53,15 +60,18 @@ srand($map_seed);
 
 ///////////////////////////////////////////MOUNTAIN generation
 
-$mix_color = (int)(($r_main + $g_main + $b_main)/4);
-
-if($r_main >= $g_main && $r_main >= $b_main){
-    $r_main = $mix_color;
-}else if($g_main >= $r_main && $g_main >= $b_main){
-    $g_main = $mix_color;
-}else if($b_main >= $r_main && $b_main >= $g_main){
-    $b_main = $mix_color;
-}else{echo "!";}
+$r_main -= color_const;
+if($r_main < 0){
+    $r_main = 0;
+}
+$g_main -= color_const;
+if($g_main < 0){
+    $g_main = 0;
+}
+$b_main -= color_const;
+if($b_main < 0){
+    $b_main = 0;
+}
 
 while($mountain_count > 0){    
     
@@ -72,65 +82,65 @@ while($mountain_count > 0){
                          
     $first_circle = 377 * $mountain_max_hight;
                 
-    $image[$i][$j]['r']= $r_main;
-    $image[$i][$j]['g']= $g_main;
-    $image[$i][$j]['b']= $b_main;
+    $image[$j][$i]['r']= $r_main;
+    $image[$j][$i]['g']= $g_main;
+    $image[$j][$i]['b']= $b_main;
     
     while($first_circle>0){
         
         $direction = rand(1,4);
         
         switch($direction){
-            case 1: $i -= 1; break;
-            case 2: $i += 1;break;
-            case 3: $j -= 1;break;
-            case 4: $j += 1;break;
+            case 1: $j -= 1; break;
+            case 2: $j += 1;break;
+            case 3: $i -= 1;break;
+            case 4: $i += 1;break;
         }
         
         //check frame for x
-        if($i < 0){
-            $i = 0;
-        }else if($i > map_scale_max - 1){
-            $i = map_scale_max - 1;
-        }
-        //check frame for y
         if($j < 0){
             $j = 0;
         }else if($j > map_scale_max - 1){
             $j = map_scale_max - 1;
         }
+        //check frame for y
+        if($i < 0){
+            $i = 0;
+        }else if($i > map_scale_max - 1){
+            $i = map_scale_max - 1;
+        }
         
-        $image[$i][$j]['r']= $r_main;
-        $image[$i][$j]['g']= $g_main;
-        $image[$i][$j]['b']= $b_main;  
+        $image[$j][$i]['r']= $r_main;
+        $image[$j][$i]['g']= $g_main;
+        $image[$j][$i]['b']= $b_main;  
         
         srand(rand($i, $j * 1000));
         
         
             //make stronger 
         if(($i - rand(1, $mountain_max_hight)) > 0){                    
-                $image[$i - rand(1, $mountain_max_hight)][$j]['r']= $r_main;
-                $image[$i - rand(1, $mountain_max_hight)][$j]['g']= $g_main;
-                $image[$i - rand(1, $mountain_max_hight)][$j]['b']= $b_main;      
+                $image[$j - rand(1, $mountain_max_hight)][$i]['r']= $r_main;
+                $image[$j - rand(1, $mountain_max_hight)][$i]['g']= $g_main;
+                $image[$j - rand(1, $mountain_max_hight)][$i]['b']= $b_main;      
             }
         if(($i + rand(1, $mountain_max_hight)) < map_scale_max - 1){                    
-                $image[$i + rand(1, $mountain_max_hight)][$j]['r']= $r_main;
-                $image[$i + rand(1, $mountain_max_hight)][$j]['g']= $g_main;
-                $image[$i + rand(1, $mountain_max_hight)][$j]['b']= $b_main;      
+                $image[$j + rand(1, $mountain_max_hight)][$i]['r']= $r_main;
+                $image[$j + rand(1, $mountain_max_hight)][$i]['g']= $g_main;
+                $image[$j + rand(1, $mountain_max_hight)][$i]['b']= $b_main;      
             }
         if(($j - rand(1, $mountain_max_hight)) > 0){                    
-                $image[$i][$j - rand(1, $mountain_max_hight)]['r']= $r_main;
-                $image[$i][$j - rand(1, $mountain_max_hight)]['g']= $g_main;
-                $image[$i][$j - rand(1, $mountain_max_hight)]['b']= $b_main;      
+                $image[$j][$i - rand(1, $mountain_max_hight)]['r']= $r_main;
+                $image[$j][$i - rand(1, $mountain_max_hight)]['g']= $g_main;
+                $image[$j][$i - rand(1, $mountain_max_hight)]['b']= $b_main;      
             }
         if(($j + rand(1, $mountain_max_hight)) < map_scale_max - 1){                    
-                $image[$i][$j + rand(1, $mountain_max_hight)]['r']= $r_main;
-                $image[$i][$j + rand(1, $mountain_max_hight)]['g']= $g_main;
-                $image[$i][$j + rand(1, $mountain_max_hight)]['b']= $b_main;      
+                $image[$j][$i + rand(1, $mountain_max_hight)]['r']= $r_main;
+                $image[$j][$i + rand(1, $mountain_max_hight)]['g']= $g_main;
+                $image[$j][$i + rand(1, $mountain_max_hight)]['b']= $b_main;      
             }
             
                    
-            srand(rand($i, $j * 50));
+            srand(rand($j, $i * 50));
             
         
         $first_circle--;
@@ -150,12 +160,13 @@ $mountain_count--;
 </head>
 <body align = "center">
 <a href="player_global_state.php">to map</a>
-
-<div style = "display: inline"><a href="actions/move_on_map.php?direction=left">left</a></div>
-<div style = "display: inline"><a href="actions/move_on_map.php?direction=right">right</a> </div>
-<div style = "display: inline"><a href="actions/move_on_map.php?direction=up">up</a> </div>
-<div style = "display: inline"><a href="actions/move_on_map.php?direction=down">down</a> </div>
-<div style='line-height: 0.9'>
+<br>
+<!-- movement directions -->
+<div style = "display: inline"><a href="actions/move_on_map.php?direction=left"><img src="../../images/buttons/left.png"></a></div>
+<div style = "display: inline"><a href="actions/move_on_map.php?direction=right"><img src="../../images/buttons/right.png"></a> </div>
+<div style = "display: inline"><a href="actions/move_on_map.php?direction=up"><img src="../../images/buttons/up.png"></a> </div>
+<div style = "display: inline"><a href="actions/move_on_map.php?direction=down"><img src="../../images/buttons/down.png"></a> </div>
+<div style='line-height: 0.7'>
 <br>
 <?
 /////drawing sector
@@ -166,39 +177,41 @@ $x_max = ((int) ($global_x/1000)) * 1000 + 99;
 $y_min = ((int) ($global_y/1000)) * 1000;
 $y_max = ((int) ($global_y/1000)) * 1000 + 99;
 
-$select = mysql_query("SELECT * FROM `data_buildings_on_map` WHERE `x` BETWEEN '$x_min' AND '$x_max' AND `y` BETWEEN  '$y_min' AND '$y_max'");
+$select = mysql_query("SELECT * FROM `data_buildings_on_map` WHERE `x` BETWEEN '$x_min' AND '$x_max' AND `y` BETWEEN  '$y_min' AND '$y_max'");    
 
+    while($point = mysql_fetch_array($select)){
+        $temp_x = $point['x'] % 1000;
+        $temp_y = $point['y'] % 1000;
+        $construction[$temp_x][$temp_y]=$point;
+    }
 //////////////////////////////////////////////////
     
-    ////////////////////////////////////////////////////calk x/y min/max for draw map
+////////////////////////////////////////////////////calk x/y min/max for draw map
 if((int)($player_x - map_drow_size/2) < 0){
     $x_min = 0;
     $x_max = map_drow_size;
 }else if((int)($player_x + map_drow_size/2) > map_scale_max){
+    $x_min = map_scale_max - map_drow_size;
     $x_max = map_scale_max;
-    $x_min = $player_x - map_drow_size;
 }else{
-    $x_max = (int)($player_x + map_drow_size/2);
     $x_min = (int)($player_x - map_drow_size/2);
+    $x_max = (int)($player_x + map_drow_size/2);
 }
     
 if((int)($player_y - map_drow_size/2) < 0){
     $y_min = 0;
     $y_max = map_drow_size;
 }else if((int)($player_y + map_drow_size/2) > map_scale_max){
+    $y_min = map_scale_max - map_drow_size;
     $y_max = map_scale_max;
-    $y_min = $player_y - map_drow_size;
 }else{
-    $y_max = (int)($player_y + map_drow_size/2);
     $y_min = (int)($player_y - map_drow_size/2);
+    $y_max = (int)($player_y + map_drow_size/2);
 }
-   /////////////////////////////////////////////////////////drawing map
-    $information = "";//for print at and of map
+/////////////////////////////////////////////////////////drawing map
     
-    while($point = mysql_fetch_array($select)){
-        $construction[$point['x']][$point['y']]=$point;        
-    }           
-
+    $information = "";//clear strinf for print info at and of map
+        
     for($i = $y_min; $i < $y_max; $i++){
         for($j = $x_min; $j < $x_max; $j++){       
 
@@ -210,59 +223,138 @@ if((int)($player_y - map_drow_size/2) < 0){
                 echo "<img src='../../images/player.png' height='14px' width='14px'>";
 
             }else if(isset($construction[$j][$i])){
-                /////////////////draw construction
-                    $r = $construction[$j][$i]['color'];
-                    $g = $construction[$j][$i]['color'];
-                    $b = $construction[$j][$i]['color'];               
                 
+                /////////////////draw construction
+                $image_point = $construction[$j][$i]['name'];
+
                 /////////////if this construction niar player
                 if($j == $player_x-1 && $i == $player_y){
                     
-                    echo "<a href = 'actions/action.php?side=left' style = 'background-color: RGB(".$r.", ".$g.", ".$b.")' title = '".$construction[$j][$i]['name']."'>&#11036</a>";
+                    echo "<a href = 'actions/action.php?side=left'><img src='../../images/construction/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'></a>";
                     
                 }else if($j == $player_x+1 && $i == $player_y){
                     
-                    echo "<a href = 'actions/action.php?side=right' style = 'background-color: RGB(".$r.", ".$g.", ".$b.")' title = '".$construction[$j][$i]['name']."'>&#11036</a>";
+                    echo "<a href = 'actions/action.php?side=right'><img src='../../images/construction/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'></a>";
                     
                 }else if($j == $player_x && $i == $player_y-1){
                     
-                    echo "<a href = 'actions/action.php?side=up' style = 'background-color: RGB(".$r.", ".$g.", ".$b.")' title = '".$construction[$j][$i]['name']."'>&#11036</a>";
+                    echo "<a href = 'actions/action.php?side=up'><img src='../../images/construction/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'></a>";
                     
                 }else if($j == $player_x && $i == $player_y+1){
                     
-                    echo "<a href = 'actions/action.php?side=down' style = 'background-color: RGB(".$r.", ".$g.", ".$b.")' title = '".$construction[$j][$i]['name']."'>&#11036</a>";
+                    echo "<a href = 'actions/action.php?side=down'><img src='../../images/construction/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'></a>";
                     
                 }else{
                     
-                    echo "<span style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#11036</span>";
+                    echo "<img src='../../images/construction/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'>";
                 }
                 
             }else{
                 /////////////////draw terrain
-                    $r = $image[$i][$j]['r'];
-                    $g = $image[$i][$j]['g'];
-                    $b = $image[$i][$j]['b'];
+                    $r = $image[$j][$i]['r'];
+                    $g = $image[$j][$i]['g'];
+                    $b = $image[$j][$i]['b'];
                 
+                $image_point = "error";
+
+                if($r == 0){
+                    if($g == 0){
+                        if($b == 0){
+                            $image_point = "error";
+
+                        }else if($b > 170){              
+                            $image_point = "smal_water"; //////////////blue pure   
+
+                        }else if($b > 85 && $b < 171){
+                            $image_point = "water";//////////////blue pure 
+
+                        }else if($b < 86){
+                            $image_point = "deep_water";//////////////blue pure 
+                        }
+
+                    }else if($g > 170){
+                        if($b == 0){
+                            $image_point = "flat"; //////////////green pure                               
+                        }
+
+                    }else if($g > 85 && $g < 171){
+                        if($b == 0){
+                            $image_point = "grass";//////////////green pure
+                        }
+
+                    }else if($g < 86){
+                        if($b == 0){    
+                            $image_point = "hils";//////////////green pure
+                        }
+                    }
+
+                }else if($r > 170){ 
+                    if($g == 0){
+                        if($b == 0){
+                            $image_point = "cold_lava"; //////////////red pure                                
+                        }
+
+                    }else if($g > 170){
+                        if($b == 0){
+                            $image_point = "lite_sand"; //////////////yelloy pure 
+
+                        }else if($b > 170){
+                            $image_point = "low_mountain"; //////////////gray pure                               
+                        }
+                    }
+                }else if($r > 85 && $b < 171){
+
+                    if($g == 0){
+                        if($b == 0){
+                            $image_point = "lava";//////////////red pure 
+                        }
+
+                    }else if($g > 85 && $g < 171){
+
+                        if($b == 0){
+                            $image_point = "sand";//////////////yelloy pure
+
+                        }else if($b > 85 && $b < 171){
+                            $image_point = "mountain"; //////////////gray pure                               
+                        }
+                    }            
+                }else if($r < 86){
+
+                    if($g == 0){
+                        if($b == 0){
+                            $image_point = "hot_lava";//////////////red pure 
+                        }
+
+                    }else if($g < 86){
+                        if($b == 0){    
+                            $image_point = "hard_sand";//////////////yelloy pure
+
+                        }else if($b < 86){
+                            $image_point = "high_mountain"; //////////////gray pure                               
+                        }
+                    }
+                }        
+        
                 /////////////if empty niar player
                 if($j == $player_x-1 && $i == $player_y){
                     
-                    echo "<a href = '../build/build_menu.php?side=left' style = 'background-color: RGB(".$r.", ".$g.", ".$b.")' >&#11036</a>";
+                    echo "<a href = '../build/build_menu.php?side=left'><img src='../../images/map/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'></a>";
                     
                 }else if($j == $player_x+1 && $i == $player_y){
                     
-                    echo "<a href = '../build/build_menu.php?side=right' style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#11036</a>";
+                    echo "<a href = '../build/build_menu.php?side=right'><img src='../../images/map/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'></a>";
                     
                 }else if($j == $player_x && $i == $player_y-1){
                     
-                    echo "<a href = '../build/build_menu.php?side=up' style = 'background-color: RGB(".$r.", ".$g.", ".$b.")' >&#11036</a>";
+                    echo "<a href = '../build/build_menu.php?side=up'><img src='../../images/map/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'></a>";
                     
                 }else if($j == $player_x && $i == $player_y+1){
                     
-                    echo "<a href = '../build/build_menu.php?side=down' style = 'background-color: RGB(".$r.", ".$g.", ".$b.")' >&#11036</a>";
+                    echo "<a href = '../build/build_menu.php?side=down'><img src='../../images/map/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'></a>";
                     
                 }else{
                     
-                    echo "<span style = 'background-color: RGB(".$r.", ".$g.", ".$b.")'>&#11036</span>";
+                    echo "<img src='../../images/map/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'>";
                 }
                 
             }      
@@ -290,10 +382,8 @@ if((int)($player_y - map_drow_size/2) < 0){
 <div>
 <?
     echo $information;
-    
-    if(isset($_GET['msg']))
-        echo "<br>".$_GET['msg'];
-    ?>
+    echo "<br>".$msg;
+?>
 </div>
 </body>
 </html>
