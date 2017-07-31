@@ -1,7 +1,7 @@
 <?php
 ////////////////////////constant
 define ("color_const", 85);// 255/3
-define ("map_drow_size", 10);//map heigt & wind draw
+define ("map_drow_size", 20);//map heigt & wind draw
 define ("map_scale_max", 100);//pixel map lenght
 
 session_start();
@@ -205,11 +205,40 @@ if((int)($player_y - map_drow_size/2) < 0){
 }
 /////////////////////////////////////////////////////////drawing map
     
-    $information = "";//clear strinf for print info at and of map
-        
+    $information = "";//clear string for print info at and of map
+    
+    $coef_l = 0;    $coef_r = 0;    $coef_u = 0;    $coef_d = 0;///////////coef for hard calc
+    
     for($i = $y_min; $i < $y_max; $i++){
         for($j = $x_min; $j < $x_max; $j++){       
 
+            $r = $image[$j][$i]['r'];
+            $g = $image[$j][$i]['g'];
+            $b = $image[$j][$i]['b'];
+            
+            if($r == 0){
+                if($g == 0){
+                    $coef = $b;////////////////////////////only blue
+                }else{
+                    if($b == 0){
+                        $coef = $g;////////////////////////only green
+                    }
+                    $coef = (int)(($g + $b) / 2);////////////////////////green blue
+                }
+            }else{
+                if($g == 0){
+                    if($b == 0){
+                        $coef = $g;////////////////////////only red
+                    }
+                    $coef = (int)(($r + $b) / 2);////////////////////////red blue
+                }else{
+                    if($b == 0){
+                        $coef = (int)(($r + $g) / 2);////////////////////red green
+                    }
+                    $coef = (int)(($r + $g + $b) / 3);////////////////////////all colors
+                }
+            }           
+            
             if($j == $player_x && $i == $player_y){
                 
                 $information = "X:".$player_x." Y:".$player_y;
@@ -245,19 +274,16 @@ if((int)($player_y - map_drow_size/2) < 0){
                 }
                 
             }else{
-                /////////////////draw terrain
-                    $r = $image[$j][$i]['r'];
-                    $g = $image[$j][$i]['g'];
-                    $b = $image[$j][$i]['b'];
+                /////////////////draw terrain                    
                 
                 $image_point = "error";
 
-                if($r == 0){
-                    if($g == 0){
-                        if($b == 0){
+                if($r == 0){////////////////////////////////////////////////////////////////////////////R = 0
+                    if($g == 0){//////////////////////////////////////////////////////////////////G = 0
+                        if($b == 0){/////////////////////////////////////////////////////////B = 0
                             $image_point = "error";
 
-                        }else if($b > 170){              
+                        }else if($b > 170){/////////////////////////////////////////////////////////B > 170              
                             $image_point = "smal_water"; //////////////blue pure   
 
                         }else if($b > 85 && $b < 171){
@@ -267,7 +293,7 @@ if((int)($player_y - map_drow_size/2) < 0){
                             $image_point = "deep_water";//////////////blue pure 
                         }
 
-                    }else if($g > 170){
+                    }else if($g > 170){///////////////////////////////////////////////////////////G > 170
                         if($b == 0){
                             $image_point = "flat"; //////////////green pure                               
                         }
@@ -283,69 +309,74 @@ if((int)($player_y - map_drow_size/2) < 0){
                         }
                     }
 
-                }else if($r > 170){ 
+                }else if($r > 170){/////////////////////////////////////////////////////////////////////////////R > 170 
                     if($g == 0){
                         if($b == 0){
                             $image_point = "cold_lava"; //////////////red pure                                
                         }
 
-                    }else if($g > 170){
+                    }else if($g > 170){////////////////////////////////////////////////////////////////////////RG > 170
                         if($b == 0){
                             $image_point = "lite_sand"; //////////////yelloy pure 
 
-                        }else if($b > 170){
+                        }else if($b > 170){///////////////////////////////////////////////////////////////////RGB > 170
                             $image_point = "low_mountain"; //////////////gray pure                               
                         }
                     }
-                }else if($r > 85 && $b < 171){
+                }else if($r > 85 && $r < 171){////////////////////////////////////////////////////////////////R 85 - 170
 
                     if($g == 0){
                         if($b == 0){
                             $image_point = "lava";//////////////red pure 
                         }
 
-                    }else if($g > 85 && $g < 171){
+                    }else if($g > 85 && $g < 171){///////////////////////////////////////////////////////////RG 85 - 170
 
                         if($b == 0){
                             $image_point = "sand";//////////////yelloy pure
 
-                        }else if($b > 85 && $b < 171){
+                        }else if($b > 85 && $b < 171){//////////////////////////////////////////////////////RGB 85 - 170
                             $image_point = "mountain"; //////////////gray pure                               
                         }
                     }            
-                }else if($r < 86){
+                }else if($r < 86){////////////////////////////////////////////////////////////////////////////R < 85
 
                     if($g == 0){
                         if($b == 0){
                             $image_point = "hot_lava";//////////////red pure 
                         }
 
-                    }else if($g < 86){
+                    }else if($g < 86){////////////////////////////////////////////////////////////////////////RG < 85
                         if($b == 0){    
                             $image_point = "hard_sand";//////////////yelloy pure
 
-                        }else if($b < 86){
+                        }else if($b < 86){///////////////////////////////////////////////////////////////////RGB < 85
                             $image_point = "high_mountain"; //////////////gray pure                               
                         }
                     }
                 }        
         
                 /////////////if empty niar player
+                                
                 if($j == $player_x-1 && $i == $player_y){
                     
-                    echo "<a href = '../build/build_menu.php?side=left'><img src='../../images/map/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'></a>";
+                    echo "<a href = '../build/build_menu.php?side=left&coef=$coef'><img src='../../images/map/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'></a>";
+                    $coef_l = $coef;
                     
                 }else if($j == $player_x+1 && $i == $player_y){
                     
-                    echo "<a href = '../build/build_menu.php?side=right'><img src='../../images/map/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'></a>";
+                    echo "<a href = '../build/build_menu.php?side=right&coef=$coef'><img src='../../images/map/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'></a>";
+                    $coef_r = $coef;
                     
                 }else if($j == $player_x && $i == $player_y-1){
                     
-                    echo "<a href = '../build/build_menu.php?side=up'><img src='../../images/map/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'></a>";
+                    echo "<a href = '../build/build_menu.php?side=up&coef=$coef'><img src='../../images/map/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'></a>";
+                    $coef_u = $coef;
                     
                 }else if($j == $player_x && $i == $player_y+1){
                     
-                    echo "<a href = '../build/build_menu.php?side=down'><img src='../../images/map/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'></a>";
+                    echo "<a href = '../build/build_menu.php?side=down&coef=$coef'><img src='../../images/map/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'></a>";
+                    $coef_d = $coef;
                     
                 }else{
                     
@@ -363,8 +394,6 @@ if((int)($player_y - map_drow_size/2) < 0){
                     $temp_name = mysql_fetch_array($select);
                     
                     $information .= "<br>Construction: ".$construction[$j][$i]['name']."<br>Builder: ".$temp_name['user_name']."<br><a href = 'actions/action.php?side=midle'>Actions</a>";
-                }else{
-                    $information .="<br><a href='../build/build_menu.php'>BUILD</a>";
                 }
             }
         }   
