@@ -7,7 +7,11 @@ include ('../../../database/database.php');
 
 $player_id = $_SESSION['user_id'];
 
-$side = $_GET['side'];
+if(!isset($_GET['side'])){
+    
+}else {
+    $side = $_GET['side'];
+}
 
 $global_x = $_SESSION['x'];
 $global_y = $_SESSION['y'];
@@ -52,12 +56,20 @@ $point = mysql_fetch_array($select);
 <body>
     <a href="../map_generator_10000.php">BACK</a>
     <br>
-    <br>    
-    <div>        
-        <a href="../../build/build_menu.php">BUILD</a>
-    </div>
+    <br> 
+    <?
+    if(!isset($point)){
+        echo "<div><a href='../../build/build_menu.php'>BUILD</a></div>";
+    }else if($point['name'] == "floor"){
+        echo "<div><a href='../../build/build_menu.php?floor=true'>BUILD</a></div>";
+        echo "<br><a href=''>REPAIR</a><br><a href=''>UPGRADE</a>";
+    }else{
+        echo "<a href=''>REPAIR</a><br><a href=''>UPGRADE</a>";
+    }
+    ?>   
+    
     <div>
-       <form action="destroy_construction.php" method = "post">
+       <form action="../../build/destroy_construction.php" method = "post">
           <input type="hidden" name = "construction_x" value="<?=$point['x']?>" >
           <input type="hidden" name = "construction_y" value="<?=$point['y']?>" >
           <input type="hidden" name = "construction_master_id" value="<?=$point['master_id']?>" >
