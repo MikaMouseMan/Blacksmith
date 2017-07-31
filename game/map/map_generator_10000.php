@@ -161,11 +161,6 @@ $mountain_count--;
 <body align = "center">
 <a href="player_global_state.php">to map</a>
 <br>
-<!-- movement directions -->
-<div style = "display: inline"><a href="actions/move_on_map.php?direction=left"><img src="../../images/buttons/left.png"></a></div>
-<div style = "display: inline"><a href="actions/move_on_map.php?direction=right"><img src="../../images/buttons/right.png"></a> </div>
-<div style = "display: inline"><a href="actions/move_on_map.php?direction=up"><img src="../../images/buttons/up.png"></a> </div>
-<div style = "display: inline"><a href="actions/move_on_map.php?direction=down"><img src="../../images/buttons/down.png"></a> </div>
 <div style='line-height: 0.7'>
 <br>
 <?
@@ -378,6 +373,15 @@ if((int)($player_y - map_drow_size/2) < 0){
     }
     
 ?>
+<br>
+<!-- movement directions -->
+<div style = "display: inline"><a href="actions/move_on_map.php?direction=left&coef=<?=$coef_l?>"><img src="../../images/buttons/left.png"></a></div>
+<div style = "display: inline"><a href="actions/move_on_map.php?direction=right&coef=<?=$coef_r?>"><img src="../../images/buttons/right.png"></a> </div>
+<div style = "display: inline"><a href="actions/move_on_map.php?direction=up&coef=<?=$coef_u?>"><img src="../../images/buttons/up.png"></a> </div>
+<div style = "display: inline"><a href="actions/move_on_map.php?direction=down&coef=<?=$coef_d?>"><img src="../../images/buttons/down.png"></a> </div>
+</div>
+<div>
+    <a href="../player/player_stats.php"><img src="../../images/player.png"></a>
 </div>
 <div>
 <?
