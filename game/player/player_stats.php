@@ -13,7 +13,7 @@ $form_user = "user_$user_name";
 $answer = mysql_query("SELECT * FROM `$form_user` WHERE `cell_id` = '1000'");
 $health = mysql_fetch_array($answer);
 
-
+////////////////regeneration
 if($health['health']<$health['health_max']){
     
     
@@ -51,8 +51,10 @@ $health = mysql_fetch_array($answer);
     <title>Blacksmith</title>
 </head>
 <body>
-   <a href="../exit.php">EXIT</a>
-   <br><a href="../home/blacksmith_home.php">Back</a>
+   <a href="../../game/exit.php">EXIT</a>
+   <br>
+   <br><a href="../../game/map/map_generator_10000.php">Back</a>
+   <br>
     <br>Player: <?=$selected_user['user_name']?>
     <br>Health: <?=$health['health']."/".$health['health_max']?>
     <br>
@@ -61,5 +63,8 @@ $health = mysql_fetch_array($answer);
             echo "Time left to regen:".(300-(time() - $curent_time))." sec";
         }
     ?>
+    <br><br>
+    <a href="../player/inventory/inventory.php"><img src="../../images/buttons/inventory.png"></a>
+    <a href="../craft/craft.php"><img src="../../images/buttons/craft.png"></a>
 </body>
 </html>

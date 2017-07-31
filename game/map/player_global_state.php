@@ -12,7 +12,7 @@ if(!$_SESSION['user_name']){
     exit(header('Location: ../../index.php'));
 }
 if($_SESSION['user_id'] == 1){
-    echo "<a href='../../database/api.php'>ADMIN</a>";
+    echo "<a href='../../database/API/api.php'>ADMIN</a>";
 }
 include("../../database/database.php");
 $user_name = $_SESSION['user_name'];
@@ -88,7 +88,6 @@ $select = mysql_query("SELECT * FROM `data_map` WHERE `x` BETWEEN '$x_min' AND '
 <body align = "center">
     <div>
     <a href="../exit.php">EXIT</a>
-    <br><a href="../home/blacksmith_home.php">Blacksmith home</a>
     </div>
     <div style='line-height: 0.7'>
     <?
