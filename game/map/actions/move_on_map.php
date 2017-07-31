@@ -4,12 +4,13 @@ if(!$_SESSION['user_name']){
     exit(header('Location: ../../index.php'));
 }
 
-
 //////////////////check busy
 if(!(($_SESSION['last_action'] + $_SESSION['busy_time']) < time())){
     $left = (time() - $_SESSION['last_action'] - $_SESSION['busy_time']) * (-1);
     exit(header("Location: ../map_generator_10000.php?msg=Not ready ".$left." sec left."));
 }
+
+$direction = $_GET['direction'];
 
 include ('../../../database/database.php');
 
@@ -20,8 +21,6 @@ $form_user = "user_$user_name";
 
 $global_x = $_SESSION['x'];
 $global_y = $_SESSION['y'];
-
-$direction = $_GET['direction'];
 
 $player_x = $global_x % 1000;
 $player_y = $global_y % 1000;
@@ -57,20 +56,24 @@ if($direction == "left"){
     $y_coef = 1;
 }
 
-$_SESSION['busy_time'] += 3;
+$_SESSION['busy_time'] += 1;
 
 //////////////colision check
 if(isset($construction[$player_x + $x_coef][$player_y + $y_coef])){
-    if($construction[$player_x + $x_coef][$player_y + $y_coef]['name']=="wall"){
+    
+    if($construction[$player_x + $x_coef][$player_y + $y_coef]['name']=="wall"){//////////////wall cant go
         exit(header("Location: ../map_generator_10000.php?msg=Cant go ".$direction.". Wall."));
-    }else if($construction[$player_x + $x_coef][$player_y + $y_coef]['name']=="road"){
+        
+    }else if($construction[$player_x + $x_coef][$player_y + $y_coef]['name']=="road"){////////road boost to speed +1
         $_SESSION['busy_time'] -= 1;
-    }else if($construction[$player_x + $x_coef][$player_y + $y_coef]['name']=="door"){
-        if(!isset($_GET['pass'])){ 
+        
+    }else if($construction[$player_x + $x_coef][$player_y + $y_coef]['name']=="door"){////////door need pasword
+        
+        if(!isset($_GET['pass'])){ //////////////////////////////////////////////////////////if pass not entered
             $door_id = $construction[$player_x + $x_coef][$player_y + $y_coef]['id'];
-            exit(header("Location: door_action.php?x_coef=".$x_coef."&y_coef=".$y_coef."&direction=".$direction));
-        }else{            
-            if($_GET['pass'] == "denaid"){
+            exit(header("Location: ../../build/door_action.php?x_coef=".$x_coef."&y_coef=".$y_coef."&direction=".$direction));
+        }else{          
+            if($_GET['pass'] == "denaid"){//////////////////////////////////////////////////////////if pass entered and wrong
                 $_SESSION['busy_time'] += 3;
                 exit(header("Location: ../map_generator_10000.php?msg=Wrong password"));
             }
@@ -78,8 +81,6 @@ if(isset($construction[$player_x + $x_coef][$player_y + $y_coef])){
     }
 }
 $_SESSION['last_action'] = time();
-
-
 
 $temp_x = $global_x;
 $temp_y = $global_y;
