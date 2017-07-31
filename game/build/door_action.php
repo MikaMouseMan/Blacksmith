@@ -8,7 +8,7 @@ if(isset($_GET['direction'])){
     $direction = $_GET['direction'];
 }
 
-include ('../../../database/database.php');
+include ('../../database/database.php');
 
 $x_coef = $_GET['x_coef'];
 $y_coef = $_GET['y_coef'];

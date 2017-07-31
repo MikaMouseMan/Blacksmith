@@ -2,9 +2,9 @@
     
     session_start();
     if(!$_SESSION['user_name']){
-        exit(header('Location: ../../index.php'));
+        exit(header('Location: ../../../index.php'));
     }
-    include("../../database/database.php");
+    include("../../../database/database.php");
     $user_name = $_SESSION['user_name'];
     $form_user = "user_$user_name";
 
@@ -27,7 +27,7 @@
     <title>Blacksmith</title>
 </head>
 <body>
-    <a href='../home/blacksmith_home.php'>Back</a>
+   <a href="../player_stats.php">back</a>
     <br>
     <br><?=$_GET['msg']?><?=$_GET['err']?>
     <br>
