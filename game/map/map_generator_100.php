@@ -1,7 +1,7 @@
 <?php
 //constant
-define ("color_const", 85);// 255/3
-define ("map_drow_size", 20);//map heigt & wind draw
+define ("color_const", 64);// 255/3 = 85 255/4=64
+define ("map_drow_size", 25);//map heigt & wind draw
 define ("map_scale_max", 100);//pixel map lenght
 
 session_start();
@@ -200,74 +200,96 @@ for($i = $y_min; $i < $y_max; $i++){
                 if($b == 0){
                     $image_point = "error";
                     
-                }else if($b > 170){              
+                }else if($b > color_const * 3){              
                     $image_point = "smal_water"; //////////////blue pure   
                     
-                }else if($b > 85 && $b < 171){
+                }else if($b > color_const * 2 && $b < color_const * 3 + 1){              
+                    $image_point = "middle_water"; //////////////blue pure     
+                    
+                }else if($b > color_const && $b < color_const * 2){
                     $image_point = "water";//////////////blue pure 
                     
-                }else if($b < 86){
+                }else if($b < color_const+1){
                     $image_point = "deep_water";//////////////blue pure 
                 }
                 
-            }else if($g > 170){
+            }else if($g > color_const * 3){
                 if($b == 0){
                     $image_point = "flat"; //////////////green pure                               
                 }
                 
-            }else if($g > 85 && $g < 171){
+            }else if($g > color_const * 2 && $g < color_const * 3 + 1){
+                if($b == 0){
+                    $image_point = "grassland";//////////////green pure  
+                }
+                
+            }else if($g > color_const && $g < color_const * 2 + 1){
                 if($b == 0){
                     $image_point = "grass";//////////////green pure
                 }
                 
-            }else if($g < 86){
+            }else if($g < color_const+1){
                 if($b == 0){    
                     $image_point = "hils";//////////////green pure
                 }
             }
             
-        }else if($r > 170){ 
+        }else if($r > color_const * 3){ 
             if($g == 0){
                 if($b == 0){
                     $image_point = "cold_lava"; //////////////red pure                                
                 }
                 
-            }else if($g > 170){
+            }else if($g > color_const * 3){
                 if($b == 0){
                     $image_point = "lite_sand"; //////////////yelloy pure 
                     
-                }else if($b > 170){
+                }else if($b > color_const * 3){
                     $image_point = "low_mountain"; //////////////gray pure                               
                 }
             }
-        }else if($r > 85 && $b < 171){
+        }else if($r > color_const * 2 && $r < color_const * 3 + 1){ 
+            if($g == 0){
+                if($b == 0){
+                    $image_point = "midle_lava"; //////////////red pure                           
+                }
+                
+            }else if($g > color_const * 2 && $g < color_const * 3 + 1){
+                if($b == 0){
+                    $image_point = "error"; //////////////yelloy pure    !!!!!!!!
+                    
+                }else if($b > color_const * 2 && $b < color_const * 3 + 1){
+                    $image_point = "error"; //////////////gray pure       !!!!!!!!!!!                        
+                }
+            }
+        }else if($r > color_const && $r < color_const * 2 + 1){
             
             if($g == 0){
                 if($b == 0){
                     $image_point = "lava";//////////////red pure 
                 }
                 
-            }else if($g > 85 && $g < 171){
+            }else if($g > color_const && $g < color_const * 2 + 1){
                 
                 if($b == 0){
                     $image_point = "sand";//////////////yelloy pure
                     
-                }else if($b > 85 && $b < 171){
+                }else if($b > color_const && $b < color_const * 2 + 1){
                     $image_point = "mountain"; //////////////gray pure                               
                 }
             }            
-        }else if($r < 86){
+        }else if($r < color_const + 1){
             
             if($g == 0){
                 if($b == 0){
                     $image_point = "hot_lava";//////////////red pure 
                 }
                 
-            }else if($g < 86){
+            }else if($g < color_const + 1){
                 if($b == 0){    
                     $image_point = "hard_sand";//////////////yelloy pure
                     
-                }else if($b < 86){
+                }else if($b < color_const + 1){
                     $image_point = "high_mountain"; //////////////gray pure                               
                 }
             }
