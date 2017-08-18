@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Blacksmit Login Screen</title>
 </head>
-<body  align = "center">
+<body style = "background-color: white" align = "center">
    <br>
    <br>
    <br>

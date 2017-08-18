@@ -12,7 +12,7 @@ if(!isset($_GET['err'])){
     <meta charset="UTF-8">
     <title>Blacksmith</title>
 </head>
-<body>
+<body style = "background-color: white">
     <h1>Log in</h1>
     <form method = "post" action = "chek_login.php">
     <br><?echo $_GET['err']?>
