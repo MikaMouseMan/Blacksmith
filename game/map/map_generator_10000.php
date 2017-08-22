@@ -287,7 +287,7 @@ if((int)($player_y - map_drow_size/2) < 0){
                     $image_point = "smal_water"; //////////////blue pure   
                     
                 }else if($b > color_const * 2 && $b < color_const * 3 + 1){              
-                    $image_point = "middle_water"; //////////////blue pure     
+                    $image_point = "midle_water"; //////////////blue pure     
                     
                 }else if($b > color_const && $b < color_const * 2){
                     $image_point = "water";//////////////blue pure 
@@ -299,21 +299,29 @@ if((int)($player_y - map_drow_size/2) < 0){
             }else if($g > color_const * 3){
                 if($b == 0){
                     $image_point = "flat"; //////////////green pure                               
+                }else if($b > color_const * 3){
+                    $image_point = "frosty"; ////////////////////////cyan
                 }
                 
             }else if($g > color_const * 2 && $g < color_const * 3 + 1){
                 if($b == 0){
                     $image_point = "grassland";//////////////green pure  
+                }else if($b > color_const * 2 && $b < color_const * 3 + 1){
+                    $image_point = "cold_frosty"; ////////////////////////cyan
                 }
                 
             }else if($g > color_const && $g < color_const * 2 + 1){
                 if($b == 0){
                     $image_point = "grass";//////////////green pure
+                }else if($b > color_const && $b < color_const * 2 + 1){
+                    $image_point = "cold"; ////////////////////////cyan
                 }
                 
             }else if($g < color_const+1){
                 if($b == 0){    
                     $image_point = "hils";//////////////green pure
+                }else if($b < color_const + 1){
+                    $image_point = "wery_cold"; ////////////////////////cyan
                 }
             }
             
@@ -321,6 +329,8 @@ if((int)($player_y - map_drow_size/2) < 0){
             if($g == 0){
                 if($b == 0){
                     $image_point = "cold_lava"; //////////////red pure                                
+                }else if($b > color_const * 3){
+                    $image_point = "smal_swap"; ////////////////////////fiolet
                 }
                 
             }else if($g > color_const * 3){
@@ -335,14 +345,16 @@ if((int)($player_y - map_drow_size/2) < 0){
             if($g == 0){
                 if($b == 0){
                     $image_point = "midle_lava"; //////////////red pure                           
+                }else if($b > color_const * 2 && $b < color_const * 3 + 1){
+                    $image_point = "swap"; ////////////////////////fiolet
                 }
                 
             }else if($g > color_const * 2 && $g < color_const * 3 + 1){
                 if($b == 0){
-                    $image_point = "error"; //////////////yelloy pure    !!!!!!!!
+                    $image_point = "midle_sand"; //////////////yelloy pure   
                     
                 }else if($b > color_const * 2 && $b < color_const * 3 + 1){
-                    $image_point = "error"; //////////////gray pure       !!!!!!!!!!!                        
+                    $image_point = "midle_mountain"; //////////////gray pure                            
                 }
             }
         }else if($r > color_const && $r < color_const * 2 + 1){
@@ -350,6 +362,8 @@ if((int)($player_y - map_drow_size/2) < 0){
             if($g == 0){
                 if($b == 0){
                     $image_point = "lava";//////////////red pure 
+                }else if($b > color_const && $b < color_const * 2 + 1){
+                    $image_point = "deep_swap"; ////////////////////////fiolet
                 }
                 
             }else if($g > color_const && $g < color_const * 2 + 1){
@@ -366,6 +380,8 @@ if((int)($player_y - map_drow_size/2) < 0){
             if($g == 0){
                 if($b == 0){
                     $image_point = "hot_lava";//////////////red pure 
+                }else if($b < color_const + 1){
+                    $image_point = "death_swap"; ////////////////////////fiolet
                 }
                 
             }else if($g < color_const + 1){
