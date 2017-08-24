@@ -9,10 +9,9 @@ if($master_id != $player_id){
 }
 
 include('../../database/database.php');
+include('../../database/functions/construct_functions.php');
 
-$id = $x.$y;
-
-mysql_query("DELETE FROM `data_buildings_on_map` WHERE `data_buildings_on_map`.`id` LIKE '$id'");
+clear_cell($x, $y);
 
 header("Location: ../map/map_generator_10000.php?msg=Destroyed");
 ?>

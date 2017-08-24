@@ -4,6 +4,7 @@ if(!$_SESSION['user_name']){
     exit(header('Location: ../../index.php'));
 }
 include("../../database/database.php");
+include('../../database/functions/construct_functions.php');
 
 $user_name = $_SESSION['user_name'];
 $form_user = "user_$user_name";
@@ -38,16 +39,28 @@ if(isset($_POST['side'])){
         //all is fine
     }
 }
+$building = $_POST['name'];
+$user_id = $_SESSION['user_id'];
 
-$select = mysql_query("SELECT * FROM `data_buildings_on_map` WHERE `x` = '$global_x' AND `y` = '$global_y'");
-$plase_coord = mysql_fetch_array($select);
-if(!$plase_coord){
-    $new_id = $global_x.$global_y;
-    $new_name = $_POST['name'];
-    $master_id = $_SESSION['user_id'];
-    $color = "";
+if(is_no_constructions($global_x, $global_y)){
     
-    mysql_query("INSERT INTO `data_buildings_on_map` (`id`, `x`, `y`, `name`, `health`, `health_max`, `master_id`, `color`) VALUES ('$new_id', '$global_x', '$global_y', '$new_name', '1', '1', '$master_id', '$color')");
+    if($building = "road"){
+        
+        build_road($global_x, $global_y, $user_id);
+        
+    }else if($building = "wall"){
+        
+        build_wall($global_x, $global_y, $user_id);
+        
+    }else if($building = "floor"){
+        
+        build_floor($global_x, $global_y, $user_id);
+        
+    }else if($building = "door"){
+        
+        build_door($global_x, $global_y, $user_id);
+    }
+    
     exit(header('Location: ../map/map_generator_10000.php?msg='.$new_name.' buided'));
 }else{
     exit(header('Location: build_menu.php?msg=alredy busy'));
