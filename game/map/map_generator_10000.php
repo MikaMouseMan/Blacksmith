@@ -244,7 +244,7 @@ if((int)($player_y - map_drow_size/2) < 0){
                 $information = "X:".$player_x." Y:".$player_y;
                 
                 ////////////////draw player
-                echo "<img src='../../images/player.png' height='14px' width='14px'>";
+                echo "<img src='../../images/player.gif' height='14px' width='14px'>";
 
             }else if(isset($construction[$j][$i])){
                 

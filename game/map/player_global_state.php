@@ -2,7 +2,7 @@
 
 //constants
 define ("color_const", 64);// 255/3 = 85 255/4=64
-define ("map_drow_size", 50);//map heigt & wind draw
+define ("map_drow_size", 25);//map heigt & wind draw
 
 $size = getimagesize ("../../database/map_core.png");
 $map_x_max = $size[0];
@@ -218,7 +218,7 @@ $select = mysql_query("SELECT * FROM `data_map` WHERE `x` BETWEEN '$x_min' AND '
         }
         
         if($point['x'] == $player_x && $point['y'] == $player_y){
-            echo "<a href = 'map_generator_100.php'><img src='../../images/player.png' height='14px' width='14px'></a>";
+            echo "<a href = 'map_generator_100.php'><img src='../../images/player.gif' height='14px' width='14px'></a>";
         }else{
             echo "<img src='../../images/map/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'>";
         }

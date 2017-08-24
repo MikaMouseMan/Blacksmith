@@ -313,7 +313,7 @@ for($i = $y_min; $i < $y_max; $i++){
         
         
         if($j == $player_x && $i == $player_y){
-            echo "<a href = 'map_generator_10000.php?r=".$r."&g=".$g."&b=".$b."'><img src='../../images/player.png' height='14px' width='14px'></a>";
+            echo "<a href = 'map_generator_10000.php?r=".$r."&g=".$g."&b=".$b."'><img src='../../images/player.gif' height='14px' width='14px'></a>";
         }else{
             echo "<img src='../../images/map/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'>";
         }        
