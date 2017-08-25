@@ -51,7 +51,7 @@ if($y != (int)($global_y/1000000)){
 }
     
 
-$map_seed = (int) $x.$y.$r_main.$g_main.$b_main;
+$map_seed = $x.$y.($r_main + $g_main + $b_main);
 
 srand($map_seed);
 
