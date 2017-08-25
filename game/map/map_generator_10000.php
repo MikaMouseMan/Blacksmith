@@ -1,12 +1,15 @@
 <?php
 ////////////////////////constant
-define ("color_const", 85);// 255/3
+define ("color_const", 64);// 255/3 = 85 255/4=64
 define ("map_drow_size", 25);//map heigt & wind draw
 define ("map_scale_max", 100);//pixel map lenght
 
 session_start();
 if(!$_SESSION['user_name']){
     exit(header('Location: ../../index.php'));
+}
+if($_SESSION['user_id'] == 1){
+    echo "<a href='../../database/API/api.php'>ADMIN</a><br>";
 }
 include ('../../database/database.php');
 
@@ -54,7 +57,7 @@ for($i = 0; $i < map_scale_max; $i++){
 $player_x = (int)($global_x % 1000);
 $player_y = (int)($global_y % 1000);
 
-$map_seed = $y.$x.$x.$y;
+$map_seed = (int)($global_x / 1000) + (int)($global_y / 1000);
 
 srand($map_seed);
 
@@ -86,9 +89,9 @@ while($mountain_count > 0){
     $image[$j][$i]['g']= $g_main;
     $image[$j][$i]['b']= $b_main;
     
-    while($first_circle>0){
+    while($first_circle > 0){
         
-        $direction = rand(1,4);
+        $direction = rand(1, 4);
         
         switch($direction){
             case 1: $j -= 1; break;
@@ -110,33 +113,33 @@ while($mountain_count > 0){
             $i = map_scale_max - 1;
         }
         
-        $image[$j][$i]['r']= $r_main;
-        $image[$j][$i]['g']= $g_main;
-        $image[$j][$i]['b']= $b_main;  
+        $image[$j][$i]['r'] = $r_main;
+        $image[$j][$i]['g'] = $g_main;
+        $image[$j][$i]['b'] = $b_main;  
         
         srand(rand($i, $j * 1000));
         
         
             //make stronger 
         if(($i - rand(1, $mountain_max_hight)) > 0){                    
-                $image[$j - rand(1, $mountain_max_hight)][$i]['r']= $r_main;
-                $image[$j - rand(1, $mountain_max_hight)][$i]['g']= $g_main;
-                $image[$j - rand(1, $mountain_max_hight)][$i]['b']= $b_main;      
+                $image[$j - rand(1, $mountain_max_hight)][$i]['r'] = $r_main;
+                $image[$j - rand(1, $mountain_max_hight)][$i]['g'] = $g_main;
+                $image[$j - rand(1, $mountain_max_hight)][$i]['b'] = $b_main;      
             }
         if(($i + rand(1, $mountain_max_hight)) < map_scale_max - 1){                    
-                $image[$j + rand(1, $mountain_max_hight)][$i]['r']= $r_main;
-                $image[$j + rand(1, $mountain_max_hight)][$i]['g']= $g_main;
-                $image[$j + rand(1, $mountain_max_hight)][$i]['b']= $b_main;      
+                $image[$j + rand(1, $mountain_max_hight)][$i]['r'] = $r_main;
+                $image[$j + rand(1, $mountain_max_hight)][$i]['g'] = $g_main;
+                $image[$j + rand(1, $mountain_max_hight)][$i]['b'] = $b_main;      
             }
         if(($j - rand(1, $mountain_max_hight)) > 0){                    
-                $image[$j][$i - rand(1, $mountain_max_hight)]['r']= $r_main;
-                $image[$j][$i - rand(1, $mountain_max_hight)]['g']= $g_main;
-                $image[$j][$i - rand(1, $mountain_max_hight)]['b']= $b_main;      
+                $image[$j][$i - rand(1, $mountain_max_hight)]['r'] = $r_main;
+                $image[$j][$i - rand(1, $mountain_max_hight)]['g'] = $g_main;
+                $image[$j][$i - rand(1, $mountain_max_hight)]['b'] = $b_main;      
             }
         if(($j + rand(1, $mountain_max_hight)) < map_scale_max - 1){                    
-                $image[$j][$i + rand(1, $mountain_max_hight)]['r']= $r_main;
-                $image[$j][$i + rand(1, $mountain_max_hight)]['g']= $g_main;
-                $image[$j][$i + rand(1, $mountain_max_hight)]['b']= $b_main;      
+                $image[$j][$i + rand(1, $mountain_max_hight)]['r'] = $r_main;
+                $image[$j][$i + rand(1, $mountain_max_hight)]['g'] = $g_main;
+                $image[$j][$i + rand(1, $mountain_max_hight)]['b'] = $b_main;      
             }
             
                    
@@ -177,31 +180,31 @@ $select = mysql_query("SELECT * FROM `data_buildings_on_map` WHERE `x` BETWEEN '
     while($point = mysql_fetch_array($select)){
         $temp_x = $point['x'] % 1000;
         $temp_y = $point['y'] % 1000;
-        $construction[$temp_x][$temp_y]=$point;
+        $construction[$temp_x][$temp_y] = $point;
     }
 //////////////////////////////////////////////////
     
 ////////////////////////////////////////////////////calk x/y min/max for draw map
-if((int)($player_x - map_drow_size/2) < 0){
+if((int)($player_x - map_drow_size / 2) < 0){
     $x_min = 0;
     $x_max = map_drow_size;
-}else if((int)($player_x + map_drow_size/2) > map_scale_max){
+}else if((int)($player_x + map_drow_size / 2) > map_scale_max){
     $x_min = map_scale_max - map_drow_size;
     $x_max = map_scale_max;
 }else{
-    $x_min = (int)($player_x - map_drow_size/2);
-    $x_max = (int)($player_x + map_drow_size/2);
+    $x_min = (int)($player_x - map_drow_size / 2);
+    $x_max = (int)($player_x + map_drow_size / 2);
 }
     
-if((int)($player_y - map_drow_size/2) < 0){
+if((int)($player_y - map_drow_size / 2) < 0){
     $y_min = 0;
     $y_max = map_drow_size;
-}else if((int)($player_y + map_drow_size/2) > map_scale_max){
+}else if((int)($player_y + map_drow_size / 2) > map_scale_max){
     $y_min = map_scale_max - map_drow_size;
     $y_max = map_scale_max;
 }else{
-    $y_min = (int)($player_y - map_drow_size/2);
-    $y_max = (int)($player_y + map_drow_size/2);
+    $y_min = (int)($player_y - map_drow_size / 2);
+    $y_max = (int)($player_y + map_drow_size / 2);
 }
 /////////////////////////////////////////////////////////drawing map
     
