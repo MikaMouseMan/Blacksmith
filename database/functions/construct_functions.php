@@ -73,7 +73,7 @@ function build_door($global_x, $global_y, $player_id = 1){
 }
 
 function build_floor($global_x, $global_y, $player_id = 1){
-        
+            
     $new_id = $global_x.$global_y;
     $new_name = "floor";
     $master_id = $player_id;
@@ -157,6 +157,18 @@ function build_home_empty($global_x1, $global_y1, $global_x2, $global_y2, $door_
 
 //////////////home
 function build_home($global_x1, $global_y1, $global_x2, $global_y2, $door_side, $player_id = 1){
+    
+}
+
+/////////////environment
+function build_environment($global_x, $global_y){
+    
+    $new_id = $global_x.$global_y;
+    $new_name = "environment";
+    $master_id = time();
+    $color = "";
+
+    mysql_query("INSERT INTO `data_buildings_on_map` (`id`, `x`, `y`, `name`, `health`, `health_max`, `master_id`, `color`) VALUES ('$new_id', '$global_x', '$global_y', '$new_name', '1', '1', '$master_id', '$color')");
     
 }
 
