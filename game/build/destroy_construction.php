@@ -12,6 +12,7 @@ include('../../database/database.php');
 include('../../database/functions/construct_functions.php');
 
 clear_cell($x, $y);
+build_environment($x, $y);
 
 header("Location: ../map/map_generator_10000.php?msg=Destroyed");
 ?>
