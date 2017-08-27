@@ -24,7 +24,8 @@ if(!isset($_GET['msg'])){
     <a href="create_global_map_from_core.php">RESAVE CURENT MAP</a> this will update main RGB map in DB from curent image. <br>
     <a href="clear_building_data.php">CLEAR ALL BUILDING DATA ON DATA BASE</a> clear all data about building in DB. <br>    
     <a href="change_global_coord.php">CHANGE COORD BY ID</a> teleport player to coord location.<br>
-    <a href="construction.php">CREATE CONSTRUCTION</a> build/delete house or walls in line in block or point.
+    <a href="construction.php">CREATE CONSTRUCTION</a> build/delete house or walls in line in block or point.<br>
+    <a href="AI_turn.php">All AI TURN</a> event to make all turns by AI<br>
     <br>
     <br><a href="../../game/map/player_global_state.php">BACK TO GAME</a> at global map.
     <br>
