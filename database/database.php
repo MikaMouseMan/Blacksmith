@@ -1,4 +1,6 @@
 <?php
+define ("game_ver", "0.0.3");
+
     $dbservername = "localhost";
     $dbusername = "root";
     $dbpassword = "";
