@@ -1,4 +1,6 @@
 <?php
+define ("color_const", 64);// 255/3 = 85 255/4=64
+
 session_start();
 if($_SESSION['user_id'] != 1){
     exit(header("Location: ../../index.php"));
@@ -30,7 +32,123 @@ for($i = 0; $i < $y; $i++){
         $g = ($rgb >> 8) & 0xFF;
         $b = $rgb & 0xFF;
                         
-        $values_string_this = "('".$ji."', '".$j."', '".$i."', '".$r."', '".$g."', '".$b."')";        
+        if($r == 0){
+            if($g == 0){
+                if($b == 0){
+                    $image_point = "error";
+                    
+                }else if($b > color_const * 3){              
+                    $image_point = "smal_water"; //////////////blue pure   
+                    
+                }else if($b > color_const * 2 && $b < color_const * 3 + 1){              
+                    $image_point = "midle_water"; //////////////blue pure     
+                    
+                }else if($b > color_const && $b < color_const * 2){
+                    $image_point = "water";//////////////blue pure 
+                    
+                }else if($b < color_const+1){
+                    $image_point = "deep_water";//////////////blue pure 
+                }
+                
+            }else if($g > color_const * 3){
+                if($b == 0){
+                    $image_point = "flat"; //////////////green pure                               
+                }else if($b > color_const * 3){
+                    $image_point = "frosty"; ////////////////////////cyan
+                }
+                
+            }else if($g > color_const * 2 && $g < color_const * 3 + 1){
+                if($b == 0){
+                    $image_point = "grassland";//////////////green pure  
+                }else if($b > color_const * 2 && $b < color_const * 3 + 1){
+                    $image_point = "cold_frosty"; ////////////////////////cyan
+                }
+                
+            }else if($g > color_const && $g < color_const * 2 + 1){
+                if($b == 0){
+                    $image_point = "grass";//////////////green pure
+                }else if($b > color_const && $b < color_const * 2 + 1){
+                    $image_point = "cold"; ////////////////////////cyan
+                }
+                
+            }else if($g < color_const+1){
+                if($b == 0){    
+                    $image_point = "hils";//////////////green pure
+                }else if($b < color_const + 1){
+                    $image_point = "wery_cold"; ////////////////////////cyan
+                }
+            }
+            
+        }else if($r > color_const * 3){ 
+            if($g == 0){
+                if($b == 0){
+                    $image_point = "cold_lava"; //////////////red pure                                
+                }else if($b > color_const * 3){
+                    $image_point = "smal_swap"; ////////////////////////fiolet
+                }
+                
+            }else if($g > color_const * 3){
+                if($b == 0){
+                    $image_point = "lite_sand"; //////////////yelloy pure 
+                    
+                }else if($b > color_const * 3){
+                    $image_point = "low_mountain"; //////////////gray pure                               
+                }
+            }
+        }else if($r > color_const * 2 && $r < color_const * 3 + 1){ 
+            if($g == 0){
+                if($b == 0){
+                    $image_point = "midle_lava"; //////////////red pure                           
+                }else if($b > color_const * 2 && $b < color_const * 3 + 1){
+                    $image_point = "swap"; ////////////////////////fiolet
+                }
+                
+            }else if($g > color_const * 2 && $g < color_const * 3 + 1){
+                if($b == 0){
+                    $image_point = "midle_sand"; //////////////yelloy pure   
+                    
+                }else if($b > color_const * 2 && $b < color_const * 3 + 1){
+                    $image_point = "midle_mountain"; //////////////gray pure                            
+                }
+            }
+        }else if($r > color_const && $r < color_const * 2 + 1){
+            
+            if($g == 0){
+                if($b == 0){
+                    $image_point = "lava";//////////////red pure 
+                }else if($b > color_const && $b < color_const * 2 + 1){
+                    $image_point = "deep_swap"; ////////////////////////fiolet
+                }
+                
+            }else if($g > color_const && $g < color_const * 2 + 1){
+                
+                if($b == 0){
+                    $image_point = "sand";//////////////yelloy pure
+                    
+                }else if($b > color_const && $b < color_const * 2 + 1){
+                    $image_point = "mountain"; //////////////gray pure                               
+                }
+            }            
+        }else if($r < color_const + 1){
+            
+            if($g == 0){
+                if($b == 0){
+                    $image_point = "hot_lava";//////////////red pure 
+                }else if($b < color_const + 1){
+                    $image_point = "death_swap"; ////////////////////////fiolet
+                }
+                
+            }else if($g < color_const + 1){
+                if($b == 0){    
+                    $image_point = "hard_sand";//////////////yelloy pure
+                    
+                }else if($b < color_const + 1){
+                    $image_point = "high_mountain"; //////////////gray pure                               
+                }
+            }
+        }
+        
+        $values_string_this = "('".$ji."', '".$j."', '".$i."', '".$r."', '".$g."', '".$b."', '".$image_point."')";        
          
         srand();
         $x1 = rand(0,99);
@@ -74,7 +192,7 @@ for($i = 0; $i < $y; $i++){
     }
     
     mysql_query("INSERT INTO `data_spawners` (`id`, `x`, `y`, `coef`) VALUES $values_string2_new");
-    mysql_query("INSERT INTO `data_map` (`id`, `x`, `y`, `r`, `g`, `b`) VALUES $values_string_new");
+    mysql_query("INSERT INTO `data_map` (`id`, `x`, `y`, `r`, `g`, `b`, `zone`) VALUES $values_string_new");
 }
 header("Location: api.php?msg=Map update complite.")
 

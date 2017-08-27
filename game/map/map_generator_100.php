@@ -1,7 +1,6 @@
 <?php
 //constant
-define ("color_const", 64);// 255/3 = 85 255/4=64
-define ("map_drow_size", 25);//map heigt & wind draw
+define ("map_drow_size", 90);//map heigt & wind draw
 define ("map_scale_max", 100);//pixel map lenght
 
 session_start();
@@ -18,24 +17,13 @@ $y = (int)($global_y/1000000);
 $select = mysql_query("SELECT * FROM `data_map` WHERE `x` = '$x' AND `y` = '$y'");
 $map_start_point = mysql_fetch_array($select);
 
-$r_main = $map_start_point['r'];
-$g_main = $map_start_point['g'];
-$b_main = $map_start_point['b'];
-
-//global setting
-//
-$mountain_max_hight = 5;
-$mountain_count = 10;
-$sity_count = 3;
-$enemy_camp_count = 6;
+$zone_main = $map_start_point['zone'];
 
 /////////////////////create and fill array base color
 for($i = 0; $i < map_scale_max; $i++){
     for($j = 0; $j < map_scale_max; $j++){
         
-        $image[$i][$j]['r']= $r_main;
-        $image[$i][$j]['g']= $g_main;
-        $image[$i][$j]['b']= $b_main;
+        $image[$j][$i]['zone']= $zone_main;
     }
 }
 
@@ -51,38 +39,60 @@ if($y != (int)($global_y/1000000)){
 }
     
 
-$map_seed = $x.$y.($r_main + $g_main + $b_main);
+$map_seed = $x.$y;
 
 srand($map_seed);
 
-///////////////////////////////////////////MOUNTAIN generation
+//generation setting
+//
+$harder_spot_randge = rand(5, 15);
+$harder_spot_count = rand(3, 10);
+$lake_count = rand(2, 6);
+$mount_hight = rand(4, 15);
+$mount_count = rand(1, 10);
 
-////////////////////////////////higter/deeper color
-$r_main -= color_const;
-if($r_main < 0){
-    $r_main = 0;
-}
-$g_main -= color_const;
-if($g_main < 0){
-    $g_main = 0;
-}
-$b_main -= color_const;
-if($b_main < 0){
-    $b_main = 0;
-}
+switch($zone_main){
+            case "flat": $next_zone = "grassland"; break;
+            case "grassland": $next_zone = "grass"; break;
+            case "grass": $next_zone = "hils"; break;
+        
+            case "frosty": $next_zone = "cold_frosty"; break;
+            case "cold_frosty": $next_zone = "cold"; break;
+            case "cold": $next_zone = "very_cold"; break;
+        
+            case "cold_lava": $next_zone = "lava"; break;
+            case "lava": $next_zone = "midle_lava"; break;
+            case "midle_lava": $next_zone = "hot_lava"; break;
+        
+            case "smal_water": $next_zone = "water"; break;
+            case "water": $next_zone = "midle_water"; break;
+            case "midle_water": $next_zone = "deep_water"; break;
+        
+            case "lite_sand": $next_zone = "sand"; break;
+            case "sand": $next_zone = "midle_sand"; break;
+            case "midle_sand": $next_zone = "hard_sand"; break;
+        
+            case "low_mountain": $next_zone = "mountain"; break;
+            case "mountain": $next_zone = "midle_mountain"; break;
+            case "midle_mountain": $next_zone = "hight_mountain"; break;
+        
+            case "smal_swap": $next_zone = "swap"; break;
+            case "swap": $next_zone = "deep_swap"; break;
+            case "deep_swap": $next_zone = "death_swap"; break;
+        }
 
-while($mountain_count > 0){    
+///////////////////////////////////////////HARDER zone generation
+
+while($harder_spot_count > 0){    
     
     $i = rand(0, map_scale_max - 1);
     srand($i);
     $j = rand(0, map_scale_max - 1);
     srand($j);
                          
-    $first_circle = 377 * $mountain_max_hight;
+    $first_circle = 128 * $harder_spot_randge;
                 
-    $image[$i][$j]['r'] = $r_main;
-    $image[$i][$j]['g'] = $g_main;
-    $image[$i][$j]['b'] = $b_main;
+    $image[$j][$i]['zone'] = $next_zone;
     
     while($first_circle > 0){
         
@@ -108,46 +118,165 @@ while($mountain_count > 0){
             $j = map_scale_max - 1;
         }
         
-        $image[$i][$j]['r']= $r_main;
-        $image[$i][$j]['g']= $g_main;
-        $image[$i][$j]['b']= $b_main;  
+        $image[$j][$i]['zone']= $next_zone; 
         
-        srand(rand($i, $j * 1000));
+        srand(rand($j, $i * 1000));
         
         
-            //make stronger 
-        if(($i - rand(1, $mountain_max_hight)) > 0){                    
-                $image[$i - rand(1, $mountain_max_hight)][$j]['r']= $r_main;
-                $image[$i - rand(1, $mountain_max_hight)][$j]['g']= $g_main;
-                $image[$i - rand(1, $mountain_max_hight)][$j]['b']= $b_main;      
+            //fill up around seed 
+        if(($i - rand(1, $harder_spot_randge)) > 0){                    
+                $image[$i - rand(1, $harder_spot_randge)][$j]['zone'] = $next_zone;     
             }
-        if(($i + rand(1, $mountain_max_hight)) < map_scale_max - 1){                    
-                $image[$i + rand(1, $mountain_max_hight)][$j]['r']= $r_main;
-                $image[$i + rand(1, $mountain_max_hight)][$j]['g']= $g_main;
-                $image[$i + rand(1, $mountain_max_hight)][$j]['b']= $b_main;      
+        if(($i + rand(1, $harder_spot_randge)) < map_scale_max - 1){                    
+                $image[$i + rand(1, $harder_spot_randge)][$j]['zone'] = $next_zone;      
             }
-        if(($j - rand(1, $mountain_max_hight)) > 0){                    
-                $image[$i][$j - rand(1, $mountain_max_hight)]['r']= $r_main;
-                $image[$i][$j - rand(1, $mountain_max_hight)]['g']= $g_main;
-                $image[$i][$j - rand(1, $mountain_max_hight)]['b']= $b_main;      
+        if(($j - rand(1, $harder_spot_randge)) > 0){                    
+                $image[$i][$j - rand(1, $harder_spot_randge)]['zone'] = $next_zone;      
             }
-        if(($j + rand(1, $mountain_max_hight)) < map_scale_max - 1){                    
-                $image[$i][$j + rand(1, $mountain_max_hight)]['r']= $r_main;
-                $image[$i][$j + rand(1, $mountain_max_hight)]['g']= $g_main;
-                $image[$i][$j + rand(1, $mountain_max_hight)]['b']= $b_main;      
+        if(($j + rand(1, $harder_spot_randge)) < map_scale_max - 1){                    
+                $image[$i][$j + rand(1, $harder_spot_randge)]['zone'] = $next_zone;      
             }
-            
-                   
+                               
             srand(rand($i, $j * 50));
-            
-        
+                    
         $first_circle--;
         
     }
         
-$mountain_count--;                     
+$harder_spot_count--;                     
     
 }
+
+///////////////////////////////////////////LAKE zone
+
+while($lake_count > 0){    
+    
+    $i = rand(0, map_scale_max - 1);
+    srand($i);
+    $j = rand(0, map_scale_max - 1);
+    srand($j);     
+    
+    $first_circle = 64;
+                
+    $image[$j][$i]['zone'] = "smal_water";
+    
+    while($first_circle > 0){
+        
+        $direction = rand(1,4);
+        
+        switch($direction){
+            case 1: $i -= 1; break;
+            case 2: $i += 1; break;
+            case 3: $j -= 1; break;
+            case 4: $j += 1; break;
+        }
+        
+        //check frame for x out of range
+        if($i < 0){
+            $i = 0;
+        }else if($i > map_scale_max - 1){
+            $i = map_scale_max - 1;
+        }
+        //check frame for y out of range
+        if($j < 0){
+            $j = 0;
+        }else if($j > map_scale_max - 1){
+            $j = map_scale_max - 1;
+        }
+        
+        $image[$j][$i]['zone']= "smal_water"; 
+        
+        srand(rand($j, $i * 1000));        
+        
+            //fill up around seed 
+        if(($i - rand(1, 2)) > 0){                    
+                $image[$i - rand(1, 2)][$j]['zone'] = "smal_water";     
+            }
+        if(($i + rand(1, 2)) < map_scale_max - 1){                    
+                $image[$i + rand(1, 2)][$j]['zone'] = "smal_water";      
+            }
+        if(($j - rand(1, 2)) > 0){                    
+                $image[$i][$j - rand(1, 2)]['zone'] = "smal_water";      
+            }
+        if(($j + rand(1, 2)) < map_scale_max - 1){                    
+                $image[$i][$j + rand(1, 2)]['zone'] = "smal_water";      
+            }       
+                               
+            srand(rand($i, $j * 50));
+                    
+        $first_circle--;
+        
+    }
+                
+$lake_count--;                     
+    
+}
+
+///////////////////////////////////////////MOUNTAIN zone generation
+
+while($mount_count > 0){    
+    
+    $i = rand(0, map_scale_max - 1);
+    srand($i);
+    $j = rand(0, map_scale_max - 1);
+    srand($j);     
+    
+    $first_circle = 64 * $mount_hight;
+                
+    $image[$j][$i]['zone'] = "low_mountain";
+    
+    while($first_circle > 0){
+        
+        $direction = rand(1,4);
+        
+        switch($direction){
+            case 1: $i -= 1; break;
+            case 2: $i += 1; break;
+            case 3: $j -= 1; break;
+            case 4: $j += 1; break;
+        }
+        
+        //check frame for x out of range
+        if($i < 0){
+            $i = 0;
+        }else if($i > map_scale_max - 1){
+            $i = map_scale_max - 1;
+        }
+        //check frame for y out of range
+        if($j < 0){
+            $j = 0;
+        }else if($j > map_scale_max - 1){
+            $j = map_scale_max - 1;
+        }
+        
+        $image[$j][$i]['zone']= "low_mountain"; 
+        
+        srand(rand($j, $i * 1000));        
+        
+            //fill up around seed 
+        if(($i - rand(1, $mount_hight)) > 0){                    
+                $image[$i - rand(1, $mount_hight)][$j]['zone'] = "low_mountain";     
+            }
+        if(($i + rand(1, $mount_hight)) < map_scale_max - 1){                    
+                $image[$i + rand(1, $mount_hight)][$j]['zone'] = "low_mountain";      
+            }
+        if(($j - rand(1, $mount_hight)) > 0){                    
+                $image[$i][$j - rand(1, $mount_hight)]['zone'] = "low_mountain";      
+            }
+        if(($j + rand(1, $mount_hight)) < map_scale_max - 1){                    
+                $image[$i][$j + rand(1, $mount_hight)]['zone'] = "low_mountain";      
+            }       
+                               
+            srand(rand($i, $j * 50));
+                    
+        $first_circle--;
+        
+    }
+                
+$mount_count--;                     
+    
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -188,134 +317,13 @@ if((int)($player_y - map_drow_size/2) < 0){
     
 for($i = $y_min; $i < $y_max; $i++){
     for($j = $x_min; $j < $x_max; $j++){
-
-        $r = $image[$i][$j]['r'];
-        $g = $image[$i][$j]['g'];
-        $b = $image[$i][$j]['b'];
         
-        $image_point = "error";
-        
-        if($r == 0){
-            if($g == 0){
-                if($b == 0){
-                    $image_point = "error";
-                    
-                }else if($b > color_const * 3){              
-                    $image_point = "smal_water"; //////////////blue pure   
-                    
-                }else if($b > color_const * 2 && $b < color_const * 3 + 1){              
-                    $image_point = "midle_water"; //////////////blue pure     
-                    
-                }else if($b > color_const && $b < color_const * 2){
-                    $image_point = "water";//////////////blue pure 
-                    
-                }else if($b < color_const+1){
-                    $image_point = "deep_water";//////////////blue pure 
-                }
-                
-            }else if($g > color_const * 3){
-                if($b == 0){
-                    $image_point = "flat"; //////////////green pure                               
-                }else if($b > color_const * 3){
-                    $image_point = "frosty"; ////////////////////////cyan
-                }
-                
-            }else if($g > color_const * 2 && $g < color_const * 3 + 1){
-                if($b == 0){
-                    $image_point = "grassland";//////////////green pure  
-                }else if($b > color_const * 2 && $b < color_const * 3 + 1){
-                    $image_point = "cold_frosty"; ////////////////////////cyan
-                }
-                
-            }else if($g > color_const && $g < color_const * 2 + 1){
-                if($b == 0){
-                    $image_point = "grass";//////////////green pure
-                }else if($b > color_const && $b < color_const * 2 + 1){
-                    $image_point = "cold"; ////////////////////////cyan
-                }
-                
-            }else if($g < color_const+1){
-                if($b == 0){    
-                    $image_point = "hils";//////////////green pure
-                }else if($b < color_const + 1){
-                    $image_point = "wery_cold"; ////////////////////////cyan
-                }
-            }
-            
-        }else if($r > color_const * 3){ 
-            if($g == 0){
-                if($b == 0){
-                    $image_point = "cold_lava"; //////////////red pure                                
-                }else if($b > color_const * 3){
-                    $image_point = "smal_swap"; ////////////////////////fiolet
-                }
-                
-            }else if($g > color_const * 3){
-                if($b == 0){
-                    $image_point = "lite_sand"; //////////////yelloy pure 
-                    
-                }else if($b > color_const * 3){
-                    $image_point = "low_mountain"; //////////////gray pure                               
-                }
-            }
-        }else if($r > color_const * 2 && $r < color_const * 3 + 1){ 
-            if($g == 0){
-                if($b == 0){
-                    $image_point = "midle_lava"; //////////////red pure                           
-                }else if($b > color_const * 2 && $b < color_const * 3 + 1){
-                    $image_point = "swap"; ////////////////////////fiolet
-                }
-                
-            }else if($g > color_const * 2 && $g < color_const * 3 + 1){
-                if($b == 0){
-                    $image_point = "midle_sand"; //////////////yelloy pure   
-                    
-                }else if($b > color_const * 2 && $b < color_const * 3 + 1){
-                    $image_point = "midle_mountain"; //////////////gray pure                            
-                }
-            }
-        }else if($r > color_const && $r < color_const * 2 + 1){
-            
-            if($g == 0){
-                if($b == 0){
-                    $image_point = "lava";//////////////red pure 
-                }else if($b > color_const && $b < color_const * 2 + 1){
-                    $image_point = "deep_swap"; ////////////////////////fiolet
-                }
-                
-            }else if($g > color_const && $g < color_const * 2 + 1){
-                
-                if($b == 0){
-                    $image_point = "sand";//////////////yelloy pure
-                    
-                }else if($b > color_const && $b < color_const * 2 + 1){
-                    $image_point = "mountain"; //////////////gray pure                               
-                }
-            }            
-        }else if($r < color_const + 1){
-            
-            if($g == 0){
-                if($b == 0){
-                    $image_point = "hot_lava";//////////////red pure 
-                }else if($b < color_const + 1){
-                    $image_point = "death_swap"; ////////////////////////fiolet
-                }
-                
-            }else if($g < color_const + 1){
-                if($b == 0){    
-                    $image_point = "hard_sand";//////////////yelloy pure
-                    
-                }else if($b < color_const + 1){
-                    $image_point = "high_mountain"; //////////////gray pure                               
-                }
-            }
-        }
-        
+        $image_point = $image[$j][$i]['zone'];        
         
         if($j == $player_x && $i == $player_y){
-            echo "<a href = 'map_generator_10000.php?r=".$r."&g=".$g."&b=".$b."'><img src='../../images/player.gif' height='14px' width='14px'></a>";
+            echo "<a href = 'map_generator_10000.php?zone=".$image_point."'><img src='../../images/player.gif' height='14px' width='14px'></a>";
         }else{
-            echo "<img src='../../images/map/".$image_point.".png?".$r.$g.$b."' height='14px' width='14px'>";
+            echo "<img src='../../images/map/".$image_point.".png' height='14px' width='14px'>";
         }        
     }
     echo "<br>";
