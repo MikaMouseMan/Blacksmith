@@ -1,6 +1,6 @@
 <?php
 ////////////////////////constant
-define ("map_drow_size", 25);//map heigt & wind draw
+define ("map_drow_size", 90);//map heigt & wind draw
 define ("map_scale_max", 100);//pixel map lenght
 
 session_start();
@@ -19,6 +19,14 @@ $global_y = $_SESSION['y'];
 $x = ((int)(($global_x)/1000))%1000;
 $y = ((int)(($global_y)/1000))%1000;
 
+$player_x = (int)($global_x % 1000);
+$player_y = (int)($global_y % 1000);
+
+$map_seed = (int)($global_x / 1000) + (int)($global_y / 1000);
+
+srand($map_seed);
+
+
 if(!isset($_GET['msg'])){
     $msg = "";
 }else{
@@ -32,12 +40,11 @@ $zone_main = $_SESSION['zone'];
 
 /////////////////////////////////////////global setting
 
-$mountain_max_hight = 5;
-$mountain_count = 10;
-$sity_count = 3;
-$enemy_camp_count = 6;
-//if change map will change too default 5 10 3 6 100
-
+$mountain_max_hight = rand(5, 15);
+$mountain_count = rand(3, 10);
+$tree_count = rand(32, 128);
+$sity_count = 3;//////////////////
+$enemy_camp_count = 6;////////////
 
 /////////////////////create and fill array base color
 for($i = 0; $i < map_scale_max; $i++){
@@ -47,12 +54,69 @@ for($i = 0; $i < map_scale_max; $i++){
     }
 }
 
-$player_x = (int)($global_x % 1000);
-$player_y = (int)($global_y % 1000);
-
-$map_seed = (int)($global_x / 1000) + (int)($global_y / 1000);
-
-srand($map_seed);
+////////////////////////////////////////////////////TREE generation
+while($tree_count > 0){    
+    
+    $i = rand(0, map_scale_max - 1);
+    srand($i);
+    $j = rand(0, map_scale_max - 1);
+    srand($j);     
+    
+    $first_circle = 64;
+                
+    $image[$j][$i]['zone'] = "tree";
+    
+    while($first_circle > 0){
+        
+        $direction = rand(1,4);
+        
+        switch($direction){
+            case 1: $i -= 1; break;
+            case 2: $i += 1; break;
+            case 3: $j -= 1; break;
+            case 4: $j += 1; break;
+        }
+        
+        //check frame for x out of range
+        if($i < 0){
+            $i = 0;
+        }else if($i > map_scale_max - 1){
+            $i = map_scale_max - 1;
+        }
+        //check frame for y out of range
+        if($j < 0){
+            $j = 0;
+        }else if($j > map_scale_max - 1){
+            $j = map_scale_max - 1;
+        }
+        
+        $image[$j][$i]['zone']= "tree"; 
+        
+        srand(rand($j, $i * 1000));        
+        
+            //fill up around seed 
+        if(($i - rand(1, 2)) > 0){                    
+                $image[$i - rand(1, 2)][$j]['zone'] = "tree";     
+            }
+        if(($i + rand(1, 2)) < map_scale_max - 1){                    
+                $image[$i + rand(1, 2)][$j]['zone'] = "tree";      
+            }
+        if(($j - rand(1, 2)) > 0){                    
+                $image[$i][$j - rand(1, 2)]['zone'] = "tree";      
+            }
+        if(($j + rand(1, 2)) < map_scale_max - 1){                    
+                $image[$i][$j + rand(1, 2)]['zone'] = "tree";      
+            }       
+                               
+            srand(rand($i, $j + $tree_count));
+                    
+        $first_circle--;
+        
+    }
+                
+$tree_count--;                     
+    
+}
 
 ///////////////////////////////////////////MOUNTAIN generation
 
