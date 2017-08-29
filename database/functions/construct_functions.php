@@ -60,8 +60,10 @@ function build_road($global_x, $global_y, $player_id = 1){
     $new_name = "road";
     $master_id = $player_id;
     $color = "";
+    $health = 1;
+    $health_max = 1;
 
-    mysql_query("INSERT INTO `data_buildings_on_map` (`id`, `x`, `y`, `name`, `health`, `health_max`, `master_id`, `color`) VALUES ('$new_id', '$global_x', '$global_y', '$new_name', '1', '1', '$master_id', '$color')");
+    mysql_query("INSERT INTO `data_buildings_on_map` (`id`, `x`, `y`, `name`, `health`, `health_max`, `master_id`, `color`) VALUES ('$new_id', '$global_x', '$global_y', '$new_name', '$health', '$health_max', '$master_id', '$color')");
     
 }
 
@@ -71,8 +73,10 @@ function build_wall($global_x, $global_y, $player_id = 1){
     $new_name = "wall";
     $master_id = $player_id;
     $color = "";
+    $health = 1;
+    $health_max = 1;
 
-    mysql_query("INSERT INTO `data_buildings_on_map` (`id`, `x`, `y`, `name`, `health`, `health_max`, `master_id`, `color`) VALUES ('$new_id', '$global_x', '$global_y', '$new_name', '1', '1', '$master_id', '$color')");
+    mysql_query("INSERT INTO `data_buildings_on_map` (`id`, `x`, `y`, `name`, `health`, `health_max`, `master_id`, `color`) VALUES ('$new_id', '$global_x', '$global_y', '$new_name', '$health', '$health_max', '$master_id', '$color')");
  
 }
 
@@ -82,8 +86,10 @@ function build_door($global_x, $global_y, $player_id = 1){
     $new_name = "door";
     $master_id = $player_id;
     $color = "";
+    $health = 1;
+    $health_max = 1;
 
-    mysql_query("INSERT INTO `data_buildings_on_map` (`id`, `x`, `y`, `name`, `health`, `health_max`, `master_id`, `color`) VALUES ('$new_id', '$global_x', '$global_y', '$new_name', '1', '1', '$master_id', '$color')");
+    mysql_query("INSERT INTO `data_buildings_on_map` (`id`, `x`, `y`, `name`, `health`, `health_max`, `master_id`, `color`) VALUES ('$new_id', '$global_x', '$global_y', '$new_name', '$health', '$health_max', '$master_id', '$color')");
  
 }
 
@@ -93,8 +99,10 @@ function build_floor($global_x, $global_y, $player_id = 1){
     $new_name = "floor";
     $master_id = $player_id;
     $color = "";
+    $health = 1;
+    $health_max = 1;
 
-    mysql_query("INSERT INTO `data_buildings_on_map` (`id`, `x`, `y`, `name`, `health`, `health_max`, `master_id`, `color`) VALUES ('$new_id', '$global_x', '$global_y', '$new_name', '1', '1', '$master_id', '$color')");
+    mysql_query("INSERT INTO `data_buildings_on_map` (`id`, `x`, `y`, `name`, `health`, `health_max`, `master_id`, `color`) VALUES ('$new_id', '$global_x', '$global_y', '$new_name', '$health', '$health_max', '$master_id', '$color')");
  
 }
 
