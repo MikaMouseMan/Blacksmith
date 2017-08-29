@@ -38,6 +38,21 @@ function clear_cell_block($global_x1, $global_y1, $global_x2, $global_y2){
     }
 }
 
+/////////////////////////////////////////////////////////////Plant tree
+function build_tree($global_x, $global_y, $player_id = 1){
+        
+    $new_id = $global_x.$global_y;
+    $new_name = "tree";
+    $master_id = $player_id;
+    $color = "";
+    $health = 1;
+    $health_max = 1;
+
+    mysql_query("INSERT INTO `data_buildings_on_map` (`id`, `x`, `y`, `name`, `health`, `health_max`, `master_id`, `color`) VALUES ('$new_id', '$global_x', '$global_y', '$new_name', '$health', '$health_max', '$master_id', '$color')");
+    
+}
+
+
 ///////////////point
 function build_road($global_x, $global_y, $player_id = 1){
         
